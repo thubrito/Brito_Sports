@@ -1,11 +1,359 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brito's Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brito's Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+
+  <div class="wpp-float" title="Fale no WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.18a8.168 8.168 0 01-4.164-1.14l-.298-.177-3.094.891.846-3.168-.194-.307A8.174 8.174 0 013.82 12c0-4.514 3.666-8.18 8.18-8.18 4.514 0 8.18 3.666 8.18 8.18 0 4.514-3.666 8.18-8.181 8.18z"/></svg>
+  </div>
+
+  <nav>
+    <div class="logo">BRITO'S<span> STORE</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Camisetas</a></li>
+      <li><a href="#">Brasileirão</a></li>
+      <li><a href="#">Premier League</a></li>
+      <li><a href="#">Seleções</a></li>
+      <li><a href="#">Promoções</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-cart">
+        <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/><path d="M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="cart-badge">2</div>
+      </div>
+      <button class="btn-nav">Rastrear Pedido</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-tag"><span>Novos Kits 2025/26</span></div>
+      <h1 class="hero-title">VISTA O<br>JOGO<br><em>CERTO</em></h1>
+      <p class="hero-sub">Camisetas oficiais de futebol de todo o mundo. Brasileirão, Premier League, La Liga e seleções nacionais — entregues diretamente para você.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary">Ver Catálogo Completo</button>
+        <button class="btn-ghost">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
+          Como funciona
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">500+</div><div class="lbl">Produtos</div></div>
+        <div class="hero-stat"><div class="num">50+</div><div class="lbl">Ligas</div></div>
+        <div class="hero-stat"><div class="num">4.9★</div><div class="lbl">Avaliação</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-bg-text">KIT</div>
+      <div class="hero-jersey">
+        <div class="jersey-card">
+          <div class="jersey-badge">Destaque</div>
+          <div class="jersey-img">
+            <div class="jersey-mockup">⚽</div>
+            <svg class="jersey-svg" viewBox="0 0 200 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 60 20 L 30 60 L 10 55 L 25 100 L 10 200 L 80 215 L 80 120 L 120 120 L 120 215 L 190 200 L 175 100 L 190 55 L 170 60 L 140 20 L 120 30 L 110 60 Q100 70 90 60 L 80 30 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(232,255,0,0.4)" stroke-width="1.5"/>
+              <path d="M 80 30 L 80 95 Q90 105 100 100 Q110 105 120 95 L 120 30" fill="rgba(232,255,0,0.06)" stroke="rgba(232,255,0,0.3)" stroke-width="1"/>
+              <text x="100" y="170" font-family="Bebas Neue, sans-serif" font-size="28" fill="rgba(232,255,0,0.5)" text-anchor="middle" letter-spacing="2">BRITO'S</text>
+              <text x="100" y="195" font-family="Bebas Neue, sans-serif" font-size="16" fill="rgba(255,255,255,0.2)" text-anchor="middle" letter-spacing="3">STORE</text>
+            </svg>
+          </div>
+          <div class="jersey-info">
+            <div>
+              <div class="jersey-name">Camisa Titular 2025/26</div>
+              <div class="jersey-club">Corinthians • Brasileirão</div>
+            </div>
+            <div class="jersey-price">R$139</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-dots">
+        <span class="active"></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Brasileirão</span><span>Premier League</span><span>La Liga</span><span>Ligue 1</span><span>Bundesliga</span><span>Serie A</span><span>Seleções</span><span>Copa do Mundo</span>
+      <span>Brasileirão</span><span>Premier League</span><span>La Liga</span><span>Ligue 1</span><span>Bundesliga</span><span>Serie A</span><span>Seleções</span><span>Copa do Mundo</span>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Explorar por liga</div>
+        <h2 class="section-title">TODAS AS<br><em>LIGAS</em></h2>
+      </div>
+      <a class="link-all">Ver todas as ligas →</a>
+    </div>
+    <div class="ligas-grid">
+      <div class="liga-card"><div class="liga-icon">🇧🇷</div><div class="liga-name">Brasileirão</div><div class="liga-count">20 clubes</div></div>
+      <div class="liga-card"><div class="liga-icon">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div class="liga-name">Premier League</div><div class="liga-count">20 clubes</div></div>
+      <div class="liga-card"><div class="liga-icon">🇪🇸</div><div class="liga-name">La Liga</div><div class="liga-count">20 clubes</div></div>
+      <div class="liga-card"><div class="liga-icon">🇫🇷</div><div class="liga-name">Ligue 1</div><div class="liga-count">18 clubes</div></div>
+      <div class="liga-card"><div class="liga-icon">🌍</div><div class="liga-name">Seleções</div><div class="liga-count">80+ países</div></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Mais vendidos</div>
+        <h2 class="section-title">LANÇA<em>MENTOS</em></h2>
+      </div>
+      <a class="link-all">Ver catálogo completo →</a>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-badge-wrap"><span class="badge badge-new">Novo</span></div>
+          <div class="product-img-inner">
+            <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
+              <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(0,0,0,0.3)" stroke="rgba(232,255,0,0.5)" stroke-width="2"/>
+              <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="20" fill="rgba(232,255,0,0.6)" text-anchor="middle">CFC 2025</text>
+            </svg>
+          </div>
+          <div class="product-actions">
+            <button class="btn-add">Adicionar ao Carrinho</button>
+            <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-club">Chelsea • Premier League</div>
+          <div class="product-name">Camisa Titular 2025/26</div>
+          <div class="product-price-row"><span class="product-price">R$149</span></div>
+          <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-badge-wrap"><span class="badge badge-promo">-20%</span></div>
+          <div class="product-img-inner">
+            <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
+              <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(0,30,120,0.4)" stroke="rgba(60,120,255,0.6)" stroke-width="2"/>
+              <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="16" fill="rgba(120,180,255,0.7)" text-anchor="middle">BRASIL 2026</text>
+            </svg>
+          </div>
+          <div class="product-actions">
+            <button class="btn-add">Adicionar ao Carrinho</button>
+            <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-club">Brasil • Seleção</div>
+          <div class="product-name">Camisa Titular Copa 2026</div>
+          <div class="product-price-row"><span class="product-price">R$159</span><span class="product-price-old">R$199</span></div>
+          <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span><span class="size-dot">XG</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-badge-wrap"><span class="badge badge-enc">Encomenda</span></div>
+          <div class="product-img-inner">
+            <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
+              <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(120,0,0,0.4)" stroke="rgba(220,50,50,0.6)" stroke-width="2"/>
+              <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="18" fill="rgba(255,100,100,0.7)" text-anchor="middle">SCCP 2025</text>
+            </svg>
+          </div>
+          <div class="product-actions">
+            <button class="btn-add">Encomendar</button>
+            <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-club">Corinthians • Brasileirão</div>
+          <div class="product-name">Third Kit 2025/26 Edição Especial</div>
+          <div class="product-price-row"><span class="product-price">R$139</span></div>
+          <div class="product-sizes"><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-badge-wrap"><span class="badge badge-new">Novo</span></div>
+          <div class="product-img-inner">
+            <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
+              <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(180,140,0,0.3)" stroke="rgba(255,210,0,0.6)" stroke-width="2"/>
+              <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="18" fill="rgba(255,210,0,0.7)" text-anchor="middle">BVB 2025</text>
+            </svg>
+          </div>
+          <div class="product-actions">
+            <button class="btn-add">Adicionar ao Carrinho</button>
+            <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-club">Borussia Dortmund • Bundesliga</div>
+          <div class="product-name">Camisa Home 2025/26</div>
+          <div class="product-price-row"><span class="product-price">R$144</span></div>
+          <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="showcase">
+    <div class="showcase-inner">
+      <div class="showcase-left">
+        <span class="showcase-tag">Sob Encomenda</span>
+        <h2 class="showcase-title">QUALQUER<br>CAMISA<br><span style="color:var(--accent)">DO MUNDO</span></h2>
+        <p class="showcase-desc">Não encontrou a camisa que procura? Na Brito's Store trabalhamos sob encomenda — se existe, a gente consegue. Prazo informado após confirmação do pagamento via Pix.</p>
+        <div class="showcase-features">
+          <div class="feat"><div class="feat-dot"></div><span><strong>Pagamento via Pix</strong> — rápido e seguro</span></div>
+          <div class="feat"><div class="feat-dot"></div><span><strong>Envio pelos Correios</strong> — frete calculado por CEP</span></div>
+          <div class="feat"><div class="feat-dot"></div><span><strong>Atendimento no WhatsApp</strong> — suporte direto</span></div>
+          <div class="feat"><div class="feat-dot"></div><span><strong>Rastreamento completo</strong> do pedido online</span></div>
+        </div>
+        <button class="btn-primary">Fazer Encomenda</button>
+      </div>
+      <div class="showcase-right">
+        <div class="showcase-jersey">
+          <svg width="200" height="260" viewBox="0 0 200 260" fill="none">
+            <defs>
+              <linearGradient id="jg" x1="0" y1="0" x2="200" y2="260" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="rgba(232,255,0,0.15)"/>
+                <stop offset="100%" stop-color="rgba(232,255,0,0.03)"/>
+              </linearGradient>
+            </defs>
+            <path d="M65 22L32 65L8 58L24 108L8 210L84 226L84 126L116 126L116 226L192 210L176 108L192 58L168 65L135 22L118 34L108 66Q100 76 92 66L82 34Z" fill="url(#jg)" stroke="rgba(232,255,0,0.4)" stroke-width="1.5"/>
+            <circle cx="100" cy="165" r="30" fill="rgba(232,255,0,0.04)" stroke="rgba(232,255,0,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+            <text x="100" y="160" font-family="Bebas Neue,sans-serif" font-size="11" fill="rgba(232,255,0,0.4)" text-anchor="middle" letter-spacing="2">BRITO'S</text>
+            <text x="100" y="175" font-family="Bebas Neue,sans-serif" font-size="9" fill="rgba(255,255,255,0.15)" text-anchor="middle" letter-spacing="3">STORE</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" style="padding-top:0">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Futebol mundial</div>
+        <h2 class="section-title"><em>SELEÇÕES</em><br>NACIONAIS</h2>
+      </div>
+      <a class="link-all">Ver todas →</a>
+    </div>
+    <div class="selecoes-grid">
+      <div class="selecao-big">
+        <div class="selecao-bg"><div class="selecao-bg-text">BRA</div></div>
+        <div style="position:relative;z-index:1">
+          <div class="section-label" style="margin-bottom:12px">Mais popular</div>
+          <div class="selecao-country">BRASIL</div>
+          <div class="selecao-items" style="margin-top:8px">12 modelos disponíveis · Titular, Reserva, Third</div>
+          <a class="link-all" style="margin-top:20px">Ver camisas →</a>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px">
+        <div class="selecao-small"><div class="selecao-flag">🇦🇷</div><div><div class="selecao-country">ARG</div><div class="selecao-items">8 modelos</div></div></div>
+        <div class="selecao-small"><div class="selecao-flag">🇫🇷</div><div><div class="selecao-country">FRA</div><div class="selecao-items">6 modelos</div></div></div>
+      </div>
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px">
+        <div class="selecao-small"><div class="selecao-flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div><div class="selecao-country">ENG</div><div class="selecao-items">5 modelos</div></div></div>
+        <div class="selecao-small"><div class="selecao-flag">🇩🇪</div><div><div class="selecao-country">ALE</div><div class="selecao-items">6 modelos</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="benefits">
+    <div class="benefits-grid">
+      <div class="benefit"><div class="benefit-icon">🚚</div><div class="benefit-title">Frete pelos Correios</div><div class="benefit-desc">Cálculo automático pelo CEP. Rastreamento completo do envio até a sua porta.</div></div>
+      <div class="benefit"><div class="benefit-icon">⚡</div><div class="benefit-title">Pix Instantâneo</div><div class="benefit-desc">Pague via Pix e confirme seu pedido in segundos. Processo 100% seguro.</div></div>
+      <div class="benefit"><div class="benefit-icon">💬</div><div class="benefit-title">Suporte no WhatsApp</div><div class="benefit-desc">Atendimento direto pelo WhatsApp. Tire dúvidas e acompanhe seu pedido.</div></div>
+      <div class="benefit"><div class="benefit-icon">🔄</div><div class="benefit-title">Política de Trocas</div><div class="benefit-desc">Problemas com tamanho ou produto? Resolvemos com agilidade e sem burocracia.</div></div>
+    </div>
+  </div>
+
+  <section class="faq">
+    <div class="section-header">
+      <div>
+        <div class="section-label">Dúvidas frequentes</div>
+        <h2 class="section-title">FAQ</h2>
+      </div>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item"><div class="faq-q">Como funciona o modelo sob encomenda? <span>→</span></div><div class="faq-a">Após você realizar o pedido e confirmar o pagamento via Pix, realizamos a compra do fornecedor e enviamos diretamente para você. O prazo é informado após a confirmação.</div></div>
+      <div class="faq-item"><div class="faq-q">Qual o prazo de entrega? <span>→</span></div><div class="faq-a">O prazo varia conforme a disponibilidade do fornecedor e sua localização. Informamos o prazo exato após a confirmação do pagamento via WhatsApp.</div></div>
+      <div class="faq-item"><div class="faq-q">Como rastrear meu pedido? <span>→</span></div><div class="faq-a">Acesse a página "Rastrear Pedido" e informe o número do seu pedido junto com seu e-mail ou WhatsApp. O código dos Correios também será enviado por mensagem.</div></div>
+      <div class="faq-item"><div class="faq-q">Vocês aceitam cartão de crédito? <span>→</span></div><div class="faq-a">No momento trabalhamos exclusivamente com Pix para garantir rapidez e segurança no processo de confirmação dos pedidos sob encomenda.</div></div>
+      <div class="faq-item"><div class="faq-q">Posso pedir uma camisa que não está no site? <span>→</span></div><div class="faq-a">Sim! Entre em contato pelo WhatsApp descrevendo a camisa desejada. Se existir no mercado, conseguimos para você.</div></div>
+      <div class="faq-item"><div class="faq-q">Como funciona a política de trocas? <span>→</span></div><div class="faq-a">Aceitamos trocas por problemas de tamanho ou defeito de fabricação. Entre em contato pelo WhatsApp em até 7 dias após o recebimento.</div></div>
+    </div>
+  </section>
+
+  <div class="newsletter">
+    <div class="nl-title">FIQUE POR DENTRO DOS LANÇAMENTOS</div>
+    <div style="flex:1;max-width:420px">
+      <p style="font-size:14px;color:rgba(0,0,0,0.6);margin-bottom:20px;line-height:1.6">Receba novidades, promoções e lançamentos diretamente no seu e-mail.</p>
+      <div class="nl-form">
+        <input class="nl-input" type="email" placeholder="seu@email.com">
+        <button class="nl-btn">Quero receber</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">BRITO'S STORE</div>
+        <p class="footer-desc">A sua loja especializada em camisetas de futebol de todo o mundo. Trabalhamos sob encomenda para levar o kit do seu time até você.</p>
+        <div class="footer-wpp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+          Fale no WhatsApp
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Ligas</h4>
+        <ul>
+          <li><a href="#">Brasileirão</a></li>
+          <li><a href="#">Premier League</a></li>
+          <li><a href="#">La Liga</a></li>
+          <li><a href="#">Ligue 1</a></li>
+          <li><a href="#">Bundesliga</a></li>
+          <li><a href="#">Serie A</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Seleções</h4>
+        <ul>
+          <li><a href="#">Brasil</a></li>
+          <li><a href="#">Argentina</a></li>
+          <li><a href="#">França</a></li>
+          <li><a href="#">Inglaterra</a></li>
+          <li><a href="#">Alemanha</a></li>
+          <li><a href="#">Ver todas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informações</h4>
+        <ul>
+          <li><a href="#">Rastrear Pedido</a></li>
+          <li><a href="#">Como Funciona</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Política de Trocas</a></li>
+          <li><a href="#">Privacidade</a></li>
+          <li><a href="#">Contato</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Brito's Store. Todos os direitos reservados.</div>
+      <div class="footer-socials">
+        <a class="social-btn" href="#">ig</a>
+        <a class="social-btn" href="#">tk</a>
+        <a class="social-btn" href="#">wp</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
