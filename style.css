@@ -232,3 +232,124 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 8
 .wpp-float svg { width: 28px; height: 28px; fill: #fff; }
 
 @keyframes bounce-in { 0%{transform:scale(0);opacity:0} 100%{transform:scale(1);opacity:1} }
+
+/* ── TABLET (≤1024px) ── */
+@media (max-width: 1024px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 100px 32px 48px; }
+  .hero-right { padding: 0 32px 60px; justify-content: flex-start; }
+  .hero-jersey { width: 100%; max-width: 400px; }
+  .hero-bg-text { font-size: 180px; }
+
+  .section { padding: 72px 32px; }
+  .section-title { font-size: 48px; }
+
+  .ligas-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .showcase-inner { grid-template-columns: 1fr; }
+  .showcase-right { min-height: 300px; }
+  .showcase-left { padding: 60px 40px; }
+  .showcase-title { font-size: 56px; }
+
+  .selecoes-grid { grid-template-columns: 1fr 1fr; }
+  .selecao-big { grid-column: 1 / -1; min-height: 300px; }
+
+  .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .faq-grid { grid-template-columns: 1fr; }
+
+  .newsletter { flex-direction: column; gap: 32px; padding: 48px 40px; }
+  .nl-title { font-size: 44px; max-width: 100%; }
+  .nl-form { max-width: 100%; width: 100%; }
+
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .showcase { padding: 0 32px 80px; }
+  .faq { padding: 72px 32px; }
+  .benefits { padding: 64px 32px; }
+}
+
+/* ── MOBILE (≤768px) ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; height: 56px; }
+  .logo { font-size: 22px; }
+  .btn-nav { display: none; }
+
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 88px 20px 40px; }
+  .hero-title { font-size: 64px; }
+  .hero-sub { font-size: 14px; }
+  .hero-ctas { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .btn-primary { width: 100%; text-align: center; clip-path: none; }
+  .btn-ghost { width: 100%; justify-content: center; }
+  .hero-stats { gap: 28px; }
+  .hero-stat .num { font-size: 32px; }
+  .hero-right { padding: 0 20px 48px; }
+  .hero-jersey { max-width: 100%; }
+  .hero-bg-text { display: none; }
+  .hero-dots { right: 20px; bottom: 20px; }
+
+  .marquee-track span { font-size: 16px; padding: 0 24px; }
+
+  .section { padding: 56px 20px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
+  .section-title { font-size: 40px; }
+
+  .ligas-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  .liga-card { padding: 24px 16px; }
+
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  .product-info { padding: 12px; }
+  .product-price { font-size: 22px; }
+  .product-name { font-size: 12px; }
+  .product-actions { opacity: 1; transform: none; }
+
+  .showcase { padding: 0 20px 56px; }
+  .showcase-inner { grid-template-columns: 1fr; }
+  .showcase-left { padding: 40px 24px; }
+  .showcase-title { font-size: 44px; }
+  .showcase-right { min-height: 220px; }
+  .showcase-right::before { font-size: 200px; }
+
+  .selecoes-grid { grid-template-columns: 1fr; }
+  .selecao-big { min-height: 240px; padding: 40px 24px; }
+  .selecao-big .selecao-country { font-size: 52px; }
+  .selecao-bg-text { font-size: 140px; }
+
+  .benefits { padding: 48px 20px; }
+  .benefits-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .benefit { padding: 28px 20px; }
+  .benefit-title { font-size: 14px; }
+  .benefit-desc { font-size: 12px; }
+
+  .faq { padding: 56px 20px; }
+  .faq-grid { grid-template-columns: 1fr; gap: 4px; }
+  .faq-item { padding: 20px; }
+
+  .newsletter { margin: 0 20px 56px; padding: 36px 24px; gap: 24px; }
+  .nl-title { font-size: 36px; }
+  .nl-form { flex-direction: column; }
+  .nl-input { border-right: 1px solid rgba(0,0,0,0.2); border-bottom: none; }
+  .nl-btn { width: 100%; padding: 14px; }
+
+  footer { padding: 56px 20px 32px; }
+  .footer-top { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+
+  .wpp-float { bottom: 20px; right: 20px; width: 48px; height: 48px; }
+  .wpp-float svg { width: 24px; height: 24px; }
+}
+
+/* ── MOBILE PEQUENO (≤480px) ── */
+@media (max-width: 480px) {
+  .hero-title { font-size: 52px; }
+  .section-title { font-size: 34px; }
+  .products-grid { grid-template-columns: 1fr; }
+  .ligas-grid { grid-template-columns: repeat(2, 1fr); }
+  .benefits-grid { grid-template-columns: 1fr; }
+  .selecao-small { min-height: 140px; padding: 28px 20px; }
+}
