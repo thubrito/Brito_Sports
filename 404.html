@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página não encontrada — Brito's Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--accent:#e8ff00;--text:#f0f0f0;--muted:#888;--border:rgba(255,255,255,0.08);--font-display:'Bebas Neue',sans-serif;--font-body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;overflow:hidden}
+.bg-404{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.bg-num{font-family:var(--font-display);font-size:600px;color:rgba(232,255,0,0.025);line-height:1;user-select:none}
+.content{position:relative;z-index:1}
+.ball{font-size:72px;margin-bottom:24px;animation:bounce 1.2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+h1{font-family:var(--font-display);font-size:clamp(80px,15vw,160px);line-height:.9;margin-bottom:16px}
+h1 em{color:var(--accent);font-style:normal}
+p{font-size:16px;color:var(--muted);max-width:440px;line-height:1.7;margin-bottom:40px}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#000;border:none;padding:16px 36px;font-family:var(--font-body);font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-primary:hover{background:#fff}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);padding:15px 28px;font-family:var(--font-body);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.logo{font-family:var(--font-display);font-size:20px;letter-spacing:3px;color:var(--accent);position:fixed;top:24px;left:40px;text-decoration:none}
+.logo span{color:var(--text)}
+</style>
+</head>
+<body>
+<a href="index.html" class="logo">BRITO'S<span> STORE</span></a>
+<div class="bg-404"><div class="bg-num">404</div></div>
+<div class="content">
+  <div class="ball">⚽</div>
+  <h1>FORA<br>DO <em>CAMPO</em></h1>
+  <p>Parece que essa página saiu de campo. Mas a loja continua aberta — volte para o catálogo e encontre a camisa perfeita.</p>
+  <div class="btns">
+    <button class="btn-primary" onclick="location.href='index.html'">Ir para Home</button>
+    <button class="btn-ghost" onclick="location.href='loja.html'">Ver Catálogo</button>
+  </div>
+</div>
+</body>
+</html>
