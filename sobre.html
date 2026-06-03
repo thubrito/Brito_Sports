@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre Nós — Brito's Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--accent:#e8ff00;--accent2:#ff3c3c;--text:#f0f0f0;--muted:#888;--border:rgba(255,255,255,0.08);--font-display:'Bebas Neue',sans-serif;--font-body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--font-display);font-size:26px;letter-spacing:3px;color:var(--accent);text-decoration:none}.logo span{color:var(--text)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.btn-nav{background:var(--accent);color:#000;border:none;padding:8px 18px;font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+
+/* HERO */
+.hero{min-height:70vh;display:flex;align-items:center;padding:100px 60px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.hero-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;overflow:hidden;pointer-events:none}
+.hero-bg-text{font-family:var(--font-display);font-size:380px;color:rgba(255,255,255,0.015);line-height:1;user-select:none;padding-right:40px}
+.hero-content{position:relative;z-index:1;max-width:720px}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
+.hero-title{font-family:var(--font-display);font-size:100px;line-height:.88;margin-bottom:32px}
+.hero-title em{color:var(--accent);font-style:normal}
+.hero-desc{font-size:18px;color:var(--muted);line-height:1.8;font-weight:300;max-width:600px}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat{padding:48px 40px;background:var(--bg2);border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-num{font-family:var(--font-display);font-size:64px;color:var(--accent);line-height:1;margin-bottom:8px}
+.stat-label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.stat-desc{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+
+/* STORY */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border)}
+.story-left{padding:80px 60px;background:var(--bg3);display:flex;flex-direction:column;justify-content:center}
+.story-right{padding:80px 60px;display:flex;flex-direction:column;justify-content:center}
+.story-title{font-family:var(--font-display);font-size:64px;line-height:.9;margin-bottom:28px}
+.story-title em{color:var(--accent);font-style:normal}
+.story-text{font-size:15px;color:var(--muted);line-height:1.9;font-weight:300}
+.story-text+.story-text{margin-top:16px}
+.accent-quote{font-family:var(--font-display);font-size:48px;color:var(--accent);line-height:1.1;margin-bottom:16px}
+.accent-quote-attr{font-size:13px;color:var(--muted);letter-spacing:1px}
+
+/* HOW IT WORKS */
+.how{padding:100px 60px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.how-title{font-family:var(--font-display);font-size:64px;margin-bottom:60px}
+.how-title em{color:var(--accent);font-style:normal}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.how-step{background:var(--bg);border:1px solid var(--border);padding:40px 28px;position:relative;overflow:hidden}
+.how-step::before{content:attr(data-num);position:absolute;top:-10px;right:16px;font-family:var(--font-display);font-size:120px;color:rgba(232,255,0,0.04);line-height:1}
+.how-step-icon{width:48px;height:48px;background:rgba(232,255,0,0.08);border:1px solid rgba(232,255,0,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:22px}
+.how-step-title{font-size:16px;font-weight:700;margin-bottom:10px}
+.how-step-desc{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* VALUES */
+.values{padding:100px 60px;border-bottom:1px solid var(--border)}
+.values-header{margin-bottom:60px}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.value-card{background:var(--bg3);border:1px solid var(--border);padding:40px 32px;transition:border-color .2s}
+.value-card:hover{border-color:rgba(232,255,0,0.2)}
+.value-icon{font-size:32px;margin-bottom:20px}
+.value-title{font-family:var(--font-display);font-size:32px;color:var(--accent);margin-bottom:12px}
+.value-desc{font-size:13px;color:var(--muted);line-height:1.8}
+
+/* CTA BOTTOM */
+.cta-bottom{padding:100px 60px;background:var(--accent);display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap}
+.cta-title{font-family:var(--font-display);font-size:72px;color:#000;line-height:.9;max-width:500px}
+.cta-btns{display:flex;flex-direction:column;gap:12px}
+.btn-dark{background:#000;color:var(--accent);border:none;padding:18px 40px;font-family:var(--font-body);font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-dark:hover{background:#1a1a1a}
+.btn-outline-dark{background:transparent;color:#000;border:2px solid #000;padding:16px 40px;font-family:var(--font-body);font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+.btn-outline-dark:hover{background:rgba(0,0,0,0.08)}
+.btn-outline-dark svg{width:18px;height:18px;fill:#000}
+
+/* FOOTER MINI */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-logo{font-family:var(--font-display);font-size:28px;letter-spacing:3px;color:var(--accent)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+
+@media(max-width:1024px){
+  .hero{padding:100px 32px 60px}.hero-title{font-size:72px}
+  .stats{grid-template-columns:repeat(2,1fr)}.stat{border-right:none;border-bottom:1px solid var(--border)}
+  .story{grid-template-columns:1fr}.story-left,.story-right{padding:60px 32px}
+  .how{padding:80px 32px}.how-grid{grid-template-columns:repeat(2,1fr)}
+  .values{padding:80px 32px}.values-grid{grid-template-columns:repeat(2,1fr)}
+  .cta-bottom{padding:80px 32px}
+}
+@media(max-width:768px){
+  nav{padding:0 20px;height:56px}.nav-links{display:none}
+  .hero{padding:90px 20px 60px}.hero-title{font-size:52px}.hero-desc{font-size:15px}
+  .stats{grid-template-columns:1fr 1fr}
+  .story-left,.story-right{padding:48px 20px}
+  .story-title{font-size:48px}
+  .how{padding:60px 20px}.how-grid{grid-template-columns:1fr}
+  .values{padding:60px 20px}.values-grid{grid-template-columns:1fr}
+  .cta-bottom{padding:60px 20px}.cta-title{font-size:52px}
+  footer{padding:32px 20px;flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">BRITO'S<span> STORE</span></a>
+  <ul class="nav-links">
+    <li><a href="loja.html">Camisetas</a></li>
+    <li><a href="sobre.html" style="color:var(--accent)">Sobre</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul>
+  <button class="btn-nav" onclick="location.href='loja.html'">Ver Catálogo</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"><div class="hero-bg-text">BS</div></div>
+  <div class="hero-content">
+    <div class="section-label">Nossa história</div>
+    <h1 class="hero-title">A PAIXÃO<br>PELO <em>JOGO</em><br>É O QUE<br>NOS MOVE</h1>
+    <p class="hero-desc">A Brito's Store nasceu do amor ao futebol e da vontade de conectar torcedores do mundo inteiro com as camisetas dos seus times favoritos — sem fronteiras, sem complicação.</p>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Produtos</div><div class="stat-desc">Camisetas de todo o planeta</div></div>
+  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Ligas</div><div class="stat-desc">De Brasileirão a J-League</div></div>
+  <div class="stat"><div class="stat-num">1K+</div><div class="stat-label">Clientes</div><div class="stat-desc">Torcedores satisfeitos</div></div>
+  <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Avaliação</div><div class="stat-desc">Média de satisfação</div></div>
+</div>
+
+<div class="story">
+  <div class="story-left">
+    <div class="section-label">De onde viemos</div>
+    <h2 class="story-title">NOSSA<br><em>HISTÓRIA</em></h2>
+    <p class="story-text">A Brito's Store começou como um projeto pessoal — um apaixonado por futebol que cansou de pagar caro em camisetas importadas e decidiu criar uma alternativa acessível e confiável para todos os torcedores.</p>
+    <p class="story-text">Operamos 100% sob encomenda, o que significa zero desperdício, preços justos e acesso a qualquer camisa do mundo. Compramos direto do fornecedor após cada pedido confirmado.</p>
+    <p class="story-text">Hoje atendemos torcedores de norte a sul do Brasil, entregando não só camisetas, mas pedaços de paixão de todos os cantos do planeta.</p>
+  </div>
+  <div class="story-right">
+    <div class="accent-quote">"O futebol não tem fronteiras. A sua camisa também não deveria ter."</div>
+    <div class="accent-quote-attr">— Fundador, Brito's Store</div>
+  </div>
+</div>
+
+<div class="how">
+  <h2 class="how-title">COMO <em>FUNCIONA</em></h2>
+  <div class="how-grid">
+    <div class="how-step" data-num="01">
+      <div class="how-step-icon">🔍</div>
+      <div class="how-step-title">Você escolhe</div>
+      <div class="how-step-desc">Navegue pelo catálogo e encontre a camisa do seu time favorito. Temos Brasileirão, Premier League, La Liga, Seleções e muito mais.</div>
+    </div>
+    <div class="how-step" data-num="02">
+      <div class="how-step-icon">⚡</div>
+      <div class="how-step-title">Você pede</div>
+      <div class="how-step-desc">Finalize o pedido pelo site ou WhatsApp. Pagamento rápido via Pix. Sem cadastro, sem burocracia.</div>
+    </div>
+    <div class="how-step" data-num="03">
+      <div class="how-step-icon">🛒</div>
+      <div class="how-step-title">Nós buscamos</div>
+      <div class="how-step-desc">Após confirmação do Pix, adquirimos o produto junto ao fornecedor e informamos o prazo via WhatsApp.</div>
+    </div>
+    <div class="how-step" data-num="04">
+      <div class="how-step-icon">📦</div>
+      <div class="how-step-title">Você recebe</div>
+      <div class="how-step-desc">Enviamos pelos Correios com código de rastreamento. Você acompanha tudo pelo site ou WhatsApp.</div>
+    </div>
+  </div>
+</div>
+
+<div class="values">
+  <div class="values-header">
+    <div class="section-label">O que nos guia</div>
+    <h2 class="how-title">NOSSOS <em>VALORES</em></h2>
+  </div>
+  <div class="values-grid">
+    <div class="value-card"><div class="value-icon">🤝</div><div class="value-title">CONFIANÇA</div><div class="value-desc">Cada pedido é tratado com seriedade. Transparência total sobre prazos, status e qualquer imprevisto que possa ocorrer.</div></div>
+    <div class="value-card"><div class="value-icon">⚽</div><div class="value-title">PAIXÃO</div><div class="value-desc">Somos torcedores antes de qualquer coisa. Entendemos o que significa vestir a camisa do seu time com orgulho.</div></div>
+    <div class="value-card"><div class="value-icon">💬</div><div class="value-title">PROXIMIDADE</div><div class="value-desc">Atendimento humanizado via WhatsApp. Você sempre fala com uma pessoa real, não com um bot.</div></div>
+    <div class="value-card"><div class="value-icon">🌍</div><div class="value-title">ALCANCE</div><div class="value-desc">Qualquer camisa de qualquer time do mundo. Se existe no mercado, a Brito's Store consegue para você.</div></div>
+    <div class="value-card"><div class="value-icon">💰</div><div class="value-title">PREÇO JUSTO</div><div class="value-desc">Sem intermediários desnecessários. Trabalhamos para oferecer o melhor custo-benefício do mercado.</div></div>
+    <div class="value-card"><div class="value-icon">🔄</div><div class="value-title">SUPORTE</div><div class="value-desc">Problema com tamanho ou produto? Resolvemos. Trocas e suporte pós-venda sem burocracia.</div></div>
+  </div>
+</div>
+
+<div class="cta-bottom">
+  <h2 class="cta-title">PRONTO PARA VESTIR SEU TIME?</h2>
+  <div class="cta-btns">
+    <button class="btn-dark" onclick="location.href='loja.html'">Ver Catálogo Completo</button>
+    <button class="btn-outline-dark" onclick="window.open('https://wa.me/5511999999999','_blank')">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+      Falar no WhatsApp
+    </button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">BRITO'S STORE</div>
+  <div class="footer-links">
+    <a href="loja.html">Loja</a>
+    <a href="rastrear.html">Rastrear</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contato.html">Contato</a>
+    <a href="politica-trocas.html">Trocas</a>
+    <a href="privacidade.html">Privacidade</a>
+  </div>
+</footer>
+</body>
+</html>
