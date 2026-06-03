@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rastrear Pedido — Brito's Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--accent:#e8ff00;--accent2:#ff3c3c;--text:#f0f0f0;--muted:#888;--border:rgba(255,255,255,0.08);--font-display:'Bebas Neue',sans-serif;--font-body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--font-display);font-size:26px;letter-spacing:3px;color:var(--accent);text-decoration:none}.logo span{color:var(--text)}
+.nav-right{display:flex;gap:16px;align-items:center}
+.btn-nav{background:var(--accent);color:#000;border:none;padding:8px 18px;font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+
+.page-wrap{padding:100px 60px 100px;max-width:900px;margin:0 auto}
+.page-header{margin-bottom:48px}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
+.page-title{font-family:var(--font-display);font-size:72px;line-height:.9}
+.page-title em{color:var(--accent);font-style:normal}
+
+.search-box{background:var(--bg3);border:1px solid var(--border);padding:32px;margin-bottom:8px}
+.search-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
+.field label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+.field input{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:14px;padding:14px 16px;outline:none;transition:border-color .2s}
+.field input:focus{border-color:rgba(232,255,0,0.4)}
+.field input::placeholder{color:var(--muted)}
+.btn-search{background:var(--accent);color:#000;border:none;padding:14px 32px;font-family:var(--font-body);font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;height:52px;white-space:nowrap;transition:all .2s}
+.btn-search:hover{background:#fff}
+.search-hint{font-size:12px;color:var(--muted);margin-bottom:48px}
+
+/* RESULT */
+.result{display:none}
+.result.visible{display:block}
+.order-header{background:var(--bg3);border:1px solid var(--border);padding:28px 32px;display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;flex-wrap:wrap;gap:16px}
+.order-id{font-family:var(--font-display);font-size:36px;color:var(--accent)}
+.order-meta{display:flex;gap:24px;flex-wrap:wrap}
+.order-meta-item{font-size:12px;color:var(--muted)}
+.order-meta-item strong{color:var(--text);display:block;font-size:13px;margin-top:2px}
+.status-pill{padding:6px 16px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+.status-aguardando{background:rgba(255,180,0,0.15);color:#ffb400;border:1px solid rgba(255,180,0,0.3)}
+.status-confirmado{background:rgba(232,255,0,0.1);color:var(--accent);border:1px solid rgba(232,255,0,0.3)}
+.status-enviado{background:rgba(37,211,102,0.1);color:#25D366;border:1px solid rgba(37,211,102,0.3)}
+.status-entregue{background:rgba(37,211,102,0.2);color:#25D366;border:1px solid rgba(37,211,102,0.4)}
+
+/* TIMELINE */
+.timeline-wrap{background:var(--bg3);border:1px solid var(--border);padding:32px;margin-bottom:2px}
+.timeline-title{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+.timeline{display:flex;flex-direction:column;gap:0;position:relative}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:1px;background:var(--border)}
+.tl-item{display:flex;gap:20px;padding-bottom:28px;position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;transition:all .2s}
+.tl-dot.done{border-color:var(--accent);background:rgba(232,255,0,0.1)}
+.tl-dot.done svg{stroke:var(--accent)}
+.tl-dot.active{border-color:var(--accent);background:var(--accent)}
+.tl-dot.active svg{stroke:#000}
+.tl-dot svg{width:14px;height:14px;stroke:var(--muted);fill:none}
+.tl-content{padding-top:4px;flex:1}
+.tl-label{font-size:14px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.tl-item.done .tl-label,.tl-item.active .tl-label{color:var(--text)}
+.tl-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.tl-date{font-size:11px;color:var(--muted);margin-top:4px;opacity:.7}
+
+/* TRACKING CODE */
+.tracking-box{background:var(--bg3);border:1px solid var(--border);padding:24px 32px;margin-bottom:2px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.tracking-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tracking-code{font-family:var(--font-display);font-size:28px;letter-spacing:3px;color:var(--accent)}
+.btn-correios{background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:10px 20px;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-correios:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ORDER ITEMS */
+.order-items-box{background:var(--bg3);border:1px solid var(--border);padding:24px 32px}
+.oi{display:flex;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
+.oi:last-child{border-bottom:none}
+.oi-img{width:56px;aspect-ratio:3/4;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.oi-name{font-size:13px;font-weight:700;margin-bottom:4px}
+.oi-meta{font-size:11px;color:var(--muted)}
+.oi-price{font-family:var(--font-display);font-size:24px;color:var(--accent);margin-left:auto;flex-shrink:0}
+
+.wpp-help{background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.2);padding:20px 24px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.wpp-help p{font-size:13px;color:var(--muted);line-height:1.6}
+.wpp-help strong{color:var(--text)}
+.btn-wpp-sm{background:#25D366;color:#fff;border:none;padding:10px 20px;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.btn-wpp-sm svg{width:16px;height:16px;fill:#fff}
+
+@media(max-width:768px){nav{padding:0 20px;height:56px}.page-wrap{padding:80px 20px 60px}.page-title{font-size:52px}.search-grid{grid-template-columns:1fr;}.btn-search{height:48px}.order-header{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">BRITO'S<span> STORE</span></a>
+  <div class="nav-right">
+    <a href="loja.html" style="color:var(--muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase">Loja</a>
+    <button class="btn-nav" onclick="location.href='carrinho.html'">Carrinho</button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="section-label">Acompanhe seu pedido</div>
+    <h1 class="page-title">RASTREAR<br><em>PEDIDO</em></h1>
+  </div>
+
+  <div class="search-box">
+    <div class="search-grid">
+      <div class="field"><label>Número do pedido *</label><input type="text" id="orderInput" placeholder="Ex: BS1024" value=""></div>
+      <div class="field"><label>E-mail ou WhatsApp *</label><input type="text" id="contactInput" placeholder="seu@email.com ou (11) 99999-9999"></div>
+      <button class="btn-search" onclick="trackOrder()">Rastrear</button>
+    </div>
+  </div>
+  <p class="search-hint">Use o número do pedido recebido no WhatsApp após a compra.</p>
+
+  <div class="result" id="result">
+    <div class="order-header">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Pedido</div>
+        <div class="order-id" id="resultOrderId">#BS1024</div>
+      </div>
+      <div class="order-meta">
+        <div class="order-meta-item">Data<strong id="resultDate">02/06/2025</strong></div>
+        <div class="order-meta-item">Cliente<strong id="resultName">Arthur Silva</strong></div>
+        <div class="order-meta-item">Total<strong>R$316</strong></div>
+      </div>
+      <div class="status-pill status-enviado" id="resultStatus">Enviado</div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-title">Histórico do Pedido</div>
+      <div class="timeline">
+        <div class="tl-item done">
+          <div class="tl-dot done"><svg viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20,6 9,17 4,12" stroke-linecap="round"/></svg></div>
+          <div class="tl-content">
+            <div class="tl-label">Pedido realizado</div>
+            <div class="tl-desc">Pedido registrado no sistema.</div>
+            <div class="tl-date">02/06/2025 às 14:23</div>
+          </div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-dot done"><svg viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20,6 9,17 4,12" stroke-linecap="round"/></svg></div>
+          <div class="tl-content">
+            <div class="tl-label">Pagamento confirmado</div>
+            <div class="tl-desc">Comprovante do Pix recebido e verificado.</div>
+            <div class="tl-date">02/06/2025 às 14:41</div>
+          </div>
+        </div>
+        <div class="tl-item done">
+          <div class="tl-dot done"><svg viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20,6 9,17 4,12" stroke-linecap="round"/></svg></div>
+          <div class="tl-content">
+            <div class="tl-label">Em preparação</div>
+            <div class="tl-desc">Produto adquirido junto ao fornecedor. Aguardando chegada.</div>
+            <div class="tl-date">03/06/2025 às 09:10</div>
+          </div>
+        </div>
+        <div class="tl-item active">
+          <div class="tl-dot active"><svg viewBox="0 0 24 24" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="tl-content">
+            <div class="tl-label">Enviado pelos Correios</div>
+            <div class="tl-desc">Pacote postado e em trânsito. Código de rastreamento disponível abaixo.</div>
+            <div class="tl-date">06/06/2025 às 11:05</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+          <div class="tl-content">
+            <div class="tl-label">Entregue</div>
+            <div class="tl-desc">Aguardando entrega no endereço informado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tracking-box">
+      <div>
+        <div class="tracking-label">Código de Rastreamento (Correios)</div>
+        <div class="tracking-code">AA123456789BR</div>
+      </div>
+      <button class="btn-correios" onclick="window.open('https://rastreamento.correios.com.br','_blank')">Rastrear nos Correios →</button>
+    </div>
+
+    <div class="order-items-box">
+      <div class="tracking-label" style="margin-bottom:16px">Itens do Pedido</div>
+      <div class="oi">
+        <div class="oi-img"><svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(220,50,50,0.4)" stroke="rgba(220,50,50,0.6)" stroke-width="2"/></svg></div>
+        <div><div class="oi-name">Camisa Titular Corinthians 2025/26</div><div class="oi-meta">Tamanho G • Qtd: 1 • Sob encomenda</div></div>
+        <div class="oi-price">R$139</div>
+      </div>
+      <div class="oi">
+        <div class="oi-img"><svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(0,30,120,0.4)" stroke="rgba(60,120,255,0.6)" stroke-width="2"/></svg></div>
+        <div><div class="oi-name">Camisa Titular Brasil Copa 2026</div><div class="oi-meta">Tamanho M • Qtd: 1</div></div>
+        <div class="oi-price">R$159</div>
+      </div>
+    </div>
+
+    <div class="wpp-help">
+      <p><strong>Precisa de ajuda com seu pedido?</strong><br>Entre em contato pelo WhatsApp com o número do pedido em mãos.</p>
+      <button class="btn-wpp-sm" onclick="window.open('https://wa.me/5511999999999?text=Olá! Preciso de ajuda com o pedido %23BS1024','_blank')">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+        Falar no WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+function trackOrder(){
+  const num=document.getElementById('orderInput').value.trim();
+  const contact=document.getElementById('contactInput').value.trim();
+  if(!num||!contact){alert('Preencha o número do pedido e seu e-mail ou WhatsApp.');return;}
+  document.getElementById('result').classList.add('visible');
+  document.getElementById('resultOrderId').textContent='#'+num.toUpperCase().replace('BS','BS');
+  document.getElementById('resultName').textContent='Cliente';
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+// Auto-preencher da sessão
+const od=JSON.parse(sessionStorage.getItem('orderData')||'null');
+if(od){ document.getElementById('orderInput').value=od.pedido||''; }
+</script>
+</body>
+</html>
