@@ -1,360 +1,697 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brito's Store</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brito's Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #1a1a1a;
+    --accent: #e8ff00;
+    --accent2: #ff3c3c;
+    --text: #f0f0f0;
+    --muted: #888;
+    --border: rgba(255,255,255,0.08);
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: var(--font-display); font-size: 28px; letter-spacing: 3px; color: var(--accent); }
+  .logo span { color: var(--text); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; transition: color .2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-cart { position: relative; cursor: pointer; }
+  .nav-cart svg { width: 22px; height: 22px; stroke: var(--text); fill: none; }
+  .cart-badge { position: absolute; top: -6px; right: -8px; background: var(--accent); color: #000; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .btn-nav { background: var(--accent); color: #000; border: none; padding: 8px 20px; font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all .2s; }
+  .btn-nav:hover { background: #fff; }
+
+  .hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 60px 80px; position: relative; z-index: 2;
+  }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(232,255,0,0.1); border: 1px solid rgba(232,255,0,0.3); padding: 6px 14px; width: fit-content; margin-bottom: 32px; }
+  .hero-tag span { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+  .hero-title { font-family: var(--font-display); font-size: clamp(72px, 9vw, 120px); line-height: .9; color: var(--text); margin-bottom: 24px; }
+  .hero-title em { color: var(--accent); font-style: normal; }
+  .hero-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 420px; margin-bottom: 48px; font-weight: 300; }
+  .hero-ctas { display: flex; gap: 16px; align-items: center; margin-bottom: 64px; }
+  .btn-primary { background: var(--accent); color: #000; border: none; padding: 16px 36px; font-family: var(--font-body); font-weight: 900; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all .2s; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 100%, 12px 100%); }
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.2); padding: 15px 32px; font-family: var(--font-body); font-weight: 600; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 10px; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats { display: flex; gap: 48px; }
+  .hero-stat .num { font-family: var(--font-display); font-size: 42px; color: var(--accent); line-height: 1; }
+  .hero-stat .lbl { font-size: 11px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; margin-top: 4px; }
+  .hero-right { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-bg-text { position: absolute; font-family: var(--font-display); font-size: 320px; color: rgba(255,255,255,0.02); white-space: nowrap; user-select: none; z-index: 0; letter-spacing: -10px; }
+  .hero-jersey { position: relative; z-index: 2; width: 360px; }
+  .jersey-card { background: var(--bg3); border: 1px solid var(--border); padding: 20px; position: relative; }
+  .jersey-card::before { content: ''; position: absolute; top: -1px; left: 40px; right: 40px; height: 2px; background: var(--accent); }
+  .jersey-img { width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg, #1e1e1e, #2a2a2a); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; position: relative; overflow: hidden; }
+  .jersey-mockup { font-family: var(--font-display); font-size: 80px; color: rgba(255,255,255,0.06); position: absolute; }
+  .jersey-svg { width: 180px; opacity: .85; }
+  .jersey-info { display: flex; justify-content: space-between; align-items: flex-end; }
+  .jersey-name { font-size: 15px; font-weight: 700; color: var(--text); }
+  .jersey-club { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .jersey-price { font-family: var(--font-display); font-size: 32px; color: var(--accent); }
+  .jersey-badge { position: absolute; top: 12px; right: 12px; background: var(--accent2); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; }
+  .hero-dots { position: absolute; bottom: 32px; right: 32px; display: flex; gap: 8px; z-index: 3; }
+  .hero-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); cursor: pointer; transition: all .2s; }
+  .hero-dots span.active { width: 24px; border-radius: 3px; background: var(--accent); }
+
+  .marquee-wrap { background: var(--accent); overflow: hidden; padding: 12px 0; }
+  .marquee-track { display: flex; gap: 0; animation: marquee 22s linear infinite; white-space: nowrap; }
+  .marquee-track span { font-family: var(--font-display); font-size: 20px; color: #000; letter-spacing: 3px; padding: 0 40px; }
+  .marquee-track span::after { content: '•'; padding-left: 40px; }
+  @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  .section { padding: 100px 60px; }
+  .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; }
+  .section-title { font-family: var(--font-display); font-size: 64px; color: var(--text); line-height: .95; }
+  .section-title em { color: var(--accent); font-style: normal; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+  .link-all { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: gap .2s; cursor: pointer; }
+  .link-all:hover { gap: 16px; }
+
+  .ligas-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+  .liga-card { background: var(--bg3); padding: 32px 20px; display: flex; flex-direction: column; align-items: center; gap: 16px; cursor: pointer; transition: all .25s; position: relative; overflow: hidden; border: 1px solid transparent; }
+  .liga-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+  .liga-card:hover { background: var(--bg2); border-color: var(--border); }
+  .liga-card:hover::before { transform: scaleX(1); }
+  .liga-icon { width: 56px; height: 56px; background: rgba(255,255,255,0.04); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+  .liga-name { font-size: 13px; font-weight: 700; text-align: center; color: var(--text); letter-spacing: .5px; }
+  .liga-count { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .product-card { background: var(--bg3); cursor: pointer; transition: all .2s; position: relative; overflow: hidden; border: 1px solid transparent; }
+  .product-card:hover { border-color: rgba(232,255,0,0.2); }
+  .product-card:hover .product-img-inner { transform: scale(1.04); }
+  .product-card:hover .product-actions { opacity: 1; transform: translateY(0); }
+  .product-img { aspect-ratio: 3/4; background: var(--bg2); overflow: hidden; position: relative; }
+  .product-img-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: transform .4s cubic-bezier(.25,.1,.25,1); }
+  .product-badge-wrap { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
+  .badge { font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 8px; }
+  .badge-new { background: var(--accent); color: #000; }
+  .badge-promo { background: var(--accent2); color: #fff; }
+  .badge-enc { background: rgba(255,255,255,0.15); color: var(--text); }
+  .product-actions { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; display: flex; gap: 8px; opacity: 0; transform: translateY(8px); transition: all .25s; z-index: 2; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); }
+  .btn-add { flex: 1; background: var(--accent); color: #000; border: none; padding: 10px; font-family: var(--font-body); font-weight: 800; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all .15s; }
+  .btn-add:hover { background: #fff; }
+  .btn-wpp { width: 40px; height: 40px; background: #25D366; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .btn-wpp svg { width: 18px; height: 18px; fill: #fff; }
+  .product-info { padding: 16px; }
+  .product-club { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .product-name { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 12px; }
+  .product-price-row { display: flex; align-items: baseline; gap: 10px; }
+  .product-price { font-family: var(--font-display); font-size: 28px; color: var(--accent); }
+  .product-price-old { font-size: 13px; color: var(--muted); text-decoration: line-through; }
+  .product-sizes { display: flex; gap: 4px; margin-top: 10px; }
+  .size-dot { width: 26px; height: 26px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--muted); font-weight: 700; cursor: pointer; transition: all .15s; }
+  .size-dot:hover { border-color: var(--accent); color: var(--accent); }
+
+  .showcase { padding: 0 60px 100px; }
+  .showcase-inner { background: var(--bg3); border: 1px solid var(--border); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; }
+  .showcase-left { padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; }
+  .showcase-tag { display: inline-block; background: rgba(255,60,60,0.15); border: 1px solid rgba(255,60,60,0.3); color: var(--accent2); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; margin-bottom: 32px; }
+  .showcase-title { font-family: var(--font-display); font-size: 72px; line-height: .9; margin-bottom: 24px; }
+  .showcase-desc { font-size: 15px; color: var(--muted); line-height: 1.8; max-width: 380px; margin-bottom: 40px; font-weight: 300; }
+  .showcase-features { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+  .feat { display: flex; align-items: center; gap: 12px; }
+  .feat-dot { width: 6px; height: 6px; background: var(--accent); flex-shrink: 0; }
+  .feat span { font-size: 13px; color: var(--muted); }
+  .feat strong { color: var(--text); }
+  .showcase-right { position: relative; background: var(--bg2); display: flex; align-items: center; justify-content: center; min-height: 520px; overflow: hidden; }
+  .showcase-right::before { content: 'BS'; font-family: var(--font-display); font-size: 400px; color: rgba(232,255,0,0.02); position: absolute; letter-spacing: -20px; }
+  .showcase-jersey { position: relative; z-index: 1; }
+
+  .selecoes-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2px; }
+  .selecao-big { background: var(--bg3); padding: 60px; position: relative; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; justify-content: flex-end; min-height: 420px; border: 1px solid transparent; transition: border-color .2s; }
+  .selecao-big:hover { border-color: rgba(232,255,0,0.3); }
+  .selecao-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: flex-end; overflow: hidden; }
+  .selecao-bg-text { font-family: var(--font-display); font-size: 220px; color: rgba(255,255,255,.02); line-height: 1; padding-right: 20px; }
+  .selecao-small { background: var(--bg3); padding: 40px 32px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; border: 1px solid transparent; transition: all .2s; }
+  .selecao-small:hover { background: var(--bg2); border-color: var(--border); }
+  .selecao-flag { font-size: 48px; margin-bottom: 16px; }
+  .selecao-country { font-family: var(--font-display); font-size: 36px; color: var(--text); }
+  .selecao-items { font-size: 12px; color: var(--muted); }
+  .selecao-big .selecao-country { font-size: 72px; }
+
+  .benefits { padding: 80px 60px; background: var(--bg2); border-top: 1px solid var(--border); }
+  .benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .benefit { padding: 40px 32px; background: var(--bg); border: 1px solid transparent; transition: all .2s; }
+  .benefit:hover { border-color: var(--border); }
+  .benefit-icon { width: 48px; height: 48px; background: rgba(232,255,0,0.08); border: 1px solid rgba(232,255,0,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 22px; }
+  .benefit-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .benefit-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  .faq { padding: 100px 60px; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; max-width: 1100px; }
+  .faq-item { background: var(--bg3); border: 1px solid var(--border); padding: 28px 32px; cursor: pointer; transition: all .2s; }
+  .faq-item.open { background: var(--bg2); border-color: rgba(232,255,0,0.2); }
+  .faq-q { font-size: 14px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-q span { font-family: var(--font-display); font-size: 22px; color: var(--accent); opacity: 0; transition: opacity .2s; }
+  .faq-item.open .faq-q span { opacity: 1; }
+  .faq-a { font-size: 13px; color: var(--muted); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height .3s, padding-top .3s; }
+  .faq-item.open .faq-a { max-height: 100px; padding-top: 16px; }
+
+  .newsletter { margin: 0 60px 100px; background: var(--accent); padding: 60px; display: flex; justify-content: space-between; align-items: center; gap: 60px; }
+  .nl-title { font-family: var(--font-display); font-size: 56px; color: #000; line-height: .95; max-width: 460px; }
+  .nl-form { display: flex; gap: 0; flex: 1; max-width: 420px; }
+  .nl-input { flex: 1; background: rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.2); border-right: none; padding: 16px 20px; font-family: var(--font-body); font-size: 14px; color: #000; outline: none; }
+  .nl-input::placeholder { color: rgba(0,0,0,0.5); }
+  .nl-btn { background: #000; color: var(--accent); border: none; padding: 16px 28px; font-family: var(--font-body); font-weight: 800; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all .2s; white-space: nowrap; }
+  .nl-btn:hover { background: #1a1a1a; }
+
+  footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 80px 60px 40px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  .footer-logo { font-family: var(--font-display); font-size: 36px; letter-spacing: 3px; color: var(--accent); margin-bottom: 16px; }
+  .footer-desc { font-size: 13px; color: var(--muted); line-height: 1.8; max-width: 280px; }
+  .footer-wpp { display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: #fff; padding: 12px 20px; margin-top: 20px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: opacity .2s; }
+  .footer-wpp:hover { opacity: .85; }
+  .footer-col h4 { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .footer-col ul li a:hover { color: var(--accent); }
+  .footer-bottom { border-top: 1px solid var(--border); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 12px; color: var(--muted); }
+  .footer-socials { display: flex; gap: 12px; }
+  .social-btn { width: 36px; height: 36px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .2s; font-size: 14px; color: var(--muted); text-decoration: none; }
+  .social-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .wpp-float { position: fixed; bottom: 32px; right: 32px; z-index: 999; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 24px rgba(37,211,102,.4); transition: transform .2s; animation: bounce-in .6s cubic-bezier(.34,1.56,.64,1) 2s both; }
+  .wpp-float:hover { transform: scale(1.1); }
+  @keyframes bounce-in { 0%{transform:scale(0);opacity:0} 100%{transform:scale(1);opacity:1} }
+  .wpp-float svg { width: 28px; height: 28px; fill: #fff; }
+</style>
 </head>
 <body>
 
-  <div class="wpp-float" title="Fale no WhatsApp">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.18a8.168 8.168 0 01-4.164-1.14l-.298-.177-3.094.891.846-3.168-.194-.307A8.174 8.174 0 013.82 12c0-4.514 3.666-8.18 8.18-8.18 4.514 0 8.18 3.666 8.18 8.18 0 4.514-3.666 8.18-8.181 8.18z"/></svg>
+<!-- WHATSAPP FLOAT -->
+<div class="wpp-float" title="Fale no WhatsApp" onclick="window.open('https://wa.me/5511999999999','_blank')">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.18a8.168 8.168 0 01-4.164-1.14l-.298-.177-3.094.891.846-3.168-.194-.307A8.174 8.174 0 013.82 12c0-4.514 3.666-8.18 8.18-8.18 4.514 0 8.18 3.666 8.18 8.18 0 4.514-3.666 8.18-8.181 8.18z"/></svg>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo" style="text-decoration:none">BRITO'S<span> STORE</span></a>
+  <ul class="nav-links">
+    <li><a href="loja.html">Camisetas</a></li>
+    <li><a href="loja.html?liga=brasileirao">Brasileirão</a></li>
+    <li><a href="loja.html?liga=premier">Premier League</a></li>
+    <li><a href="loja.html?tipo=selecoes">Seleções</a></li>
+    <li><a href="loja.html?promo=true">Promoções</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-cart" onclick="location.href='carrinho.html'" style="cursor:pointer">
+      <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/><path d="M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="cart-badge">2</div>
+    </div>
+    <button class="btn-nav" onclick="location.href='rastrear.html'">Rastrear Pedido</button>
   </div>
+</nav>
 
-  <nav>
-    <div class="logo">BRITO'S<span> STORE</span></div>
-    <ul class="nav-links">
-      <li><a href="#">Camisetas</a></li>
-      <li><a href="#">Brasileirão</a></li>
-      <li><a href="#">Premier League</a></li>
-      <li><a href="#">Seleções</a></li>
-      <li><a href="#">Promoções</a></li>
-    </ul>
-    <div class="nav-right">
-      <div class="nav-cart">
-        <svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke-linecap="round"/><path d="M16 10a4 4 0 01-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="cart-badge">2</div>
-      </div>
-      <button class="btn-nav">Rastrear Pedido</button>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag"><span>Novos Kits 2025/26</span></div>
+    <h1 class="hero-title">VISTA O<br>JOGO<br><em>CERTO</em></h1>
+    <p class="hero-sub">Camisetas oficiais de futebol de todo o mundo. Brasileirão, Premier League, La Liga e seleções nacionais — entregues diretamente para você.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="location.href='loja.html'">Ver Catálogo Completo</button>
+      <button class="btn-ghost">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
+        Como funciona
+      </button>
     </div>
-  </nav>
-
-  <section class="hero">
-    <div class="hero-left">
-      <div class="hero-tag"><span>Novos Kits 2025/26</span></div>
-      <h1 class="hero-title">VISTA O<br>JOGO<br><em>CERTO</em></h1>
-      <p class="hero-sub">Camisetas oficiais de futebol de todo o mundo. Brasileirão, Premier League, La Liga e seleções nacionais — entregues diretamente para você.</p>
-      <div class="hero-ctas">
-        <button class="btn-primary">Ver Catálogo Completo</button>
-        <button class="btn-ghost">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
-          Como funciona
-        </button>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="num">500+</div><div class="lbl">Produtos</div></div>
-        <div class="hero-stat"><div class="num">50+</div><div class="lbl">Ligas</div></div>
-        <div class="hero-stat"><div class="num">4.9★</div><div class="lbl">Avaliação</div></div>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-bg-text">KIT</div>
-      <div class="hero-jersey">
-        <div class="jersey-card">
-          <div class="jersey-badge">Destaque</div>
-          <div class="jersey-img">
-            <div class="jersey-mockup">⚽</div>
-            <svg class="jersey-svg" viewBox="0 0 200 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M 60 20 L 30 60 L 10 55 L 25 100 L 10 200 L 80 215 L 80 120 L 120 120 L 120 215 L 190 200 L 175 100 L 190 55 L 170 60 L 140 20 L 120 30 L 110 60 Q100 70 90 60 L 80 30 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(232,255,0,0.4)" stroke-width="1.5"/>
-              <path d="M 80 30 L 80 95 Q90 105 100 100 Q110 105 120 95 L 120 30" fill="rgba(232,255,0,0.06)" stroke="rgba(232,255,0,0.3)" stroke-width="1"/>
-              <text x="100" y="170" font-family="Bebas Neue, sans-serif" font-size="28" fill="rgba(232,255,0,0.5)" text-anchor="middle" letter-spacing="2">BRITO'S</text>
-              <text x="100" y="195" font-family="Bebas Neue, sans-serif" font-size="16" fill="rgba(255,255,255,0.2)" text-anchor="middle" letter-spacing="3">STORE</text>
-            </svg>
-          </div>
-          <div class="jersey-info">
-            <div>
-              <div class="jersey-name">Camisa Titular 2025/26</div>
-              <div class="jersey-club">Corinthians • Brasileirão</div>
-            </div>
-            <div class="jersey-price">R$139</div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-dots">
-        <span class="active"></span><span></span><span></span><span></span>
-      </div>
-    </div>
-  </section>
-
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>Brasileirão</span><span>Premier League</span><span>La Liga</span><span>Ligue 1</span><span>Bundesliga</span><span>Serie A</span><span>Seleções</span><span>Copa do Mundo</span>
-      <span>Brasileirão</span><span>Premier League</span><span>La Liga</span><span>Ligue 1</span><span>Bundesliga</span><span>Serie A</span><span>Seleções</span><span>Copa do Mundo</span>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">500+</div><div class="lbl">Produtos</div></div>
+      <div class="hero-stat"><div class="num">50+</div><div class="lbl">Ligas</div></div>
+      <div class="hero-stat"><div class="num">4.9★</div><div class="lbl">Avaliação</div></div>
     </div>
   </div>
-
-  <section class="section">
-    <div class="section-header">
-      <div>
-        <div class="section-label">Explorar por liga</div>
-        <h2 class="section-title">TODAS AS<br><em>LIGAS</em></h2>
-      </div>
-      <a class="link-all">Ver todas as ligas →</a>
-    </div>
-    <div class="ligas-grid">
-      <div class="liga-card"><div class="liga-icon">🇧🇷</div><div class="liga-name">Brasileirão</div><div class="liga-count">20 clubes</div></div>
-      <div class="liga-card"><div class="liga-icon">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div class="liga-name">Premier League</div><div class="liga-count">20 clubes</div></div>
-      <div class="liga-card"><div class="liga-icon">🇪🇸</div><div class="liga-name">La Liga</div><div class="liga-count">20 clubes</div></div>
-      <div class="liga-card"><div class="liga-icon">🇫🇷</div><div class="liga-name">Ligue 1</div><div class="liga-count">18 clubes</div></div>
-      <div class="liga-card"><div class="liga-icon">🌍</div><div class="liga-name">Seleções</div><div class="liga-count">80+ países</div></div>
-    </div>
-  </section>
-
-  <section class="section" style="padding-top:0">
-    <div class="section-header">
-      <div>
-        <div class="section-label">Mais vendidos</div>
-        <h2 class="section-title">LANÇA<em>MENTOS</em></h2>
-      </div>
-      <a class="link-all">Ver catálogo completo →</a>
-    </div>
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-img">
-          <div class="product-badge-wrap"><span class="badge badge-new">Novo</span></div>
-          <div class="product-img-inner">
-            <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
-              <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(0,0,0,0.3)" stroke="rgba(232,255,0,0.5)" stroke-width="2"/>
-              <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="20" fill="rgba(232,255,0,0.6)" text-anchor="middle">CFC 2025</text>
-            </svg>
-          </div>
-          <div class="product-actions">
-            <button class="btn-add">Adicionar ao Carrinho</button>
-            <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-club">Chelsea • Premier League</div>
-          <div class="product-name">Camisa Titular 2025/26</div>
-          <div class="product-price-row"><span class="product-price">R$149</span></div>
-          <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-img">
-          <div class="product-badge-wrap"><span class="badge badge-promo">-20%</span></div>
-          <div class="product-img-inner">
-            <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
-              <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(0,30,120,0.4)" stroke="rgba(60,120,255,0.6)" stroke-width="2"/>
-              <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="16" fill="rgba(120,180,255,0.7)" text-anchor="middle">BRASIL 2026</text>
-            </svg>
-          </div>
-          <div class="product-actions">
-            <button class="btn-add">Adicionar ao Carrinho</button>
-            <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-club">Brasil • Seleção</div>
-          <div class="product-name">Camisa Titular Copa 2026</div>
-          <div class="product-price-row"><span class="product-price">R$159</span><span class="product-price-old">R$199</span></div>
-          <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span><span class="size-dot">XG</span></div>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-img">
-          <div class="product-badge-wrap"><span class="badge badge-enc">Encomenda</span></div>
-          <div class="product-img-inner">
-            <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
-              <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(120,0,0,0.4)" stroke="rgba(220,50,50,0.6)" stroke-width="2"/>
-              <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="18" fill="rgba(255,100,100,0.7)" text-anchor="middle">SCCP 2025</text>
-            </svg>
-          </div>
-          <div class="product-actions">
-            <button class="btn-add">Encomendar</button>
-            <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-club">Corinthians • Brasileirão</div>
-          <div class="product-name">Third Kit 2025/26 Edição Especial</div>
-          <div class="product-price-row"><span class="product-price">R$139</span></div>
-          <div class="product-sizes"><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-img">
-          <div class="product-badge-wrap"><span class="badge badge-new">Novo</span></div>
-          <div class="product-img-inner">
-            <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
-              <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(180,140,0,0.3)" stroke="rgba(255,210,0,0.6)" stroke-width="2"/>
-              <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="18" fill="rgba(255,210,0,0.7)" text-anchor="middle">BVB 2025</text>
-            </svg>
-          </div>
-          <div class="product-actions">
-            <button class="btn-add">Adicionar ao Carrinho</button>
-            <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
-          </div>
-        </div>
-        <div class="product-info">
-          <div class="product-club">Borussia Dortmund • Bundesliga</div>
-          <div class="product-name">Camisa Home 2025/26</div>
-          <div class="product-price-row"><span class="product-price">R$144</span></div>
-          <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="showcase">
-    <div class="showcase-inner">
-      <div class="showcase-left">
-        <span class="showcase-tag">Sob Encomenda</span>
-        <h2 class="showcase-title">QUALQUER<br>CAMISA<br><span style="color:var(--accent)">DO MUNDO</span></h2>
-        <p class="showcase-desc">Não encontrou a camisa que procura? Na Brito's Store trabalhamos sob encomenda — se existe, a gente consegue. Prazo informado após confirmação do pagamento via Pix.</p>
-        <div class="showcase-features">
-          <div class="feat"><div class="feat-dot"></div><span><strong>Pagamento via Pix</strong> — rápido e seguro</span></div>
-          <div class="feat"><div class="feat-dot"></div><span><strong>Envio pelos Correios</strong> — frete calculado por CEP</span></div>
-          <div class="feat"><div class="feat-dot"></div><span><strong>Atendimento no WhatsApp</strong> — suporte direto</span></div>
-          <div class="feat"><div class="feat-dot"></div><span><strong>Rastreamento completo</strong> do pedido online</span></div>
-        </div>
-        <button class="btn-primary">Fazer Encomenda</button>
-      </div>
-      <div class="showcase-right">
-        <div class="showcase-jersey">
-          <svg width="200" height="260" viewBox="0 0 200 260" fill="none">
-            <defs>
-              <linearGradient id="jg" x1="0" y1="0" x2="200" y2="260" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="rgba(232,255,0,0.15)"/>
-                <stop offset="100%" stop-color="rgba(232,255,0,0.03)"/>
-              </linearGradient>
-            </defs>
-            <path d="M65 22L32 65L8 58L24 108L8 210L84 226L84 126L116 126L116 226L192 210L176 108L192 58L168 65L135 22L118 34L108 66Q100 76 92 66L82 34Z" fill="url(#jg)" stroke="rgba(232,255,0,0.4)" stroke-width="1.5"/>
-            <circle cx="100" cy="165" r="30" fill="rgba(232,255,0,0.04)" stroke="rgba(232,255,0,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
-            <text x="100" y="160" font-family="Bebas Neue,sans-serif" font-size="11" fill="rgba(232,255,0,0.4)" text-anchor="middle" letter-spacing="2">BRITO'S</text>
-            <text x="100" y="175" font-family="Bebas Neue,sans-serif" font-size="9" fill="rgba(255,255,255,0.15)" text-anchor="middle" letter-spacing="3">STORE</text>
+  <div class="hero-right">
+    <div class="hero-bg-text">KIT</div>
+    <div class="hero-jersey">
+      <div class="jersey-card">
+        <div class="jersey-badge">Destaque</div>
+        <div class="jersey-img">
+          <div class="jersey-mockup">⚽</div>
+          <svg class="jersey-svg" viewBox="0 0 200 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 60 20 L 30 60 L 10 55 L 25 100 L 10 200 L 80 215 L 80 120 L 120 120 L 120 215 L 190 200 L 175 100 L 190 55 L 170 60 L 140 20 L 120 30 L 110 60 Q100 70 90 60 L 80 30 Z" fill="rgba(255,255,255,0.08)" stroke="rgba(232,255,0,0.4)" stroke-width="1.5"/>
+            <path d="M 80 30 L 80 95 Q90 105 100 100 Q110 105 120 95 L 120 30" fill="rgba(232,255,0,0.06)" stroke="rgba(232,255,0,0.3)" stroke-width="1"/>
+            <text x="100" y="170" font-family="Bebas Neue, sans-serif" font-size="28" fill="rgba(232,255,0,0.5)" text-anchor="middle" letter-spacing="2">BRITO'S</text>
+            <text x="100" y="195" font-family="Bebas Neue, sans-serif" font-size="16" fill="rgba(255,255,255,0.2)" text-anchor="middle" letter-spacing="3">STORE</text>
           </svg>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <section class="section" style="padding-top:0">
-    <div class="section-header">
-      <div>
-        <div class="section-label">Futebol mundial</div>
-        <h2 class="section-title"><em>SELEÇÕES</em><br>NACIONAIS</h2>
-      </div>
-      <a class="link-all">Ver todas →</a>
-    </div>
-    <div class="selecoes-grid">
-      <div class="selecao-big">
-        <div class="selecao-bg"><div class="selecao-bg-text">BRA</div></div>
-        <div style="position:relative;z-index:1">
-          <div class="section-label" style="margin-bottom:12px">Mais popular</div>
-          <div class="selecao-country">BRASIL</div>
-          <div class="selecao-items" style="margin-top:8px">12 modelos disponíveis · Titular, Reserva, Third</div>
-          <a class="link-all" style="margin-top:20px">Ver camisas →</a>
+        <div class="jersey-info">
+          <div>
+            <div class="jersey-name">Camisa Titular 2025/26</div>
+            <div class="jersey-club">Corinthians • Brasileirão</div>
+          </div>
+          <div class="jersey-price">R$139</div>
         </div>
       </div>
-      <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px">
-        <div class="selecao-small"><div class="selecao-flag">🇦🇷</div><div><div class="selecao-country">ARG</div><div class="selecao-items">8 modelos</div></div></div>
-        <div class="selecao-small"><div class="selecao-flag">🇫🇷</div><div><div class="selecao-country">FRA</div><div class="selecao-items">6 modelos</div></div></div>
-      </div>
-      <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px">
-        <div class="selecao-small"><div class="selecao-flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div><div class="selecao-country">ENG</div><div class="selecao-items">5 modelos</div></div></div>
-        <div class="selecao-small"><div class="selecao-flag">🇩🇪</div><div><div class="selecao-country">ALE</div><div class="selecao-items">6 modelos</div></div></div>
-      </div>
     </div>
-  </section>
-
-  <div class="benefits">
-    <div class="benefits-grid">
-      <div class="benefit"><div class="benefit-icon">🚚</div><div class="benefit-title">Frete pelos Correios</div><div class="benefit-desc">Cálculo automático pelo CEP. Rastreamento completo do envio até a sua porta.</div></div>
-      <div class="benefit"><div class="benefit-icon">⚡</div><div class="benefit-title">Pix Instantâneo</div><div class="benefit-desc">Pague via Pix e confirme seu pedido in segundos. Processo 100% seguro.</div></div>
-      <div class="benefit"><div class="benefit-icon">💬</div><div class="benefit-title">Suporte no WhatsApp</div><div class="benefit-desc">Atendimento direto pelo WhatsApp. Tire dúvidas e acompanhe seu pedido.</div></div>
-      <div class="benefit"><div class="benefit-icon">🔄</div><div class="benefit-title">Política de Trocas</div><div class="benefit-desc">Problemas com tamanho ou produto? Resolvemos com agilidade e sem burocracia.</div></div>
+    <div class="hero-dots">
+      <span class="active"></span><span></span><span></span><span></span>
     </div>
   </div>
+</section>
 
-  <section class="faq">
-    <div class="section-header">
-      <div>
-        <div class="section-label">Dúvidas frequentes</div>
-        <h2 class="section-title">FAQ</h2>
-      </div>
-    </div>
-    <div class="faq-grid">
-      <div class="faq-item"><div class="faq-q">Como funciona o modelo sob encomenda? <span>→</span></div><div class="faq-a">Após você realizar o pedido e confirmar o pagamento via Pix, realizamos a compra do fornecedor e enviamos diretamente para você. O prazo é informado após a confirmação.</div></div>
-      <div class="faq-item"><div class="faq-q">Qual o prazo de entrega? <span>→</span></div><div class="faq-a">O prazo varia conforme a disponibilidade do fornecedor e sua localização. Informamos o prazo exato após a confirmação do pagamento via WhatsApp.</div></div>
-      <div class="faq-item"><div class="faq-q">Como rastrear meu pedido? <span>→</span></div><div class="faq-a">Acesse a página "Rastrear Pedido" e informe o número do seu pedido junto com seu e-mail ou WhatsApp. O código dos Correios também será enviado por mensagem.</div></div>
-      <div class="faq-item"><div class="faq-q">Vocês aceitam cartão de crédito? <span>→</span></div><div class="faq-a">No momento trabalhamos exclusivamente com Pix para garantir rapidez e segurança no processo de confirmação dos pedidos sob encomenda.</div></div>
-      <div class="faq-item"><div class="faq-q">Posso pedir uma camisa que não está no site? <span>→</span></div><div class="faq-a">Sim! Entre em contato pelo WhatsApp descrevendo a camisa desejada. Se existir no mercado, conseguimos para você.</div></div>
-      <div class="faq-item"><div class="faq-q">Como funciona a política de trocas? <span>→</span></div><div class="faq-a">Aceitamos trocas por problemas de tamanho ou defeito de fabricação. Entre em contato pelo WhatsApp em até 7 dias após o recebimento.</div></div>
-    </div>
-  </section>
-
-  <div class="newsletter">
-    <div class="nl-title">FIQUE POR DENTRO DOS LANÇAMENTOS</div>
-    <div style="flex:1;max-width:420px">
-      <p style="font-size:14px;color:rgba(0,0,0,0.6);margin-bottom:20px;line-height:1.6">Receba novidades, promoções e lançamentos diretamente no seu e-mail.</p>
-      <div class="nl-form">
-        <input class="nl-input" type="email" placeholder="seu@email.com">
-        <button class="nl-btn">Quero receber</button>
-      </div>
-    </div>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Brasileirão</span><span>Premier League</span><span>La Liga</span><span>Ligue 1</span><span>Bundesliga</span><span>Serie A</span><span>Seleções</span><span>Copa do Mundo</span>
+    <span>Brasileirão</span><span>Premier League</span><span>La Liga</span><span>Ligue 1</span><span>Bundesliga</span><span>Serie A</span><span>Seleções</span><span>Copa do Mundo</span>
   </div>
+</div>
 
-  <footer>
-    <div class="footer-top">
-      <div>
-        <div class="footer-logo">BRITO'S STORE</div>
-        <p class="footer-desc">A sua loja especializada em camisetas de futebol de todo o mundo. Trabalhamos sob encomenda para levar o kit do seu time até você.</p>
-        <div class="footer-wpp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-          Fale no WhatsApp
+<!-- LIGAS -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Explorar por liga</div>
+      <h2 class="section-title">TODAS AS<br><em>LIGAS</em></h2>
+    </div>
+    <a class="link-all" href="loja.html">Ver todas as ligas →</a>
+  </div>
+  <div class="ligas-grid">
+    <div class="liga-card" style="cursor:pointer"><div class="liga-icon">🇧🇷</div><div class="liga-name">Brasileirão</div><div class="liga-count">20 clubes</div></div>
+    <div class="liga-card" style="cursor:pointer"><div class="liga-icon">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div class="liga-name">Premier League</div><div class="liga-count">20 clubes</div></div>
+    <div class="liga-card" style="cursor:pointer"><div class="liga-icon">🇪🇸</div><div class="liga-name">La Liga</div><div class="liga-count">20 clubes</div></div>
+    <div class="liga-card" style="cursor:pointer"><div class="liga-icon">🇫🇷</div><div class="liga-name">Ligue 1</div><div class="liga-count">18 clubes</div></div>
+    <div class="liga-card" style="cursor:pointer"><div class="liga-icon">🌍</div><div class="liga-name">Seleções</div><div class="liga-count">80+ países</div></div>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section class="section" style="padding-top:0">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Mais vendidos</div>
+      <h2 class="section-title">LANÇA<em>MENTOS</em></h2>
+    </div>
+    <a class="link-all" href="loja.html">Ver catálogo completo →</a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card" onclick="location.href='produto.html'">
+      <div class="product-img">
+        <div class="product-badge-wrap"><span class="badge badge-new">Novo</span></div>
+        <div class="product-img-inner">
+          <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
+            <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(0,0,0,0.3)" stroke="rgba(232,255,0,0.5)" stroke-width="2"/>
+            <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="20" fill="rgba(232,255,0,0.6)" text-anchor="middle">CFC 2025</text>
+          </svg>
+        </div>
+        <div class="product-actions">
+          <button class="btn-add" onclick="location.href='carrinho.html'">Adicionar ao Carrinho</button>
+          <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
         </div>
       </div>
-      <div class="footer-col">
-        <h4>Ligas</h4>
-        <ul>
-          <li><a href="#">Brasileirão</a></li>
-          <li><a href="#">Premier League</a></li>
-          <li><a href="#">La Liga</a></li>
-          <li><a href="#">Ligue 1</a></li>
-          <li><a href="#">Bundesliga</a></li>
-          <li><a href="#">Serie A</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Seleções</h4>
-        <ul>
-          <li><a href="#">Brasil</a></li>
-          <li><a href="#">Argentina</a></li>
-          <li><a href="#">França</a></li>
-          <li><a href="#">Inglaterra</a></li>
-          <li><a href="#">Alemanha</a></li>
-          <li><a href="#">Ver todas</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Informações</h4>
-        <ul>
-          <li><a href="#">Rastrear Pedido</a></li>
-          <li><a href="#">Como Funciona</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Política de Trocas</a></li>
-          <li><a href="#">Privacidade</a></li>
-          <li><a href="#">Contato</a></li>
-        </ul>
+      <div class="product-info">
+        <div class="product-club">Chelsea • Premier League</div>
+        <div class="product-name">Camisa Titular 2025/26</div>
+        <div class="product-price-row"><span class="product-price">R$149</span></div>
+        <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div class="footer-copy">© 2025 Brito's Store. Todos os direitos reservados.</div>
-      <div class="footer-socials">
-        <a class="social-btn" href="#">ig</a>
-        <a class="social-btn" href="#">tk</a>
-        <a class="social-btn" href="#">wp</a>
+    <div class="product-card" onclick="location.href='produto.html'">
+      <div class="product-img">
+        <div class="product-badge-wrap"><span class="badge badge-promo">-20%</span></div>
+        <div class="product-img-inner">
+          <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
+            <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(0,30,120,0.4)" stroke="rgba(60,120,255,0.6)" stroke-width="2"/>
+            <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="16" fill="rgba(120,180,255,0.7)" text-anchor="middle">BRASIL 2026</text>
+          </svg>
+        </div>
+        <div class="product-actions">
+          <button class="btn-add" onclick="location.href='carrinho.html'">Adicionar ao Carrinho</button>
+          <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-club">Brasil • Seleção</div>
+        <div class="product-name">Camisa Titular Copa 2026</div>
+        <div class="product-price-row"><span class="product-price">R$159</span><span class="product-price-old">R$199</span></div>
+        <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span><span class="size-dot">XG</span></div>
       </div>
     </div>
-  </footer>
+    <div class="product-card" onclick="location.href='produto.html'">
+      <div class="product-img">
+        <div class="product-badge-wrap"><span class="badge badge-enc">Encomenda</span></div>
+        <div class="product-img-inner">
+          <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
+            <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(120,0,0,0.4)" stroke="rgba(220,50,50,0.6)" stroke-width="2"/>
+            <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="18" fill="rgba(255,100,100,0.7)" text-anchor="middle">SCCP 2025</text>
+          </svg>
+        </div>
+        <div class="product-actions">
+          <button class="btn-add">Encomendar</button>
+          <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-club">Corinthians • Brasileirão</div>
+        <div class="product-name">Third Kit 2025/26 Edição Especial</div>
+        <div class="product-price-row"><span class="product-price">R$139</span></div>
+        <div class="product-sizes"><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
+      </div>
+    </div>
+    <div class="product-card" onclick="location.href='produto.html'">
+      <div class="product-img">
+        <div class="product-badge-wrap"><span class="badge badge-new">Novo</span></div>
+        <div class="product-img-inner">
+          <svg width="120" height="160" viewBox="0 0 200 250" fill="none">
+            <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(180,140,0,0.3)" stroke="rgba(255,210,0,0.6)" stroke-width="2"/>
+            <text x="100" y="165" font-family="Bebas Neue,sans-serif" font-size="18" fill="rgba(255,210,0,0.7)" text-anchor="middle">BVB 2025</text>
+          </svg>
+        </div>
+        <div class="product-actions">
+          <button class="btn-add" onclick="location.href='carrinho.html'">Adicionar ao Carrinho</button>
+          <button class="btn-wpp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-club">Borussia Dortmund • Bundesliga</div>
+        <div class="product-name">Camisa Home 2025/26</div>
+        <div class="product-price-row"><span class="product-price">R$144</span></div>
+        <div class="product-sizes"><span class="size-dot">P</span><span class="size-dot">M</span><span class="size-dot">G</span><span class="size-dot">GG</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<!-- SHOWCASE -->
+<div class="showcase">
+  <div class="showcase-inner">
+    <div class="showcase-left">
+      <span class="showcase-tag">Sob Encomenda</span>
+      <h2 class="showcase-title">QUALQUER<br>CAMISA<br><span style="color:var(--accent)">DO MUNDO</span></h2>
+      <p class="showcase-desc">Não encontrou a camisa que procura? Na Brito's Store trabalhamos sob encomenda — se existe, a gente consegue. Prazo informado após confirmação do pagamento via Pix.</p>
+      <div class="showcase-features">
+        <div class="feat"><div class="feat-dot"></div><span><strong>Pagamento via Pix</strong> — rápido e seguro</span></div>
+        <div class="feat"><div class="feat-dot"></div><span><strong>Envio pelos Correios</strong> — frete calculado por CEP</span></div>
+        <div class="feat"><div class="feat-dot"></div><span><strong>Atendimento no WhatsApp</strong> — suporte direto</span></div>
+        <div class="feat"><div class="feat-dot"></div><span><strong>Rastreamento completo</strong> do pedido online</span></div>
+      </div>
+      <button class="btn-primary" onclick="window.open('https://wa.me/5511940028422?text=Olá! Gostaria de fazer uma encomenda.','_blank')">Fazer Encomenda</button>
+    </div>
+    <div class="showcase-right">
+      <div class="showcase-jersey">
+        <svg width="200" height="260" viewBox="0 0 200 260" fill="none">
+          <defs>
+            <linearGradient id="jg" x1="0" y1="0" x2="200" y2="260" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="rgba(232,255,0,0.15)"/>
+              <stop offset="100%" stop-color="rgba(232,255,0,0.03)"/>
+            </linearGradient>
+          </defs>
+          <path d="M65 22L32 65L8 58L24 108L8 210L84 226L84 126L116 126L116 226L192 210L176 108L192 58L168 65L135 22L118 34L108 66Q100 76 92 66L82 34Z" fill="url(#jg)" stroke="rgba(232,255,0,0.4)" stroke-width="1.5"/>
+          <circle cx="100" cy="165" r="30" fill="rgba(232,255,0,0.04)" stroke="rgba(232,255,0,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="100" y="160" font-family="Bebas Neue,sans-serif" font-size="11" fill="rgba(232,255,0,0.4)" text-anchor="middle" letter-spacing="2">BRITO'S</text>
+          <text x="100" y="175" font-family="Bebas Neue,sans-serif" font-size="9" fill="rgba(255,255,255,0.15)" text-anchor="middle" letter-spacing="3">STORE</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SELEÇÕES -->
+<section class="section" style="padding-top:0">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Futebol mundial</div>
+      <h2 class="section-title"><em>SELEÇÕES</em><br>NACIONAIS</h2>
+    </div>
+    <a class="link-all" href="loja.html?tipo=selecoes">Ver todas →</a>
+  </div>
+  <div class="selecoes-grid">
+    <div class="selecao-big" onclick="location.href='loja.html?selecao=brasil'" style="cursor:pointer">
+      <div class="selecao-bg"><div class="selecao-bg-text">BRA</div></div>
+      <div style="position:relative;z-index:1">
+        <div class="section-label" style="margin-bottom:12px">Mais popular</div>
+        <div class="selecao-country">BRASIL</div>
+        <div class="selecao-items" style="margin-top:8px">12 modelos disponíveis · Titular, Reserva, Third</div>
+        <a class="link-all" href="loja.html?selecao=brasil" style="margin-top:20px">Ver camisas →</a>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px">
+      <div class="selecao-small" onclick="location.href='loja.html?tipo=selecoes'" style="cursor:pointer"><div class="selecao-flag">🇦🇷</div><div><div class="selecao-country">ARG</div><div class="selecao-items">8 modelos</div></div></div>
+      <div class="selecao-small" onclick="location.href='loja.html?tipo=selecoes'" style="cursor:pointer"><div class="selecao-flag">🇫🇷</div><div><div class="selecao-country">FRA</div><div class="selecao-items">6 modelos</div></div></div>
+    </div>
+    <div style="display:grid;grid-template-rows:1fr 1fr;gap:2px">
+      <div class="selecao-small" onclick="location.href='loja.html?tipo=selecoes'" style="cursor:pointer"><div class="selecao-flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div><div><div class="selecao-country">ENG</div><div class="selecao-items">5 modelos</div></div></div>
+      <div class="selecao-small" onclick="location.href='loja.html?tipo=selecoes'" style="cursor:pointer"><div class="selecao-flag">🇩🇪</div><div><div class="selecao-country">ALE</div><div class="selecao-items">6 modelos</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<div class="benefits">
+  <div class="benefits-grid">
+    <div class="benefit"><div class="benefit-icon">🚚</div><div class="benefit-title">Frete pelos Correios</div><div class="benefit-desc">Cálculo automático pelo CEP. Rastreamento completo do envio até a sua porta.</div></div>
+    <div class="benefit"><div class="benefit-icon">⚡</div><div class="benefit-title">Pix Instantâneo</div><div class="benefit-desc">Pague via Pix e confirme seu pedido em segundos. Processo 100% seguro.</div></div>
+    <div class="benefit"><div class="benefit-icon">💬</div><div class="benefit-title">Suporte no WhatsApp</div><div class="benefit-desc">Atendimento direto pelo WhatsApp. Tire dúvidas e acompanhe seu pedido.</div></div>
+    <div class="benefit"><div class="benefit-icon">🔄</div><div class="benefit-title">Política de Trocas</div><div class="benefit-desc">Problemas com tamanho ou produto? Resolvemos com agilidade e sem burocracia.</div></div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Dúvidas frequentes</div>
+      <h2 class="section-title">FAQ</h2>
+    </div>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Como funciona o modelo sob encomenda? <span>→</span></div><div class="faq-a">Após você realizar o pedido e confirmar o pagamento via Pix, realizamos a compra do fornecedor e enviamos diretamente para você. O prazo é informado após a confirmação.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Qual o prazo de entrega? <span>→</span></div><div class="faq-a">O prazo varia conforme a disponibilidade do fornecedor e sua localização. Informamos o prazo exato após a confirmação do pagamento via WhatsApp.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Como rastrear meu pedido? <span>→</span></div><div class="faq-a">Acesse a página "Rastrear Pedido" e informe o número do seu pedido junto com seu e-mail ou WhatsApp. O código dos Correios também será enviado por mensagem.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Vocês aceitam cartão de crédito? <span>→</span></div><div class="faq-a">No momento trabalhamos exclusivamente com Pix para garantir rapidez e segurança no processo de confirmação dos pedidos sob encomenda.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Posso pedir uma camisa que não está no site? <span>→</span></div><div class="faq-a">Sim! Entre em contato pelo WhatsApp descrevendo a camisa desejada. Se existir no mercado, conseguimos para você.</div></div>
+    <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q">Como funciona a política de trocas? <span>→</span></div><div class="faq-a">Aceitamos trocas por problemas de tamanho ou defeito de fabricação. Entre em contato pelo WhatsApp em até 7 dias após o recebimento.</div></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="nl-title">FIQUE POR DENTRO DOS LANÇAMENTOS</div>
+  <div style="flex:1;max-width:420px">
+    <p style="font-size:14px;color:rgba(0,0,0,0.6);margin-bottom:20px;line-height:1.6">Receba novidades, promoções e lançamentos diretamente no seu e-mail.</p>
+    <div class="nl-form">
+      <input class="nl-input" type="email" placeholder="seu@email.com">
+      <button class="nl-btn">Quero receber</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">BRITO'S STORE</div>
+      <p class="footer-desc">A sua loja especializada em camisetas de futebol de todo o mundo. Trabalhamos sob encomenda para levar o kit do seu time até você.</p>
+      <div class="footer-wpp" onclick="window.open('https://wa.me/5511999999999','_blank')" style="cursor:pointer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+        Fale no WhatsApp
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Ligas</h4>
+      <ul>
+        <li><a href="loja.html?liga=brasileirao">Brasileirão</a></li>
+        <li><a href="loja.html?liga=premier">Premier League</a></li>
+        <li><a href="loja.html?liga=laliga">La Liga</a></li>
+        <li><a href="loja.html?liga=ligue1">Ligue 1</a></li>
+        <li><a href="loja.html?liga=bundesliga">Bundesliga</a></li>
+        <li><a href="loja.html?liga=seriea">Serie A</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Seleções</h4>
+      <ul>
+        <li><a href="loja.html?selecao=brasil">Brasil</a></li>
+        <li><a href="loja.html?selecao=argentina">Argentina</a></li>
+        <li><a href="loja.html?selecao=franca">França</a></li>
+        <li><a href="loja.html?selecao=inglaterra">Inglaterra</a></li>
+        <li><a href="loja.html?selecao=alemanha">Alemanha</a></li>
+        <li><a href="loja.html?tipo=selecoes">Ver todas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Informações</h4>
+      <ul>
+        <li><a href="rastrear.html">Rastrear Pedido</a></li>
+        <li><a href="sobre.html">Como Funciona</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="politica-trocas.html">Política de Trocas</a></li>
+        <li><a href="privacidade.html">Privacidade</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Brito's Store. Todos os direitos reservados.</div>
+    <div class="footer-socials">
+      <a class="social-btn" href="https://instagram.com/britosstore" target="_blank">ig</a>
+      <a class="social-btn" href="https://tiktok.com/@britosstore" target="_blank">tk</a>
+      <a class="social-btn" href="https://wa.me/5511999999999" target="_blank">wp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  document.querySelectorAll('.faq-item').forEach(i => { if(i !== el) i.classList.remove('open'); });
+  el.classList.toggle('open');
+}
+</script>
 </body>
 </html>
+<!-- RESPONSIVIDADE INJETADA -->
+<style>
+/* ── TABLET (≤1024px) ── */
+@media (max-width: 1024px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 100px 32px 48px; }
+  .hero-right { padding: 0 32px 60px; justify-content: flex-start; }
+  .hero-jersey { width: 100%; max-width: 400px; }
+  .hero-bg-text { font-size: 180px; }
+
+  .section { padding: 72px 32px; }
+  .section-title { font-size: 48px; }
+
+  .ligas-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .showcase-inner { grid-template-columns: 1fr; }
+  .showcase-right { min-height: 300px; }
+  .showcase-left { padding: 60px 40px; }
+  .showcase-title { font-size: 56px; }
+
+  .selecoes-grid { grid-template-columns: 1fr 1fr; }
+  .selecao-big { grid-column: 1 / -1; min-height: 300px; }
+
+  .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .faq-grid { grid-template-columns: 1fr; }
+
+  .newsletter { flex-direction: column; gap: 32px; padding: 48px 40px; }
+  .nl-title { font-size: 44px; max-width: 100%; }
+  .nl-form { max-width: 100%; width: 100%; }
+
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .showcase { padding: 0 32px 80px; }
+  .faq { padding: 72px 32px; }
+  .benefits { padding: 64px 32px; }
+}
+
+/* ── MOBILE (≤768px) ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; height: 56px; }
+  .logo { font-size: 22px; }
+  .btn-nav { display: none; }
+
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 88px 20px 40px; }
+  .hero-title { font-size: 64px; }
+  .hero-sub { font-size: 14px; }
+  .hero-ctas { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .btn-primary { width: 100%; text-align: center; clip-path: none; }
+  .btn-ghost { width: 100%; justify-content: center; }
+  .hero-stats { gap: 28px; }
+  .hero-stat .num { font-size: 32px; }
+  .hero-right { padding: 0 20px 48px; }
+  .hero-jersey { max-width: 100%; }
+  .hero-bg-text { display: none; }
+  .hero-dots { right: 20px; bottom: 20px; }
+
+  .marquee-track span { font-size: 16px; padding: 0 24px; }
+
+  .section { padding: 56px 20px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
+  .section-title { font-size: 40px; }
+
+  .ligas-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  .liga-card { padding: 24px 16px; }
+
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+  .product-info { padding: 12px; }
+  .product-price { font-size: 22px; }
+  .product-name { font-size: 12px; }
+  .product-actions { opacity: 1; transform: none; }
+
+  .showcase { padding: 0 20px 56px; }
+  .showcase-inner { grid-template-columns: 1fr; }
+  .showcase-left { padding: 40px 24px; }
+  .showcase-title { font-size: 44px; }
+  .showcase-right { min-height: 220px; }
+  .showcase-right::before { font-size: 200px; }
+
+  .selecoes-grid { grid-template-columns: 1fr; }
+  .selecao-big { min-height: 240px; padding: 40px 24px; }
+  .selecao-big .selecao-country { font-size: 52px; }
+  .selecao-bg-text { font-size: 140px; }
+
+  .benefits { padding: 48px 20px; }
+  .benefits-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .benefit { padding: 28px 20px; }
+  .benefit-title { font-size: 14px; }
+  .benefit-desc { font-size: 12px; }
+
+  .faq { padding: 56px 20px; }
+  .faq-grid { grid-template-columns: 1fr; gap: 4px; }
+  .faq-item { padding: 20px; }
+
+  .newsletter { margin: 0 20px 56px; padding: 36px 24px; gap: 24px; }
+  .nl-title { font-size: 36px; }
+  .nl-form { flex-direction: column; }
+  .nl-input { border-right: 1px solid rgba(0,0,0,0.2); border-bottom: none; }
+  .nl-btn { width: 100%; padding: 14px; }
+
+  footer { padding: 56px 20px 32px; }
+  .footer-top { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+
+  .wpp-float { bottom: 20px; right: 20px; width: 48px; height: 48px; }
+  .wpp-float svg { width: 24px; height: 24px; }
+}
+
+/* ── MOBILE PEQUENO (≤480px) ── */
+@media (max-width: 480px) {
+  .hero-title { font-size: 52px; }
+  .section-title { font-size: 34px; }
+  .products-grid { grid-template-columns: 1fr; }
+  .ligas-grid { grid-template-columns: repeat(2, 1fr); }
+  .benefits-grid { grid-template-columns: 1fr; }
+  .selecao-small { min-height: 140px; padding: 28px 20px; }
+}
+</style>
