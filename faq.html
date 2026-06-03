@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Brito's Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--accent:#e8ff00;--accent2:#ff3c3c;--text:#f0f0f0;--muted:#888;--border:rgba(255,255,255,0.08);--font-display:'Bebas Neue',sans-serif;--font-body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--font-display);font-size:26px;letter-spacing:3px;color:var(--accent);text-decoration:none}.logo span{color:var(--text)}
+.btn-nav{background:var(--accent);color:#000;border:none;padding:8px 18px;font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+
+.page-wrap{padding:100px 60px 100px;max-width:1000px;margin:0 auto}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
+.page-title{font-family:var(--font-display);font-size:80px;line-height:.9;margin-bottom:48px}
+.page-title em{color:var(--accent);font-style:normal}
+
+/* SEARCH */
+.faq-search{background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;gap:0;margin-bottom:48px;transition:border-color .2s}
+.faq-search:focus-within{border-color:rgba(232,255,0,0.4)}
+.faq-search svg{width:18px;height:18px;stroke:var(--muted);fill:none;margin:0 16px;flex-shrink:0}
+.faq-search input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:15px;padding:16px 16px 16px 0}
+.faq-search input::placeholder{color:var(--muted)}
+
+/* CATEGORIES */
+.faq-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.cat-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted);padding:8px 18px;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.cat-btn.active,.cat-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,255,0,0.05)}
+
+/* FAQ ITEMS */
+.faq-group{margin-bottom:40px}
+.faq-group-title{font-family:var(--font-display);font-size:28px;color:var(--muted);margin-bottom:8px;padding-left:4px}
+.faq-item{border:1px solid var(--border);margin-bottom:2px;transition:border-color .2s;overflow:hidden}
+.faq-item.open{border-color:rgba(232,255,0,0.25)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;cursor:pointer;gap:16px;background:var(--bg3);transition:background .2s}
+.faq-item.open .faq-q{background:var(--bg2)}
+.faq-q-text{font-size:15px;font-weight:700;color:var(--text);line-height:1.4}
+.faq-q-icon{width:28px;height:28px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-family:var(--font-display);font-size:18px;color:var(--muted)}
+.faq-item.open .faq-q-icon{border-color:var(--accent);color:var(--accent);background:rgba(232,255,0,0.08)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1),padding .3s}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a-inner{padding:0 24px 20px;font-size:14px;color:var(--muted);line-height:1.8}
+.faq-a-inner a{color:var(--accent);text-decoration:underline}
+.faq-a-inner strong{color:var(--text)}
+
+/* CONTACT CTA */
+.contact-cta{background:var(--bg3);border:1px solid var(--border);padding:40px;margin-top:48px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.cta-text h3{font-family:var(--font-display);font-size:36px;margin-bottom:8px}
+.cta-text h3 em{color:var(--accent);font-style:normal}
+.cta-text p{font-size:13px;color:var(--muted);line-height:1.6}
+.btn-wpp{background:#25D366;color:#fff;border:none;padding:14px 28px;font-family:var(--font-body);font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:opacity .2s}
+.btn-wpp:hover{opacity:.85}
+.btn-wpp svg{width:18px;height:18px;fill:#fff}
+
+@media(max-width:768px){nav{padding:0 20px;height:56px}.page-wrap{padding:80px 20px 60px}.page-title{font-size:56px}.faq-q-text{font-size:13px}.contact-cta{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">BRITO'S<span> STORE</span></a>
+  <button class="btn-nav" onclick="location.href='contato.html'">Fale Conosco</button>
+</nav>
+
+<div class="page-wrap">
+  <div class="section-label">Dúvidas frequentes</div>
+  <h1 class="page-title">PERGUNTAS<br><em>FREQUENTES</em></h1>
+
+  <div class="faq-search">
+    <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+    <input type="text" placeholder="Buscar dúvida..." id="faqSearch" oninput="searchFaq(this.value)">
+  </div>
+
+  <div class="faq-cats">
+    <button class="cat-btn active" onclick="filterCat('all',this)">Todas</button>
+    <button class="cat-btn" onclick="filterCat('pedidos',this)">Pedidos</button>
+    <button class="cat-btn" onclick="filterCat('pagamento',this)">Pagamento</button>
+    <button class="cat-btn" onclick="filterCat('entrega',this)">Entrega</button>
+    <button class="cat-btn" onclick="filterCat('trocas',this)">Trocas</button>
+    <button class="cat-btn" onclick="filterCat('produto',this)">Produtos</button>
+  </div>
+
+  <div id="faqContainer">
+    <div class="faq-group" data-cat="pedidos">
+      <div class="faq-group-title">Pedidos</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Como funciona o modelo sob encomenda?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Na Brito's Store, trabalhamos <strong>100% sob demanda</strong>. Isso significa que não mantemos estoque físico. Após você realizar o pedido e confirmar o pagamento via Pix, adquirimos o produto junto ao nosso fornecedor e enviamos diretamente para você. O prazo de entrega é informado por WhatsApp após a confirmação.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Preciso criar uma conta para comprar?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Não! A Brito's Store opera com <strong>checkout como visitante (guest checkout)</strong>. Basta informar seus dados de entrega e contato no momento do pedido. Sem cadastro, sem senha, sem burocracia.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Posso cancelar ou alterar meu pedido?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Cancelamentos são aceitos <strong>antes da confirmação do pagamento</strong>. Após o Pix confirmado, o pedido já entra em processamento. Para alterações de tamanho ou endereço, entre em contato imediatamente pelo <a href="https://wa.me/5511999999999" target="_blank">WhatsApp</a>.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Posso encomendar uma camisa que não está no site?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Sim! Entre em contato pelo <a href="https://wa.me/5511999999999" target="_blank">WhatsApp</a> descrevendo a camisa desejada (time, temporada, tipo e tamanho). Se existir no mercado, a gente consegue para você e informa o valor e prazo.</div></div></div>
+    </div>
+
+    <div class="faq-group" data-cat="pagamento">
+      <div class="faq-group-title">Pagamento</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Quais formas de pagamento são aceitas?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Atualmente aceitamos apenas <strong>Pix</strong>. É o método mais rápido e seguro para confirmar pedidos sob encomenda. A confirmação é instantânea, agilizando todo o processo de compra.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Como envio o comprovante do Pix?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Após finalizar o pedido, você será redirecionado para uma página de confirmação com um botão <strong>"Finalizar no WhatsApp"</strong>. Clique nele para abrir o WhatsApp com a mensagem do pedido já preenchida e envie o comprovante junto.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Vocês aceitam parcelamento?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">No momento não oferecemos parcelamento por cartão de crédito. Trabalhamos exclusivamente com Pix à vista, o que nos permite manter preços mais competitivos e confirmar pedidos com rapidez.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">O Pix é seguro?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Sim. O Pix é um sistema de pagamento oficial regulamentado pelo Banco Central do Brasil. Todas as transações são criptografadas e processadas pelo sistema bancário. Nossa chave Pix é <strong>britostore@pix.com.br</strong>.</div></div></div>
+    </div>
+
+    <div class="faq-group" data-cat="entrega">
+      <div class="faq-group-title">Entrega e Frete</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Qual o prazo de entrega?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">O prazo total varia entre <strong>10 e 20 dias úteis</strong> após confirmação do pagamento, considerando o tempo de aquisição junto ao fornecedor (7–15 dias úteis) mais o prazo dos Correios (3–10 dias úteis dependendo da sua região e modalidade escolhida). O prazo exato é informado por WhatsApp.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Como funciona o frete?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Calculamos o frete automaticamente pelo seu CEP durante o checkout. Você escolhe entre <strong>PAC</strong> (mais econômico, prazo maior) ou <strong>SEDEX</strong> (mais rápido, valor superior). O envio é feito pelos Correios.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Como rastrear meu pedido?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Após a postagem, você recebe o código de rastreamento pelo WhatsApp. Você também pode rastrear pelo nosso site na página <a href="rastrear.html">Rastrear Pedido</a> informando o número do pedido e seu e-mail ou WhatsApp.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Vocês entregam em todo o Brasil?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Sim! Enviamos para todos os estados brasileiros pelos Correios. Para regiões mais remotas (Norte e Centro-Oeste), o prazo de entrega pode ser um pouco maior.</div></div></div>
+    </div>
+
+    <div class="faq-group" data-cat="trocas">
+      <div class="faq-group-title">Trocas e Devoluções</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Posso trocar o tamanho?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Sim. Aceitamos trocas por tamanho em até <strong>7 dias corridos</strong> após o recebimento, desde que o produto esteja sem uso, com etiqueta original e na embalagem. Entre em contato pelo WhatsApp para iniciar o processo de troca.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">E se o produto chegar com defeito?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Em caso de defeito de fabricação, substituímos o produto sem custo adicional. Envie fotos do defeito pelo WhatsApp em até <strong>7 dias</strong> após o recebimento. Cobrimos os custos de frete da troca nesse caso.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">O frete de troca é por minha conta?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Para trocas por tamanho (escolha do cliente), o frete de retorno é por conta do comprador. Para defeitos de fabricação, arcamos com os custos de frete nos dois sentidos.</div></div></div>
+    </div>
+
+    <div class="faq-group" data-cat="produto">
+      <div class="faq-group-title">Produtos</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">As camisetas são originais?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Trabalhamos com produtos de alta qualidade adquiridos de fornecedores especializados. Para dúvidas específicas sobre procedência de um produto, entre em contato pelo WhatsApp antes de fazer o pedido.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">Quais tamanhos estão disponíveis?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">A maioria dos produtos está disponível nos tamanhos <strong>P, M, G, GG e XG</strong>. A disponibilidade varia por produto. Confira os tamanhos disponíveis na página de cada camisa. Para tamanhos específicos, consulte pelo WhatsApp.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span class="faq-q-text">O que significa "Sob Encomenda"?</span><span class="faq-q-icon">+</span></div><div class="faq-a"><div class="faq-a-inner">Produtos marcados como "Sob Encomenda" são adquiridos <strong>após a confirmação do seu pedido e pagamento</strong>. Não há estoque físico — compramos especialmente para você. O prazo é ligeiramente maior, mas o preço é mais competitivo.</div></div></div>
+    </div>
+  </div>
+
+  <div class="contact-cta">
+    <div class="cta-text">
+      <h3>NÃO ENCONTROU<br>SUA <em>RESPOSTA?</em></h3>
+      <p>Nossa equipe está pronta para ajudar. Fale diretamente pelo WhatsApp.</p>
+    </div>
+    <button class="btn-wpp" onclick="window.open('https://wa.me/5511999999999','_blank')">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+      Falar no WhatsApp
+    </button>
+  </div>
+</div>
+
+<script>
+function toggle(el){
+  const item=el.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{ i.classList.remove('open'); i.querySelector('.faq-q-icon').textContent='+'; });
+  if(!isOpen){ item.classList.add('open'); el.querySelector('.faq-q-icon').textContent='−'; }
+}
+function searchFaq(q){
+  const term=q.toLowerCase();
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const text=item.querySelector('.faq-q-text').textContent.toLowerCase()+item.querySelector('.faq-a-inner').textContent.toLowerCase();
+    item.style.display=text.includes(term)?'block':'none';
+  });
+  document.querySelectorAll('.faq-group').forEach(g=>{
+    const visible=[...g.querySelectorAll('.faq-item')].some(i=>i.style.display!=='none');
+    g.style.display=visible?'block':'none';
+  });
+}
+function filterCat(cat,btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.faq-group').forEach(g=>{
+    g.style.display=(cat==='all'||g.dataset.cat===cat)?'block':'none';
+  });
+  document.querySelectorAll('.faq-item').forEach(i=>i.style.display='block');
+}
+</script>
+</body>
+</html>
