@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato — Brito's Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--accent:#e8ff00;--accent2:#ff3c3c;--text:#f0f0f0;--muted:#888;--border:rgba(255,255,255,0.08);--green:#25D366;--font-display:'Bebas Neue',sans-serif;--font-body:'Barlow',sans-serif}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--font-display);font-size:26px;letter-spacing:3px;color:var(--accent);text-decoration:none}.logo span{color:var(--text)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.btn-nav{background:var(--accent);color:#000;border:none;padding:8px 18px;font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+
+.page-wrap{padding:100px 60px 100px;max-width:1200px;margin:0 auto}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
+.page-title{font-family:var(--font-display);font-size:80px;line-height:.9;margin-bottom:16px}
+.page-title em{color:var(--accent);font-style:normal}
+.page-sub{font-size:15px;color:var(--muted);max-width:480px;line-height:1.7;margin-bottom:60px}
+
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+
+/* CHANNELS */
+.channels{display:flex;flex-direction:column;gap:2px}
+.channel{background:var(--bg3);border:1px solid var(--border);padding:32px;display:flex;gap:20px;align-items:flex-start;cursor:pointer;transition:all .2s;text-decoration:none}
+.channel:hover{border-color:rgba(232,255,0,0.2);background:var(--bg2)}
+.channel-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.icon-wpp{background:rgba(37,211,102,0.15)}
+.icon-email{background:rgba(232,255,0,0.08)}
+.icon-insta{background:rgba(200,50,200,0.12)}
+.channel-info{}
+.channel-name{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
+.channel-handle{font-size:13px;color:var(--accent);margin-bottom:6px;font-family:var(--font-display);font-size:18px;letter-spacing:1px}
+.channel-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.channel-badge{display:inline-block;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);color:#25D366;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;margin-top:8px}
+
+/* FORM */
+.contact-form{background:var(--bg3);border:1px solid var(--border);padding:40px}
+.form-title{font-family:var(--font-display);font-size:36px;margin-bottom:24px}
+.form-title em{color:var(--accent);font-style:normal}
+.field{margin-bottom:16px}
+.field label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+.field input,.field textarea,.field select{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:14px;padding:13px 16px;outline:none;transition:border-color .2s;resize:none;-webkit-appearance:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:rgba(232,255,0,0.4)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field select option{background:var(--bg3)}
+.field textarea{height:120px}
+.btn-send{width:100%;background:var(--accent);color:#000;border:none;padding:16px;font-family:var(--font-body);font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:8px}
+.btn-send:hover{background:#fff;transform:translateY(-1px)}
+.success-msg{display:none;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);padding:16px 20px;color:#25D366;font-size:13px;font-weight:600;text-align:center;margin-top:12px}
+
+/* INFO */
+.info-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2px}
+.info-item{background:var(--bg2);border:1px solid var(--border);padding:28px 24px}
+.info-icon{font-size:24px;margin-bottom:12px}
+.info-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.info-text{font-size:12px;color:var(--muted);line-height:1.6}
+
+@media(max-width:1024px){.page-wrap{padding:100px 32px 80px}.contact-layout{grid-template-columns:1fr}.info-strip{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){nav{padding:0 20px;height:56px}.nav-links{display:none}.page-wrap{padding:80px 20px 60px}.page-title{font-size:56px}.info-strip{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">BRITO'S<span> STORE</span></a>
+  <ul class="nav-links">
+    <li><a href="loja.html">Loja</a></li>
+    <li><a href="sobre.html">Sobre</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+  </ul>
+  <button class="btn-nav" onclick="location.href='loja.html'">Ver Catálogo</button>
+</nav>
+
+<div class="page-wrap">
+  <div class="section-label">Fale conosco</div>
+  <h1 class="page-title">ENTRE EM<br><em>CONTATO</em></h1>
+  <p class="page-sub">Tire suas dúvidas, faça pedidos especiais ou resolva qualquer questão. Estamos aqui para ajudar.</p>
+
+  <div class="contact-layout">
+    <div class="channels">
+      <a class="channel" href="https://wa.me/5511999999999" target="_blank">
+        <div class="channel-icon icon-wpp">💬</div>
+        <div class="channel-info">
+          <div class="channel-name">WhatsApp</div>
+          <div class="channel-handle">(11) 99999-9999</div>
+          <div class="channel-desc">Canal principal de atendimento. Resposta rápida de seg a sáb, das 9h às 21h.</div>
+          <div class="channel-badge">⚡ Resposta em até 2h</div>
+        </div>
+      </a>
+      <a class="channel" href="mailto:contato@britosstore.com.br">
+        <div class="channel-icon icon-email">📧</div>
+        <div class="channel-info">
+          <div class="channel-name">E-mail</div>
+          <div class="channel-handle">contato@britosstore.com.br</div>
+          <div class="channel-desc">Para dúvidas detalhadas, comprovantes ou questões formais. Resposta em até 24h.</div>
+        </div>
+      </a>
+      <a class="channel" href="https://instagram.com/britosstore" target="_blank">
+        <div class="channel-icon icon-insta">📸</div>
+        <div class="channel-info">
+          <div class="channel-name">Instagram</div>
+          <div class="channel-handle">@britosstore</div>
+          <div class="channel-desc">Novidades, lançamentos e promoções. Marca a gente nas suas fotos usando nossas camisetas!</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="contact-form">
+      <h2 class="form-title">MANDE UMA<br><em>MENSAGEM</em></h2>
+      <div class="field"><label>Seu nome *</label><input type="text" placeholder="Como posso te chamar?" id="c-nome"></div>
+      <div class="field"><label>E-mail ou WhatsApp *</label><input type="text" placeholder="Para onde respondemos?" id="c-contact"></div>
+      <div class="field"><label>Assunto *</label>
+        <select id="c-assunto">
+          <option value="">Selecione o assunto</option>
+          <option>Dúvida sobre produto</option>
+          <option>Status do meu pedido</option>
+          <option>Troca / Devolução</option>
+          <option>Produto não encontrado</option>
+          <option>Pagamento / Pix</option>
+          <option>Sugestão</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="field"><label>Mensagem *</label><textarea placeholder="Descreva sua dúvida ou mensagem..." id="c-msg"></textarea></div>
+      <button class="btn-send" onclick="sendContact()">Enviar Mensagem</button>
+      <div class="success-msg" id="successMsg">✓ Mensagem enviada! Entraremos em contato em breve.</div>
+    </div>
+  </div>
+
+  <div class="info-strip">
+    <div class="info-item"><div class="info-icon">🕐</div><div class="info-title">Horário de Atendimento</div><div class="info-text">Segunda a Sábado<br>9h às 21h<br><br>Domingos e feriados: 10h–18h</div></div>
+    <div class="info-item"><div class="info-icon">📦</div><div class="info-title">Sobre Pedidos</div><div class="info-text">Para questões sobre pedidos, tenha em mãos o número do pedido (ex: BS1024) para agilizar o atendimento.</div></div>
+    <div class="info-item"><div class="info-icon">⚡</div><div class="info-title">Atendimento Preferencial</div><div class="info-text">O WhatsApp é nosso canal mais rápido. Para urgências, entre em contato diretamente por lá.</div></div>
+  </div>
+</div>
+
+<script>
+function sendContact(){
+  const nome=document.getElementById('c-nome').value.trim();
+  const contact=document.getElementById('c-contact').value.trim();
+  const assunto=document.getElementById('c-assunto').value;
+  const msg=document.getElementById('c-msg').value.trim();
+  if(!nome||!contact||!assunto||!msg){alert('Preencha todos os campos obrigatórios.');return;}
+  document.getElementById('successMsg').style.display='block';
+  document.getElementById('c-nome').value='';
+  document.getElementById('c-contact').value='';
+  document.getElementById('c-assunto').value='';
+  document.getElementById('c-msg').value='';
+  setTimeout(()=>document.getElementById('successMsg').style.display='none',5000);
+}
+</script>
+</body>
+</html>
