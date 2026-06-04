@@ -366,7 +366,7 @@ function toggleSidebar(){
 function clearFilters(){ document.querySelectorAll('.filter-opt').forEach(o=>{ o.classList.remove('active'); o.querySelector('input').checked=false; }); }
 function updatePrice(v){ document.getElementById('priceMax').textContent='R$'+v; }
 function addToCart(id){ const p=products.find(x=>x.id===id); let c=JSON.parse(localStorage.getItem('cart')||'[]'); c.push({...p,qty:1,size:'M'}); localStorage.setItem('cart',JSON.stringify(c)); document.getElementById('cartCount').textContent=c.length; }
-function wppProduct(id){ const p=products.find(x=>x.id===id); const msg=encodeURIComponent(`Olá! Tenho interesse na camisa: ${p.name} - ${p.club}\nValor: R$${p.price}`); window.open(`https://wa.me/5511999999999?text=${msg}`,'_blank'); }
+function wppProduct(id){ const p=products.find(x=>x.id===id); const msg=encodeURIComponent(`Olá! Tenho interesse na camisa: ${p.name} - ${p.club}\nValor: R$${p.price}`); window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank'); }
 document.querySelectorAll('.filter-opt').forEach(o=>{ o.addEventListener('click',function(){ this.classList.toggle('active'); this.querySelector('input').checked=this.classList.contains('active'); }); });
 const saved=JSON.parse(localStorage.getItem('cart')||'[]');
 document.getElementById('cartCount').textContent=saved.length;

@@ -271,7 +271,7 @@ function wppOrder(){
   const cidade=document.getElementById('cidade').value||'—';
   const frete=document.querySelector('[name=frete]:checked')?.value==='sedex'?32:18;
   const msg=encodeURIComponent(`Olá! Acabei de realizar um pedido na Brito's Store.\n\nPedido: #BS${Math.floor(Math.random()*9000+1000)}\n\nProdutos:\n• Camisa Titular Corinthians 2025/26 — G\n• Camisa Titular Brasil Copa 2026 — M\n\nTotal: R$${298+frete}\n\nNome: ${nome}\nCidade: ${cidade}\n\nVou enviar o comprovante do Pix.`);
-  window.open(`https://wa.me/5511999999999?text=${msg}`,'_blank');
+  window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank');
 }
 </script>
 </body>

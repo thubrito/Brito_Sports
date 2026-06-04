@@ -87,7 +87,7 @@ const order=JSON.parse(sessionStorage.getItem('orderData')||'{"pedido":"BS1024",
 document.getElementById('orderNum').textContent='#'+order.pedido;
 document.getElementById('wppBtn').onclick=function(){
   const msg=encodeURIComponent(`Olá! Acabei de realizar um pedido na Brito's Store.\n\nPedido: #${order.pedido}\n\nProdutos:\n• Camisa Titular Corinthians 2025/26 — G — Qtd: 1\n• Camisa Titular Brasil Copa 2026 — M — Qtd: 1\n\nValor Total: R$316\n\nNome: ${order.nome}\nCidade: ${order.cidade}\n\nVou enviar o comprovante do Pix em seguida.`);
-  window.open(`https://wa.me/5511999999999?text=${msg}`,'_blank');
+  window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank');
 };
 // confetti
 const el=document.getElementById('confetti');

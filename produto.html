@@ -397,7 +397,7 @@ function buyNow(){ addToCart(); location.href='carrinho.html'; }
 function openWhatsApp(){
   const size = document.querySelector('.size-btn.active')?.textContent||'M';
   const msg = encodeURIComponent(`Olá! Tenho interesse na seguinte camisa:\n\nProduto: Camisa Titular Corinthians 2025/26\nTamanho: ${size}\nQuantidade: ${qty}\nValor: R$${139*qty},00\n\nPoderia me passar mais informações?`);
-  window.open(`https://wa.me/5511999999999?text=${msg}`,'_blank');
+  window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank');
 }
 document.querySelectorAll('.thumb').forEach((t,i)=>{ t.onclick=()=>{ document.querySelectorAll('.thumb').forEach(x=>x.classList.remove('active')); t.classList.add('active'); }; });
 const saved = JSON.parse(localStorage.getItem('cart')||'[]');
