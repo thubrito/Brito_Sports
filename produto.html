@@ -37,17 +37,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 /* GALLERY */
 .gallery{position:sticky;top:80px;height:fit-content}
-.gallery-main{aspect-ratio:3/4;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:12px;cursor:zoom-in}
-.gallery-main img,.gallery-main .jersey-placeholder{width:100%;height:100%;object-fit:cover;display:flex;align-items:center;justify-content:center}
-.gallery-badge{position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:6px;z-index:2}
+.gallery-main{aspect-ratio:3/4;background:var(--bg3);border:1px solid var(--border);position:relative;overflow:hidden;margin-bottom:12px}
+.gallery-track{display:flex;height:100%;transition:transform .4s cubic-bezier(.25,.1,.25,1)}
+.gallery-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gallery-slide img{width:100%;height:100%;object-fit:cover}
+.gallery-badge{position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:6px;z-index:3}
 .badge{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px}
 .badge-new{background:var(--accent);color:#000}
 .badge-enc{background:rgba(255,255,255,0.12);color:var(--text);border:1px solid var(--border)}
-.gallery-zoom{position:absolute;bottom:16px;right:16px;background:rgba(0,0,0,0.6);border:1px solid var(--border);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px)}
-.gallery-zoom svg{width:16px;height:16px;stroke:var(--text);fill:none}
+.badge-promo{background:var(--accent2);color:#fff}
+.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;background:rgba(10,10,10,0.75);border:1px solid var(--border);backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.gallery-arrow:hover{background:rgba(232,255,0,0.15);border-color:var(--accent)}
+.gallery-arrow svg{width:18px;height:18px;stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gallery-arrow-prev{left:12px}
+.gallery-arrow-next{right:12px}
+.gallery-counter{position:absolute;bottom:14px;right:14px;z-index:3;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);border:1px solid var(--border);padding:4px 10px;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px}
 .gallery-thumbs{display:flex;gap:8px}
 .thumb{width:72px;aspect-ratio:3/4;background:var(--bg3);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;overflow:hidden}
-.thumb.active,.thumb:hover{border-color:var(--accent)}
+.thumb.active{border-color:var(--accent)}
+.thumb:hover{border-color:rgba(232,255,0,0.5)}
+.thumb img{width:100%;height:100%;object-fit:cover}
 .thumb svg{width:36px;height:48px;opacity:.6}
 
 /* PRODUCT INFO */
@@ -201,39 +210,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <div class="product-page">
   <!-- GALLERY -->
   <div class="gallery">
-    <div class="gallery-main" id="mainImg">
-      <div class="gallery-badge">
-        <span class="badge badge-new">Novo</span>
-        <span class="badge badge-enc">Sob Encomenda</span>
-      </div>
-      <svg width="260" height="340" viewBox="0 0 200 260" fill="none">
-        <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="200" y2="260" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="rgba(220,50,50,0.3)"/>
-            <stop offset="100%" stop-color="rgba(120,0,0,0.15)"/>
-          </linearGradient>
-        </defs>
-        <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="url(#g1)" stroke="rgba(220,50,50,0.6)" stroke-width="2"/>
-        <path d="M80 30L80 95Q90 105 100 100Q110 105 120 95L120 30" fill="rgba(220,50,50,0.15)" stroke="rgba(220,50,50,0.4)" stroke-width="1.5"/>
-        <text x="100" y="155" font-family="Bebas Neue,sans-serif" font-size="22" fill="rgba(255,255,255,0.5)" text-anchor="middle" letter-spacing="3">CORINTHIANS</text>
-        <text x="100" y="178" font-family="Bebas Neue,sans-serif" font-size="14" fill="rgba(255,255,255,0.2)" text-anchor="middle" letter-spacing="2">2025/26</text>
-      </svg>
-      <div class="gallery-zoom"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6" stroke-linecap="round"/></svg></div>
+    <div class="gallery-main" id="galleryMain">
+      <div class="gallery-badge" id="galleryBadge"></div>
+      <div class="gallery-track" id="galleryTrack"></div>
+      <button class="gallery-arrow gallery-arrow-prev" onclick="galleryMove(-1)" aria-label="Foto anterior">
+        <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+      </button>
+      <button class="gallery-arrow gallery-arrow-next" onclick="galleryMove(1)" aria-label="Próxima foto">
+        <svg viewBox="0 0 24 24"><polyline points="9,6 15,12 9,18"/></svg>
+      </button>
+      <div class="gallery-counter" id="galleryCounter">1 / 4</div>
     </div>
-    <div class="gallery-thumbs">
-      <div class="thumb active">
-        <svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(220,50,50,0.4)" stroke="rgba(220,50,50,0.6)" stroke-width="3"/></svg>
-      </div>
-      <div class="thumb">
-        <svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(180,30,30,0.5)" stroke="rgba(200,50,50,0.5)" stroke-width="3"/></svg>
-      </div>
-      <div class="thumb">
-        <svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(100,10,10,0.6)" stroke="rgba(160,40,40,0.6)" stroke-width="3"/></svg>
-      </div>
-      <div class="thumb">
-        <svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(220,50,50,0.2)" stroke="rgba(232,255,0,0.4)" stroke-width="3"/></svg>
-      </div>
-    </div>
+    <div class="gallery-thumbs" id="galleryThumbs"></div>
   </div>
 
   <!-- INFO -->
@@ -375,8 +363,104 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   </div>
 </div>
 
+<script src="catalogo.js"></script>
 <script>
 let qty = 1;
+let currentProduct = null;
+let galleryIndex = 0;
+let galleryImages = [];
+
+/* ── GALERIA ─────────────────────────────────────── */
+function buildGallery(product) {
+  galleryImages = product.imagens && product.imagens.length ? product.imagens : [null];
+  galleryIndex = 0;
+
+  // Track: um slide por imagem
+  const track = document.getElementById('galleryTrack');
+  track.innerHTML = galleryImages.map((src, i) => {
+    const inner = src
+      ? `<img src="${src}" alt="${product.club} foto ${i+1}"
+           onerror="this.outerHTML=fallbackSVGInline()">`
+      : fallbackSVGInline();
+    return `<div class="gallery-slide">${inner}</div>`;
+  }).join('');
+
+  // Thumbs
+  const thumbs = document.getElementById('galleryThumbs');
+  thumbs.innerHTML = galleryImages.map((src, i) => {
+    const inner = src
+      ? `<img src="${src}" alt="Thumb ${i+1}" onerror="this.outerHTML=fallbackSVGThumb()">`
+      : fallbackSVGThumb();
+    return `<div class="thumb${i===0?' active':''}" onclick="galleryGoTo(${i})">${inner}</div>`;
+  }).join('');
+
+  // Badge
+  const badge = document.getElementById('galleryBadge');
+  badge.innerHTML =
+    (product.badge==='new'  ? '<span class="badge badge-new">Novo</span>' : '') +
+    (product.badge==='enc'  ? '<span class="badge badge-enc">Sob Encomenda</span>' : '') +
+    (product.badge==='promo'? '<span class="badge badge-promo">Promoção</span>' : '');
+
+  updateGalleryUI();
+}
+
+function galleryGoTo(idx) {
+  galleryIndex = ((idx % galleryImages.length) + galleryImages.length) % galleryImages.length;
+  updateGalleryUI();
+}
+
+function galleryMove(dir) {
+  galleryGoTo(galleryIndex + dir);
+}
+
+function updateGalleryUI() {
+  // Move track
+  document.getElementById('galleryTrack').style.transform = `translateX(-${galleryIndex * 100}%)`;
+  // Contador
+  document.getElementById('galleryCounter').textContent = `${galleryIndex + 1} / ${galleryImages.length}`;
+  // Thumbs
+  document.querySelectorAll('#galleryThumbs .thumb').forEach((t, i) => {
+    t.classList.toggle('active', i === galleryIndex);
+  });
+}
+
+function fallbackSVGInline() {
+  if (!currentProduct) return '';
+  const c = currentProduct;
+  return `<svg width="260" height="340" viewBox="0 0 200 260" fill="none">
+    <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z"
+      fill="${c.color}" stroke="${c.stroke}" stroke-width="2"/>
+    <text x="100" y="155" font-family="Bebas Neue,sans-serif" font-size="22"
+      fill="${c.stroke}" text-anchor="middle" letter-spacing="3">${c.club.toUpperCase()}</text>
+    <text x="100" y="178" font-family="Bebas Neue,sans-serif" font-size="14"
+      fill="${c.stroke}" text-anchor="middle" letter-spacing="2">${c.temporada}</text>
+  </svg>`;
+}
+
+function fallbackSVGThumb() {
+  if (!currentProduct) return '';
+  const c = currentProduct;
+  return `<svg width="36" height="48" viewBox="0 0 200 260" fill="none">
+    <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z"
+      fill="${c.color}" stroke="${c.stroke}" stroke-width="3"/>
+  </svg>`;
+}
+
+// Suporte a swipe (mobile)
+(function(){
+  let startX = 0;
+  document.addEventListener('DOMContentLoaded', () => {
+    const main = document.getElementById('galleryMain');
+    if (!main) return;
+    main.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+    main.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) galleryMove(dx < 0 ? 1 : -1);
+    }, {passive:true});
+  });
+})();
+
+/* ── RESTANTE ─────────────────────────────────────── */
 function changeQty(d){ qty = Math.max(1, qty + d); document.getElementById('qtyNum').textContent = qty; }
 function selectSize(el){ document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
 function switchTab(el){
@@ -385,23 +469,108 @@ function switchTab(el){
   el.classList.add('active');
   document.getElementById('tab-'+el.dataset.tab).classList.add('active');
 }
-function addToCart(){
-  const size = document.querySelector('.size-btn.active')?.textContent||'M';
-  let cart = JSON.parse(localStorage.getItem('cart')||'[]');
-  cart.push({id:1,name:'Camisa Titular Corinthians 2025/26',price:139,size,qty});
-  localStorage.setItem('cart',JSON.stringify(cart));
-  document.getElementById('cartCount').textContent = cart.length;
+function handleAddToCart(){
+  if(!currentProduct) return;
+  const size = document.querySelector('.size-btn.active')?.textContent||currentProduct.sizes[0]||'M';
+  addToCart(currentProduct, size, qty);
   alert('Produto adicionado ao carrinho!');
 }
-function buyNow(){ addToCart(); location.href='carrinho.html'; }
+function buyNow(){ handleAddToCart(); location.href='carrinho.html'; }
 function openWhatsApp(){
-  const size = document.querySelector('.size-btn.active')?.textContent||'M';
-  const msg = encodeURIComponent(`Olá! Tenho interesse na seguinte camisa:\n\nProduto: Camisa Titular Corinthians 2025/26\nTamanho: ${size}\nQuantidade: ${qty}\nValor: R$${139*qty},00\n\nPoderia me passar mais informações?`);
+  if(!currentProduct) return;
+  const size = document.querySelector('.size-btn.active')?.textContent||currentProduct.sizes[0]||'M';
+  const msg = encodeURIComponent(`Olá! Tenho interesse na seguinte camisa:\n\nProduto: ${currentProduct.name} - ${currentProduct.club}\nTamanho: ${size}\nQuantidade: ${qty}\nValor: R$${currentProduct.price * qty},00\n\nPoderia me passar mais informações?`);
   window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank');
 }
-document.querySelectorAll('.thumb').forEach((t,i)=>{ t.onclick=()=>{ document.querySelectorAll('.thumb').forEach(x=>x.classList.remove('active')); t.classList.add('active'); }; });
-const saved = JSON.parse(localStorage.getItem('cart')||'[]');
-document.getElementById('cartCount').textContent = saved.length;
+
+function renderProduct(p){
+  currentProduct = p;
+  document.title = `${p.club} — ${p.name} — Brito's Store`;
+
+  // Breadcrumb
+  document.querySelector('.breadcrumb .current').textContent = `${p.club} — ${p.name}`;
+
+  // Liga tags
+  document.querySelector('.product-liga').innerHTML = `
+    <span class="liga-tag">${p.liga}</span>
+    <span class="liga-tag">${p.club}</span>
+    <span class="liga-tag">${p.tipo}</span>`;
+
+  // Título
+  const titleParts = p.name.split(' ');
+  document.querySelector('.product-title').innerHTML = titleParts.slice(0,-1).join('<br>') + '<br>' + titleParts.slice(-1);
+  document.querySelector('.product-season').textContent = p.club + ' — Temporada ' + p.temporada;
+
+  // Preço
+  document.querySelector('.price-main').textContent = 'R$' + p.price;
+  const oldEl = document.querySelector('.price-old');
+  oldEl.textContent = p.oldPrice ? 'R$' + p.oldPrice : '';
+  document.querySelector('.price-installment').innerHTML = `ou <strong>2x de R$${(p.price/2).toFixed(2).replace('.',',')}</strong> sem juros via Pix parcelado`;
+
+  // Encomenda alert
+  const encAlert = document.querySelector('.enc-alert');
+  encAlert.style.display = p.status === 'encomenda' ? 'flex' : 'none';
+
+  // Galeria de imagens
+  buildGallery(p);
+
+  // Tamanhos
+  const sizesGrid = document.querySelector('.sizes-grid');
+  sizesGrid.innerHTML = p.sizes.map((s,i)=>
+    `<button class="size-btn${i===0?' active':''}" onclick="selectSize(this)">${s}</button>`
+  ).join('');
+
+  // Specs tab
+  document.getElementById('tab-specs').innerHTML = `
+    <div class="specs-grid">
+      <div class="spec-row"><span class="key">Time</span><span class="val">${p.club}</span></div>
+      <div class="spec-row"><span class="key">Liga</span><span class="val">${p.liga}</span></div>
+      <div class="spec-row"><span class="key">Temporada</span><span class="val">${p.temporada}</span></div>
+      <div class="spec-row"><span class="key">Tipo</span><span class="val">${p.tipo}</span></div>
+      <div class="spec-row"><span class="key">Categoria</span><span class="val">Masculino</span></div>
+      <div class="spec-row"><span class="key">Material</span><span class="val">100% Poliéster</span></div>
+      <div class="spec-row"><span class="key">Tamanhos</span><span class="val">${p.sizes.join(', ')}</span></div>
+      <div class="spec-row"><span class="key">Status</span><span class="val">${p.status==='encomenda'?'Sob Encomenda':'Disponível'}</span></div>
+    </div>`;
+
+  // Descrição
+  document.getElementById('tab-desc').querySelector('p').textContent = p.descricao;
+
+  // Relacionados
+  renderRelated(p);
+}
+
+
+
+function renderRelated(current){
+  const catalog = window.CATALOGO || [];
+  const related = catalog.filter(p=>p.id!==current.id && (p.liga===current.liga||p.club===current.club)).slice(0,4);
+  const grid = document.querySelector('.related-grid');
+  if(!grid || !related.length) return;
+  grid.innerHTML = related.map(p=>`
+    <div class="rel-card" onclick="location.href='produto.html?id=${p.id}'">
+      <div class="rel-img"><div class="rel-img-inner">${jerseyPlaceholderSVG(p,100,130)}</div></div>
+      <div class="rel-info">
+        <div class="rel-club">${p.club} • ${p.liga}</div>
+        <div class="rel-name">${p.name}</div>
+        <div class="rel-price">R$${p.price}</div>
+      </div>
+    </div>`).join('');
+}
+
+// Substitui chamadas inline dos botões
+document.querySelector('.btn-primary').onclick = handleAddToCart;
+document.querySelector('.btn-secondary').onclick = buyNow;
+document.querySelector('.btn-wpp').onclick = openWhatsApp;
+
+syncCartBadge();
+
+loadCatalogo().then(catalog=>{
+  const params = new URLSearchParams(location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const product = catalog.find(p=>p.id===id) || catalog[0];
+  renderProduct(product);
+});
 </script>
 </body>
 </html>

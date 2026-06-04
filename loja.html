@@ -288,26 +288,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   </main>
 </div>
 
+<script src="catalogo.js"></script>
 <script>
-const products = [
-  {id:1,name:'Camisa Titular 2025/26',club:'Corinthians',liga:'Brasileirão',price:139,oldPrice:null,badge:'enc',color:'rgba(220,50,50,0.35)',stroke:'rgba(220,50,50,0.6)',sizes:['M','G','GG']},
-  {id:2,name:'Camisa Titular Copa 2026',club:'Brasil',liga:'Seleção',price:159,oldPrice:199,badge:'promo',color:'rgba(0,30,120,0.4)',stroke:'rgba(60,120,255,0.6)',sizes:['P','M','G','GG','XG']},
-  {id:3,name:'Camisa Home 2025/26',club:'Chelsea',liga:'Premier League',price:149,oldPrice:null,badge:'new',color:'rgba(0,0,120,0.4)',stroke:'rgba(100,150,255,0.6)',sizes:['P','M','G','GG']},
-  {id:4,name:'Camisa Titular 2025/26',club:'Flamengo',liga:'Brasileirão',price:139,oldPrice:null,badge:'new',color:'rgba(180,20,20,0.4)',stroke:'rgba(220,50,50,0.6)',sizes:['P','M','G','GG']},
-  {id:5,name:'Camisa Home 2025/26',club:'Real Madrid',liga:'La Liga',price:155,oldPrice:180,badge:'promo',color:'rgba(200,160,0,0.3)',stroke:'rgba(240,200,0,0.5)',sizes:['M','G','GG']},
-  {id:6,name:'Camisa Titular 2025/26',club:'Palmeiras',liga:'Brasileirão',price:139,oldPrice:null,badge:'enc',color:'rgba(0,100,30,0.4)',stroke:'rgba(0,170,60,0.6)',sizes:['P','M','G']},
-  {id:7,name:'Camisa Home 2025/26',club:'Borussia Dortmund',liga:'Bundesliga',price:144,oldPrice:null,badge:'new',color:'rgba(180,140,0,0.35)',stroke:'rgba(255,210,0,0.6)',sizes:['P','M','G','GG']},
-  {id:8,name:'Camisa Titular 2025/26',club:'Argentina',liga:'Seleção',price:159,oldPrice:null,badge:'new',color:'rgba(0,60,140,0.4)',stroke:'rgba(100,180,255,0.5)',sizes:['M','G','GG','XG']},
-  {id:9,name:'Third Kit 2025/26',club:'Manchester City',liga:'Premier League',price:149,oldPrice:170,badge:'promo',color:'rgba(0,80,140,0.4)',stroke:'rgba(0,160,220,0.6)',sizes:['P','M','G']},
-  {id:10,name:'Camisa Reserva 2025/26',club:'São Paulo',liga:'Brasileirão',price:139,oldPrice:null,badge:'enc',color:'rgba(180,0,30,0.3)',stroke:'rgba(220,60,60,0.5)',sizes:['M','G','GG']},
-  {id:11,name:'Camisa Titular 2025/26',club:'França',liga:'Seleção',price:155,oldPrice:null,badge:'new',color:'rgba(0,20,100,0.4)',stroke:'rgba(80,120,220,0.5)',sizes:['P','M','G','GG']},
-  {id:12,name:'Camisa Home 2025/26',club:'Juventus',liga:'Serie A',price:145,oldPrice:165,badge:'promo',color:'rgba(40,40,40,0.5)',stroke:'rgba(200,200,200,0.3)',sizes:['P','M','G']},
-];
+let products = [];
+let filtered = [];
 
 function renderProducts(list){
   const grid = document.getElementById('productsGrid');
+  document.querySelector('.results-count strong').textContent = list.length;
+  if(!list.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:80px 0;color:var(--muted)">Nenhuma camisa encontrada com esses filtros.</div>';
+    return;
+  }
   grid.innerHTML = list.map(p=>`
-    <div class="product-card" onclick="location.href='produto.html'">
+    <div class="product-card" onclick="location.href='produto.html?id=${p.id}'">
       <div class="product-img">
         <div class="badge-wrap">
           ${p.badge==='new'?'<span class="badge badge-new">Novo</span>':''}
@@ -315,13 +309,10 @@ function renderProducts(list){
           ${p.badge==='enc'?'<span class="badge badge-enc">Encomenda</span>':''}
         </div>
         <div class="product-img-inner">
-          <svg width="100" height="130" viewBox="0 0 200 260" fill="none">
-            <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="${p.color}" stroke="${p.stroke}" stroke-width="2"/>
-            <text x="100" y="155" font-family="Bebas Neue,sans-serif" font-size="13" fill="${p.stroke}" text-anchor="middle">${p.club.toUpperCase().substring(0,8)}</text>
-          </svg>
+          ${productImageHTML(p,100,130)}
         </div>
         <div class="product-actions">
-          <button class="btn-add" onclick="event.stopPropagation();addToCart(${p.id})">Adicionar</button>
+          <button class="btn-add" onclick="event.stopPropagation();handleAddToCart(${p.id})">Adicionar</button>
           <button class="btn-wpp-sm" onclick="event.stopPropagation();wppProduct(${p.id})"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></button>
         </div>
       </div>
@@ -338,12 +329,26 @@ function renderProducts(list){
   `).join('');
 }
 
-function filterProducts(q){
-  const filtered = products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())||p.club.toLowerCase().includes(q.toLowerCase()));
+function applyAllFilters(){
+  const q = document.querySelector('.search-box input')?.value.toLowerCase()||'';
+  const checkedLigas = [...document.querySelectorAll('#sidebar .filter-section:nth-child(1) .filter-opt.active')].map(o=>o.querySelector('label').textContent.trim());
+  const checkedTipos = [...document.querySelectorAll('#sidebar .filter-section:nth-child(2) .filter-opt.active')].map(o=>o.querySelector('label').textContent.trim());
+  const checkedSizes = [...document.querySelectorAll('#sidebar .filter-section:nth-child(4) .filter-opt.active')].map(o=>o.querySelector('label').textContent.trim());
+  const maxPrice = parseInt(document.getElementById('priceRange').value)||300;
+  filtered = products.filter(p=>{
+    if(q && !p.name.toLowerCase().includes(q) && !p.club.toLowerCase().includes(q)) return false;
+    if(checkedLigas.length && !checkedLigas.some(l=>p.liga.toLowerCase().includes(l.toLowerCase()))) return false;
+    if(checkedTipos.length && !checkedTipos.some(t=>p.tipo.toLowerCase().includes(t.toLowerCase()))) return false;
+    if(checkedSizes.length && !checkedSizes.some(s=>p.sizes.includes(s))) return false;
+    if(p.price > maxPrice) return false;
+    return true;
+  });
   renderProducts(filtered);
 }
+
+function filterProducts(q){ applyAllFilters(); }
 function sortProducts(v){
-  let sorted=[...products];
+  let sorted=[...filtered];
   if(v==='asc') sorted.sort((a,b)=>a.price-b.price);
   if(v==='desc') sorted.sort((a,b)=>b.price-a.price);
   if(v==='new') sorted.reverse();
@@ -363,14 +368,45 @@ function toggleSidebar(){
   s.classList.toggle('mobile-open');
   o.classList.toggle('open');
 }
-function clearFilters(){ document.querySelectorAll('.filter-opt').forEach(o=>{ o.classList.remove('active'); o.querySelector('input').checked=false; }); }
-function updatePrice(v){ document.getElementById('priceMax').textContent='R$'+v; }
-function addToCart(id){ const p=products.find(x=>x.id===id); let c=JSON.parse(localStorage.getItem('cart')||'[]'); c.push({...p,qty:1,size:'M'}); localStorage.setItem('cart',JSON.stringify(c)); document.getElementById('cartCount').textContent=c.length; }
+function clearFilters(){
+  document.querySelectorAll('.filter-opt').forEach(o=>{o.classList.remove('active');o.querySelector('input').checked=false;});
+  document.getElementById('priceRange').value=300;
+  document.getElementById('priceMax').textContent='R$300';
+  applyAllFilters();
+}
+function updatePrice(v){ document.getElementById('priceMax').textContent='R$'+v; applyAllFilters(); }
+function handleAddToCart(id){ const p=products.find(x=>x.id===id); addToCart(p, p.sizes[0]||'M'); }
 function wppProduct(id){ const p=products.find(x=>x.id===id); const msg=encodeURIComponent(`Olá! Tenho interesse na camisa: ${p.name} - ${p.club}\nValor: R$${p.price}`); window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank'); }
-document.querySelectorAll('.filter-opt').forEach(o=>{ o.addEventListener('click',function(){ this.classList.toggle('active'); this.querySelector('input').checked=this.classList.contains('active'); }); });
-const saved=JSON.parse(localStorage.getItem('cart')||'[]');
-document.getElementById('cartCount').textContent=saved.length;
-renderProducts(products);
+
+document.querySelectorAll('.filter-opt').forEach(o=>{
+  o.addEventListener('click',function(){
+    this.classList.toggle('active');
+    this.querySelector('input').checked=this.classList.contains('active');
+    applyAllFilters();
+  });
+});
+
+syncCartBadge();
+
+loadCatalogo().then(data=>{
+  products = data;
+  filtered = [...products];
+
+  // Aplica filtro de URL (?liga=brasileirao, ?tipo=selecoes, ?promo=true)
+  const params = new URLSearchParams(location.search);
+  if(params.get('liga')){
+    const ligaSlug = params.get('liga').toLowerCase();
+    filtered = products.filter(p=>p.liga.toLowerCase().replace(/\s+/g,'').includes(ligaSlug));
+  }
+  if(params.get('tipo')==='selecoes'){
+    filtered = products.filter(p=>p.liga==='Seleção');
+  }
+  if(params.get('promo')==='true'){
+    filtered = products.filter(p=>p.badge==='promo');
+  }
+
+  renderProducts(filtered);
+});
 </script>
 </body>
 </html>
