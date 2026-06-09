@@ -89,7 +89,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .badge{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 8px}
 .badge-new{background:var(--accent);color:#000}
 .badge-promo{background:var(--accent2);color:#fff}
-.badge-enc{background:rgba(255,255,255,0.12);color:var(--text)}
 .product-actions{position:absolute;bottom:0;left:0;right:0;padding:14px;display:flex;gap:8px;opacity:0;transform:translateY(8px);transition:all .25s;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.85),transparent)}
 .btn-add{flex:1;background:var(--accent);color:#000;border:none;padding:9px;font-family:var(--font-body);font-weight:800;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
 .btn-add:hover{background:#fff}
@@ -227,7 +226,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="filter-title">Status</div>
       <div class="filter-options">
         <div class="filter-opt"><input type="checkbox" id="f-disp"><label for="f-disp">Disponível</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-enc"><label for="f-enc">Sob Encomenda</label></div>
         <div class="filter-opt"><input type="checkbox" id="f-prom"><label for="f-prom">Em Promoção</label></div>
       </div>
     </div>
@@ -314,7 +312,6 @@ function renderProducts(list){
         <div class="badge-wrap">
           ${p.badge==='new'?'<span class="badge badge-new">Novo</span>':''}
           ${p.badge==='promo'?'<span class="badge badge-promo">Promoção</span>':''}
-          ${p.badge==='enc'?'<span class="badge badge-enc">Encomenda</span>':''}
         </div>
         <div class="product-img-inner">
           ${productImageHTML(p,100,130)}

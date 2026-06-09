@@ -37,8 +37,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .cart-empty{text-align:center;padding:100px 40px;display:none}
 .cart-empty h2{font-family:var(--font-display);font-size:48px;margin-bottom:16px;color:var(--muted)}
 .cart-empty p{color:var(--muted);margin-bottom:32px}
-.enc-note{background:rgba(232,255,0,0.05);border:1px solid rgba(232,255,0,0.15);padding:16px 20px;margin-top:16px;font-size:13px;color:var(--muted);line-height:1.6}
-.enc-note strong{color:var(--accent)}
 
 /* ORDER SUMMARY */
 .order-summary{background:var(--bg3);border:1px solid var(--border);padding:32px;height:fit-content;position:sticky;top:80px}
@@ -111,9 +109,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <button class="btn-checkout" style="max-width:280px;margin:0 auto" onclick="location.href='loja.html'">Ver Catálogo</button>
     </div>
 
-    <div class="enc-note" id="encNote" style="display:none">
-      <strong>⚡ Produto sob encomenda no carrinho.</strong> O prazo de envio será confirmado via WhatsApp após a confirmação do pagamento.
-    </div>
   </div>
 
   <div class="order-summary">
@@ -151,7 +146,6 @@ function render(){
   const encNote=document.getElementById('encNote');
   if(!cart.length){el.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
-  const hasEnc=cart.some(i=>i.enc);
   encNote.style.display=hasEnc?'block':'none';
   el.innerHTML=cart.map((item,i)=>`
     <div class="cart-item">
@@ -165,7 +159,6 @@ function render(){
         <div class="item-name">${item.name}</div>
         <div class="item-meta">
           <span class="meta-tag">Tamanho: ${item.size}</span>
-          ${item.enc?'<span class="meta-tag" style="border-color:rgba(232,255,0,0.3);color:var(--accent)">Sob Encomenda</span>':''}
         </div>
         <div class="item-qty">
           <button class="qty-btn" onclick="updateQty(${i},-1)">−</button>

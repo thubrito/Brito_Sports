@@ -44,7 +44,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .gallery-badge{position:absolute;top:16px;left:16px;display:flex;flex-direction:column;gap:6px;z-index:3}
 .badge{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px}
 .badge-new{background:var(--accent);color:#000}
-.badge-enc{background:rgba(255,255,255,0.12);color:var(--text);border:1px solid var(--border)}
 .badge-promo{background:var(--accent2);color:#fff}
 .gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;background:rgba(10,10,10,0.75);border:1px solid var(--border);backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .gallery-arrow:hover{background:rgba(232,255,0,0.15);border-color:var(--accent)}
@@ -73,10 +72,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .divider{height:1px;background:var(--border);margin:24px 0}
 
 /* ENCOMENDA ALERT */
-.enc-alert{background:rgba(232,255,0,0.05);border:1px solid rgba(232,255,0,0.2);padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:flex-start}
-.enc-alert svg{width:18px;height:18px;stroke:var(--accent);fill:none;flex-shrink:0;margin-top:1px}
-.enc-alert p{font-size:13px;color:var(--muted);line-height:1.6}
-.enc-alert strong{color:var(--accent)}
 
 /* SIZES */
 .size-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
@@ -182,7 +177,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   .qty-control{width:100%}
   .qty-btn{flex:1}
   .qty-num{flex:2}
-  .enc-alert{padding:12px 16px}
   .wpp-float{bottom:20px;right:20px;width:48px;height:48px}
   .wpp-float svg{width:24px;height:24px}
 }
@@ -257,10 +251,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     </div>
     <div class="price-installment">ou <strong>2x de R$69,50</strong> sem juros via Pix parcelado</div>
 
-    <div class="enc-alert">
-      <svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-linecap="round"/></svg>
-      <p><strong>Produto sob encomenda.</strong> O prazo de envio será informado após confirmação do pagamento. Normalmente entre 7 e 15 dias úteis.</p>
-    </div>
 
     <div class="divider"></div>
 
@@ -352,7 +342,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   <h4>Envio</h4>
   <p>Todos os pedidos são enviados pelos Correios (PAC ou SEDEX). O frete é calculado automaticamente no checkout com base no seu CEP. O código de rastreamento é enviado via WhatsApp após a postagem.</p>
   <h4>Prazo</h4>
-  <p>Por trabalharmos sob encomenda, o prazo de envio é de 7 a 15 dias úteis após a confirmação do pagamento. O prazo exato será informado por WhatsApp.</p>
+  <p>O prazo de envio é de 7 a 15 dias úteis após a confirmação do pagamento. O prazo exato será informado por WhatsApp.</p>
   <h4>Trocas</h4>
   <p>Aceitamos trocas em até 7 dias após o recebimento, desde que o produto esteja sem uso e com etiqueta. Entre em contato pelo WhatsApp para iniciar o processo.</p>
 </div>
@@ -415,7 +405,6 @@ function buildGallery(product) {
   const badge = document.getElementById('galleryBadge');
   badge.innerHTML =
     (product.badge==='new'  ? '<span class="badge badge-new">Novo</span>' : '') +
-    (product.badge==='enc'  ? '<span class="badge badge-enc">Sob Encomenda</span>' : '') +
     (product.badge==='promo'? '<span class="badge badge-promo">Promoção</span>' : '');
 
   updateGalleryUI();
@@ -525,8 +514,6 @@ function renderProduct(p){
   document.querySelector('.price-installment').innerHTML = `ou <strong>2x de R$${(p.price/2).toFixed(2).replace('.',',')}</strong> sem juros via Pix parcelado`;
 
   // Encomenda alert
-  const encAlert = document.querySelector('.enc-alert');
-  encAlert.style.display = p.status === 'encomenda' ? 'flex' : 'none';
 
   // Galeria de imagens
   buildGallery(p);
@@ -547,7 +534,7 @@ function renderProduct(p){
       <div class="spec-row"><span class="key">Categoria</span><span class="val">Masculino</span></div>
       <div class="spec-row"><span class="key">Material</span><span class="val">100% Poliéster</span></div>
       <div class="spec-row"><span class="key">Tamanhos</span><span class="val">${p.sizes.join(', ')}</span></div>
-      <div class="spec-row"><span class="key">Status</span><span class="val">${p.status==='encomenda'?'Sob Encomenda':'Disponível'}</span></div>
+      <div class="spec-row"><span class="key">Status</span><span class="val">${'Disponível'}</span></div>
     </div>`;
 
   // Descrição

@@ -31,7 +31,6 @@ function addToCart(product, size, qty = 1) {
       price: product.price,
       size: size,
       qty: qty,
-      enc: product.status === 'encomenda',
       color: product.color,
       stroke: product.stroke,
       imagem: product.imagens ? product.imagens[0] : null
