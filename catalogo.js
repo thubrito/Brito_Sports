@@ -9,12 +9,15 @@ async function loadCatalogo() {
 }
 
 function getCartCount() {
-  return JSON.parse(localStorage.getItem('cart') || '[]').length;
+  return JSON.parse(localStorage.getItem('cart') || '[]').reduce((s,i)=>s+(i.qty||1),0);
 }
 
 function syncCartBadge() {
   const el = document.getElementById('cartCount');
-  if (el) el.textContent = getCartCount();
+  if (!el) return;
+  const total = getCartCount();
+  el.textContent = total;
+  el.style.display = total > 0 ? 'flex' : 'none';
 }
 
 function addToCart(product, size, qty = 1) {
