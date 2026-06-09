@@ -16,7 +16,8 @@
     "stroke": "rgba(60,120,255,0.6)",
     "descricao": "A camisa oficial da Seleção Brasileira para a Copa do Mundo 2026. O icônico amarelo-ouro com detalhes em verde, símbolo do futebol brasileiro ao redor do mundo.",
     "imagens": [
-      "assets/img/camisas/brasil/frente.png"
+      "assets/img/camisas/brasil/frente.png",
+      "assets/img/camisas/brasil/verso.png"
     ]
   },
    {
