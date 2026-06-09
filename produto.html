@@ -45,6 +45,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .badge{font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px}
 .badge-new{background:var(--accent);color:#000}
 .badge-promo{background:var(--accent2);color:#fff}
+.price-discount{background:var(--accent2);color:#fff;font-size:12px;font-weight:800;letter-spacing:1px;padding:4px 8px;align-self:center}
 .gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;background:rgba(10,10,10,0.75);border:1px solid var(--border);backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .gallery-arrow:hover{background:rgba(232,255,0,0.15);border-color:var(--accent)}
 .gallery-arrow svg{width:18px;height:18px;stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -251,10 +252,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <div class="product-season">Sport Club Corinthians Paulista</div>
 
     <div class="product-price-block">
-      <span class="price-main">R$139</span>
-      <span class="price-old">R$169</span>
+      <span class="price-main" id="priceMain">—</span>
+      <span class="price-old" id="priceOld"></span>
+      <span class="price-discount" id="priceDiscount"></span>
     </div>
-    <div class="price-installment">ou <strong>2x de R$69,50</strong> sem juros via Pix parcelado</div>
+    <div class="price-installment" id="priceInstallment"></div>
 
 
     <div class="divider"></div>
@@ -513,10 +515,19 @@ function renderProduct(p){
   document.querySelector('.product-season').textContent = p.club + ' — Temporada ' + p.temporada;
 
   // Preço
-  document.querySelector('.price-main').textContent = 'R$' + p.price;
-  const oldEl = document.querySelector('.price-old');
-  oldEl.textContent = p.oldPrice ? 'R$' + p.oldPrice : '';
-  document.querySelector('.price-installment').innerHTML = `ou <strong>2x de R$${(p.price/2).toFixed(2).replace('.',',')}</strong> sem juros via Pix parcelado`;
+  document.getElementById('priceMain').textContent = 'R$' + p.price;
+  const oldEl = document.getElementById('priceOld');
+  const discEl = document.getElementById('priceDiscount');
+  if (p.oldPrice) {
+    oldEl.textContent = 'R$' + p.oldPrice;
+    const pct = Math.round((1 - p.price / p.oldPrice) * 100);
+    discEl.textContent = '-' + pct + '%';
+    discEl.style.display = 'inline-block';
+  } else {
+    oldEl.textContent = '';
+    discEl.style.display = 'none';
+  }
+  document.getElementById('priceInstallment').innerHTML = `ou <strong>2x de R$${(p.price/2).toFixed(2).replace('.',',')}</strong> sem juros via Pix parcelado`;
 
   // Encomenda alert
 
