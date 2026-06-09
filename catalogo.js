@@ -57,10 +57,9 @@ function jerseyPlaceholderSVG(product, w = 100, h = 130) {
 function productImageHTML(product, w = 100, h = 130) {
   const src = product.imagens ? product.imagens[0] : product.imagem;
   if (src) {
-    const fallback = jerseyPlaceholderSVG(product, w, h).replace(/`/g, '\\`').replace(/"/g, '&quot;');
     return `<img src="${src}" alt="${product.club} ${product.name}"
-      style="width:100%;height:100%;object-fit:contain;padding:10%"
-      onerror="this.outerHTML='${jerseyPlaceholderSVG(product, w, h).replace(/'/g, "&#39;")}'">`;
+      style="width:100%;height:100%;object-fit:cover;display:block"
+      onerror="this.style.display='none'">`;
   }
   return jerseyPlaceholderSVG(product, w, h);
 }
