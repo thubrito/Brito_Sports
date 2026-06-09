@@ -184,59 +184,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <div class="shop-layout">
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
-    <div class="filter-section">
-      <div class="filter-title">Liga</div>
-      <div class="filter-options">
-        <div class="filter-opt active"><input type="checkbox" checked id="f-br"><label for="f-br">Brasileirão</label><span class="count">142</span></div>
-        <div class="filter-opt"><input type="checkbox" id="f-pl"><label for="f-pl">Premier League</label><span class="count">98</span></div>
-        <div class="filter-opt"><input type="checkbox" id="f-ll"><label for="f-ll">La Liga</label><span class="count">76</span></div>
-        <div class="filter-opt"><input type="checkbox" id="f-l1"><label for="f-l1">Ligue 1</label><span class="count">54</span></div>
-        <div class="filter-opt"><input type="checkbox" id="f-bu"><label for="f-bu">Bundesliga</label><span class="count">60</span></div>
-        <div class="filter-opt"><input type="checkbox" id="f-sa"><label for="f-sa">Serie A</label><span class="count">48</span></div>
-        <div class="filter-opt"><input type="checkbox" id="f-sel"><label for="f-sel">Seleções</label><span class="count">120</span></div>
-      </div>
-    </div>
-    <div class="filter-section">
-      <div class="filter-title">Tipo</div>
-      <div class="filter-options">
-        <div class="filter-opt"><input type="checkbox" id="f-tit"><label for="f-tit">Titular</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-res"><label for="f-res">Reserva</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-thi"><label for="f-thi">Third</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-tre"><label for="f-tre">Treino</label></div>
-      </div>
-    </div>
-    <div class="filter-section">
-      <div class="filter-title">Categoria</div>
-      <div class="filter-options">
-        <div class="filter-opt"><input type="checkbox" id="f-mas"><label for="f-mas">Masculino</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-fem"><label for="f-fem">Feminino</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-inf"><label for="f-inf">Infantil</label></div>
-      </div>
-    </div>
-    <div class="filter-section">
-      <div class="filter-title">Tamanho</div>
-      <div class="filter-options">
-        <div class="filter-opt"><input type="checkbox" id="f-p"><label for="f-p">P</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-m"><label for="f-m">M</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-g"><label for="f-g">G</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-gg"><label for="f-gg">GG</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-xg"><label for="f-xg">XG</label></div>
-      </div>
-    </div>
-    <div class="filter-section">
-      <div class="filter-title">Status</div>
-      <div class="filter-options">
-        <div class="filter-opt"><input type="checkbox" id="f-disp"><label for="f-disp">Disponível</label></div>
-        <div class="filter-opt"><input type="checkbox" id="f-prom"><label for="f-prom">Em Promoção</label></div>
-      </div>
-    </div>
-    <div class="filter-section">
-      <div class="filter-title">Preço</div>
-      <div class="price-range">
-        <input type="range" min="50" max="300" value="300" id="priceRange" oninput="updatePrice(this.value)">
-        <div class="price-labels"><span>R$50</span><span id="priceMax">R$300</span></div>
-      </div>
-    </div>
+    <div id="sidebarContent"><!-- gerado pelo JS --></div>
     <button class="clear-filters" onclick="clearFilters()">Limpar Filtros</button>
   </aside>
 
@@ -248,7 +196,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
           <svg viewBox="0 0 24 24" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="10" y2="18"/></svg>
           Filtros
         </button>
-        <span class="results-count"><strong>142</strong> produtos encontrados</span>
+        <span class="results-count"><strong>0</strong> produtos encontrados</span>
       </div>
       <div class="toolbar-right">
         <div class="search-box">
@@ -335,20 +283,90 @@ function renderProducts(list){
   `).join('');
 }
 
-function applyAllFilters(){
-  const q = document.querySelector('.search-box input')?.value.toLowerCase()||'';
-  const checkedLigas = [...document.querySelectorAll('#sidebar .filter-section:nth-child(1) .filter-opt.active')].map(o=>o.querySelector('label').textContent.trim());
-  const checkedTipos = [...document.querySelectorAll('#sidebar .filter-section:nth-child(2) .filter-opt.active')].map(o=>o.querySelector('label').textContent.trim());
-  const checkedSizes = [...document.querySelectorAll('#sidebar .filter-section:nth-child(4) .filter-opt.active')].map(o=>o.querySelector('label').textContent.trim());
-  const maxPrice = parseInt(document.getElementById('priceRange').value)||300;
-  filtered = products.filter(p=>{
-    if(q && !p.name.toLowerCase().includes(q) && !p.club.toLowerCase().includes(q)) return false;
-    if(checkedLigas.length && !checkedLigas.some(l=>p.liga.toLowerCase().includes(l.toLowerCase()))) return false;
-    if(checkedTipos.length && !checkedTipos.some(t=>p.tipo.toLowerCase().includes(t.toLowerCase()))) return false;
-    if(checkedSizes.length && !checkedSizes.some(s=>p.sizes.includes(s))) return false;
-    if(p.price > maxPrice) return false;
+// Estado dos filtros
+const activeFilters = { ligas: [], tipos: [], tamanhos: [], promo: false };
+let maxPrice = 300;
+
+// Gera sidebar dinamicamente a partir dos dados do JSON
+function buildSidebar(data) {
+  const ligas   = [...new Set(data.map(p=>p.liga))].sort();
+  const tipos   = [...new Set(data.map(p=>p.tipo))].sort();
+  const tamanhos = ['P','M','G','GG','XG'];
+  const maxP    = Math.max(...data.map(p=>p.price));
+  maxPrice      = maxP;
+
+  function countLiga(l)  { return data.filter(p=>p.liga===l).length; }
+  function countTipo(t)  { return data.filter(p=>p.tipo===t).length; }
+  function countSize(s)  { return data.filter(p=>p.sizes.includes(s)).length; }
+  function countPromo()  { return data.filter(p=>p.oldPrice).length; }
+
+  function section(title, opts) {
+    return `<div class="filter-section">
+      <div class="filter-title">${title}</div>
+      <div class="filter-options">${opts}</div>
+    </div>`;
+  }
+  function opt(key, group, value, label, count) {
+    const id = `f-${key}`;
+    return `<div class="filter-opt" data-group="${group}" data-value="${value}" onclick="toggleFilter(this)">
+      <input type="checkbox" id="${id}">
+      <label for="${id}">${label}</label>
+      <span class="count">${count}</span>
+    </div>`;
+  }
+
+  const html = [
+    section('Liga',    ligas.map((l,i)=>opt('liga'+i,'liga',l,l,countLiga(l))).join('')),
+    section('Tipo',    tipos.map((t,i)=>opt('tipo'+i,'tipo',t,t,countTipo(t))).join('')),
+    section('Tamanho', tamanhos.map(s=>opt('sz'+s,'tamanho',s,s,countSize(s))).join('')),
+    section('Promoção',opt('promo','promo','sim','Em Promoção',countPromo())),
+    `<div class="filter-section">
+      <div class="filter-title">Preço até</div>
+      <div class="price-range">
+        <input type="range" min="50" max="${maxP}" value="${maxP}" id="priceRange" oninput="updatePrice(this.value)">
+        <div class="price-labels"><span>R$50</span><span id="priceMax">R$${maxP}</span></div>
+      </div>
+    </div>`
+  ].join('');
+
+  document.getElementById('sidebarContent').innerHTML = html;
+}
+
+function toggleFilter(el) {
+  el.classList.toggle('active');
+  el.querySelector('input').checked = el.classList.contains('active');
+  const group = el.dataset.group;
+  const value = el.dataset.value;
+  if (group === 'liga') {
+    activeFilters.ligas = getChecked('liga');
+  } else if (group === 'tipo') {
+    activeFilters.tipos = getChecked('tipo');
+  } else if (group === 'tamanho') {
+    activeFilters.tamanhos = getChecked('tamanho');
+  } else if (group === 'promo') {
+    activeFilters.promo = el.classList.contains('active');
+  }
+  applyAllFilters();
+}
+
+function getChecked(group) {
+  return [...document.querySelectorAll(`.filter-opt[data-group="${group}"].active`)]
+    .map(o => o.dataset.value);
+}
+
+function applyAllFilters() {
+  const q = document.querySelector('.search-box input')?.value.toLowerCase() || '';
+  const maxP = parseInt(document.getElementById('priceRange')?.value) || maxPrice;
+  filtered = products.filter(p => {
+    if (q && !p.name.toLowerCase().includes(q) && !p.club.toLowerCase().includes(q) && !p.liga.toLowerCase().includes(q)) return false;
+    if (activeFilters.ligas.length    && !activeFilters.ligas.includes(p.liga))                     return false;
+    if (activeFilters.tipos.length    && !activeFilters.tipos.includes(p.tipo))                     return false;
+    if (activeFilters.tamanhos.length && !activeFilters.tamanhos.some(s => p.sizes.includes(s)))    return false;
+    if (activeFilters.promo           && !p.oldPrice)                                               return false;
+    if (p.price > maxP)                                                                             return false;
     return true;
   });
+  document.querySelector('.results-count strong').textContent = filtered.length;
   renderProducts(filtered);
 }
 
@@ -357,7 +375,7 @@ function sortProducts(v){
   let sorted=[...filtered];
   if(v==='asc') sorted.sort((a,b)=>a.price-b.price);
   if(v==='desc') sorted.sort((a,b)=>b.price-a.price);
-  if(v==='new') sorted.reverse();
+  if(v==='new') sorted = [...products].reverse().filter(p=>filtered.includes(p));
   renderProducts(sorted);
 }
 function setView(n,btn){
@@ -375,22 +393,15 @@ function toggleSidebar(){
   o.classList.toggle('open');
 }
 function clearFilters(){
+  activeFilters.ligas=[];activeFilters.tipos=[];activeFilters.tamanhos=[];activeFilters.promo=false;
   document.querySelectorAll('.filter-opt').forEach(o=>{o.classList.remove('active');o.querySelector('input').checked=false;});
-  document.getElementById('priceRange').value=300;
-  document.getElementById('priceMax').textContent='R$300';
+  const pr=document.getElementById('priceRange');
+  if(pr){pr.value=maxPrice;document.getElementById('priceMax').textContent='R$'+maxPrice;}
   applyAllFilters();
 }
 function updatePrice(v){ document.getElementById('priceMax').textContent='R$'+v; applyAllFilters(); }
 function handleAddToCart(id){ const p=products.find(x=>x.id===id); addToCart(p, p.sizes[0]||'M'); }
 function wppProduct(id){ const p=products.find(x=>x.id===id); const msg=encodeURIComponent(`Olá! Tenho interesse na camisa: ${p.name} - ${p.club}\nValor: R$${p.price}`); window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank'); }
-
-document.querySelectorAll('.filter-opt').forEach(o=>{
-  o.addEventListener('click',function(){
-    this.classList.toggle('active');
-    this.querySelector('input').checked=this.classList.contains('active');
-    applyAllFilters();
-  });
-});
 
 syncCartBadge();
 
@@ -411,6 +422,7 @@ loadCatalogo().then(data=>{
     filtered = products.filter(p=>p.badge==='promo');
   }
 
+  buildSidebar(data);
   renderProducts(filtered);
 });
 </script>
