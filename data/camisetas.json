@@ -60,30 +60,28 @@
     "imagens": [
     "assets/img/camisas/PortugalAway2026/frente.png",
     "assets/img/camisas/PortugalAway2026/verso.png"
-  ]
+    ]
   },
   {
     "id": 4,
-    "name": "Camisa Titular 2025/26",
+    "name": "Camisa Flamengo III 25/26 Torcedor Adidas Masculina - Off White",
     "club": "Flamengo",
     "slug": "flamengo",
-    "liga": "Brasileirão",
-    "tipo": "Titular",
+    "liga": "Brasileirão Série A",
+    "tipo": "III",
     "temporada": "2025/26",
-    "price": 139,
+    "price": 189,
     "oldPrice": null,
     "badge": "new",
     "status": "disponivel",
     "sizes": ["P", "M", "G", "GG"],
-    "color": "rgba(180,20,20,0.4)",
-    "stroke": "rgba(220,50,50,0.6)",
-    "descricao": "A camisa do Mengão para a temporada 2025/26. As tradicionais listras rubro-negras em tecido de alta qualidade, ideal para os verdadeiros torcedores.",
+    "color": "rgba(230,220,190,0.35)",
+    "stroke": "rgba(212,175,55,0.7)",
+    "descricao": "A terceira camisa do Flamengo para a temporada 2025/26. Modelo torcedor Adidas na elegante cor off white, com detalhes dourados e acabamento premium. Inspirada na tradição e na grandeza do clube, oferece conforto, leveza e estilo para acompanhar o Mengão em todos os  momentos.",
     "imagens": [
-      "assets/img/camisas/flamengo/titular-2025-1.png",
-      "assets/img/camisas/flamengo/titular-2025-2.png",
-      "assets/img/camisas/flamengo/titular-2025-3.png",
-      "assets/img/camisas/flamengo/titular-2025-4.png"
-    ]
+    "assets/img/camisas/FlamengoOffWhite2026/frente.png",
+    "assets/img/camisas/FlamengoOffWhite2026/verso.png"
+  ]
   },
   {
     "id": 5,
