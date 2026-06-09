@@ -28,8 +28,8 @@
     "liga": "Copa do Mundo",
     "tipo": "Reserva",
     "temporada": "2026",
-    "price": 149,
-    "oldPrice": 179,
+    "price": 199,
+    "oldPrice": 240,
     "badge": "enc",
     "status": "encomenda",
     "sizes": ["P", "M", "G", "GG", "XG"],
@@ -37,8 +37,8 @@
     "stroke": "rgba(0,34,102,0.6)",
     "descricao": "A camisa reserva da Seleção Brasileira para a Copa do Mundo de 2026 traz o tradicional azul vibrante com detalhes modernos. Confeccionada em tecido de alta performance com tecnologia de absorção de umidade para garantir o máximo conforto.",
     "imagens": [
-      "assets/img/camisas/BrasilAzul2026/Frente.png",
-      "assets/img/camisas/BrasilAzul2026/Verso.png"
+      "assets/img/camisas/BrasilAzul2026/frente.png",
+      "assets/img/camisas/BrasilAzul2026/verso.png"
     ]
   },
   {
