@@ -134,11 +134,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 </div>
 
 <script>
-const mockCart = [
-  {id:1,name:'Camisa Titular 2025/26',club:'Corinthians',liga:'Brasileirão',price:139,size:'G',qty:1,enc:true,color:'rgba(220,50,50,0.4)',stroke:'rgba(220,50,50,0.6)'},
-  {id:2,name:'Camisa Titular Copa 2026',club:'Brasil',liga:'Seleção',price:159,size:'M',qty:1,enc:false,color:'rgba(0,30,120,0.4)',stroke:'rgba(60,120,255,0.6)'},
-];
-let cart = JSON.parse(localStorage.getItem('cart')||'null') || mockCart;
+let cart = JSON.parse(localStorage.getItem('cart')||'[]');
 
 function render(){
   const el=document.getElementById('cartItems');
