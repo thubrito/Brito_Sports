@@ -16,31 +16,29 @@
     "stroke": "rgba(60,120,255,0.6)",
     "descricao": "A camisa oficial da Seleção Brasileira para a Copa do Mundo 2026. O icônico amarelo-ouro com detalhes em verde, símbolo do futebol brasileiro ao redor do mundo.",
     "imagens": [
-      "assets/img/camisas/brasil/frente.png",
-      "assets/img/camisas/brasil/verso.png"
+      "assets/img/camisas/BrasilAmarela2026/frente.png",
+      "assets/img/camisas/BrasilAmarela2026/verso.png"
     ]
   },
-   {
+{
     "id": 2,
-    "name": "Camisa Titular 2025/26",
-    "club": "Corinthians",
-    "slug": "corinthians",
-    "liga": "Brasileirão",
-    "tipo": "Titular",
-    "temporada": "2025/26",
-    "price": 139,
-    "oldPrice": 169,
+    "name": "Camisa Reserva Brasil Copa 2026",
+    "club": "Seleção Brasileira",
+    "slug": "brasil",
+    "liga": "Copa do Mundo",
+    "tipo": "Reserva",
+    "temporada": "2026",
+    "price": 149,
+    "oldPrice": 179,
     "badge": "enc",
     "status": "encomenda",
-    "sizes": ["P", "M", "G", "GG"],
-    "color": "rgba(220,50,50,0.35)",
-    "stroke": "rgba(220,50,50,0.6)",
-    "descricao": "A camisa titular do Sport Club Corinthians Paulista para a temporada 2025/26 traz o clássico design em preto e branco. Confeccionada em tecido de alta performance com tecnologia de absorção de umidade.",
+    "sizes": ["P", "M", "G", "GG", "XG"],
+    "color": "rgba(0,34,102,0.35)",
+    "stroke": "rgba(0,34,102,0.6)",
+    "descricao": "A camisa reserva da Seleção Brasileira para a Copa do Mundo de 2026 traz o tradicional azul vibrante com detalhes modernos. Confeccionada em tecido de alta performance com tecnologia de absorção de umidade para garantir o máximo conforto.",
     "imagens": [
-      "assets/img/camisas/corinthians/titular-2025-1.png",
-      "assets/img/camisas/corinthians/titular-2025-2.png",
-      "assets/img/camisas/corinthians/titular-2025-3.png",
-      "assets/img/camisas/corinthians/titular-2025-4.png"
+      "assets/img/camisas/BrasilAzul2026/Frente.png",
+      "assets/img/camisas/BrasilAzul2026/Verso.png"
     ]
   },
   {
