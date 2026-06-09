@@ -43,26 +43,24 @@
   },
   {
     "id": 3,
-    "name": "Camisa Home 2025/26",
-    "club": "Chelsea",
-    "slug": "chelsea",
-    "liga": "Premier League",
-    "tipo": "Titular",
-    "temporada": "2025/26",
-    "price": 149,
+    "name": "Camisa Reserva Portugal Copa 2026",
+    "club": "Portugal",
+    "slug": "portugal",
+    "liga": "Copa do Mundo",
+    "tipo": "Reserva",
+    "temporada": "2026",
+    "price": 189,
     "oldPrice": null,
     "badge": "new",
     "status": "disponivel",
     "sizes": ["P", "M", "G", "GG"],
-    "color": "rgba(0,0,120,0.4)",
-    "stroke": "rgba(100,150,255,0.6)",
-    "descricao": "A camisa principal do Chelsea FC para a temporada 2025/26. Azul royal tradicional com detalhes modernos e tecnologia Nike Dri-FIT ADV.",
+    "color": "rgba(120,220,220,0.35)",
+    "stroke": "rgba(120,220,220,0.7)",
+    "descricao": "A camisa reserva de Portugal para a Copa do Mundo 2026. Design moderno em branco e verde água com padrões inspirados nas ondas do oceano, tecnologia de tecido respirável e acabamento premium para máximo conforto dentro e fora dos gramados.",
     "imagens": [
-      "assets/img/camisas/chelsea/home-2025-1.png",
-      "assets/img/camisas/chelsea/home-2025-2.png",
-      "assets/img/camisas/chelsea/home-2025-3.png",
-      "assets/img/camisas/chelsea/home-2025-4.png"
-    ]
+    "assets/img/camisas/PortugalAway2026/frente.png",
+    "assets/img/camisas/PortugalAway2026/verso.png"
+  ]
   },
   {
     "id": 4,
