@@ -106,7 +106,7 @@
   .liga-name { font-size: 13px; font-weight: 700; text-align: center; color: var(--text); letter-spacing: .5px; }
   .liga-count { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
 
-  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .product-card { background: var(--bg3); cursor: pointer; transition: all .2s; position: relative; overflow: hidden; border: 1px solid transparent; }
   .product-card:hover { border-color: rgba(232,255,0,0.2); }
   .product-card:hover .product-img-inner { transform: scale(1.04); }
@@ -122,11 +122,11 @@
   .btn-add:hover { background: #fff; }
   .btn-wpp { width: 40px; height: 40px; background: #25D366; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .btn-wpp svg { width: 18px; height: 18px; fill: #fff; }
-  .product-info { padding: 16px; }
+  .product-info { padding: 20px 16px; }
   .product-club { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .product-name { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 12px; }
+  .product-name { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 12px; }
   .product-price-row { display: flex; align-items: baseline; gap: 10px; }
-  .product-price { font-family: var(--font-display); font-size: 28px; color: var(--accent); }
+  .product-price { font-family: var(--font-display); font-size: 32px; color: var(--accent); }
   .product-price-old { font-size: 13px; color: var(--muted); text-decoration: line-through; }
   .product-sizes { display: flex; gap: 4px; margin-top: 10px; }
   .size-dot { width: 26px; height: 26px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--muted); font-weight: 700; cursor: pointer; transition: all .15s; }
@@ -601,8 +601,8 @@ function toggleFaq(el) {
   .ligas-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
   .liga-card { padding: 24px 16px; }
 
-  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
-  .product-info { padding: 12px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .product-info { padding: 14px; }
   .product-price { font-size: 22px; }
   .product-name { font-size: 12px; }
   .product-actions { opacity: 1; transform: none; }
