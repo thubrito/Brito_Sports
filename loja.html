@@ -135,13 +135,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 @media(max-width:768px){
   nav{padding:0 20px;height:56px}
   .nav-links{display:none}
-  .page-header{padding:76px 20px 32px}
-  .page-header h1{font-size:40px}
-  .shop-main{padding:20px}
-  .products-grid,.products-grid.view-2,.products-grid.view-4{grid-template-columns:repeat(2,1fr)}
-  .shop-toolbar{flex-wrap:wrap;gap:10px}
-  .search-box input{width:140px}
+  .page-header{padding:76px 20px 28px}
+  .page-header h1{font-size:36px}
+  .shop-main{padding:16px}
+  .products-grid,.products-grid.view-2,.products-grid.view-4{grid-template-columns:repeat(2,1fr);gap:8px}
+  .shop-toolbar{flex-wrap:wrap;gap:8px}
+  .search-box input{width:120px;font-size:12px}
   .sort-select{font-size:11px}
+  .product-name{font-size:12px}
+  .mobile-filter-btn{font-size:11px;padding:8px 12px}
+  .wpp-float{bottom:20px;right:20px;width:48px;height:48px}
+}
+@media(max-width:400px){
+  .products-grid,.products-grid.view-2,.products-grid.view-4{grid-template-columns:repeat(2,1fr);gap:6px}
+  .shop-main{padding:12px}
+  .page-header h1{font-size:30px}
 }
 </style>
 </head>

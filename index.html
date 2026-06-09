@@ -647,11 +647,18 @@ function toggleFaq(el) {
 
 /* ── MOBILE PEQUENO (≤480px) ── */
 @media (max-width: 480px) {
-  .hero-title { font-size: 52px; }
-  .section-title { font-size: 34px; }
-  .products-grid { grid-template-columns: 1fr; }
-  .ligas-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-title { font-size: 48px; }
+  .section-title { font-size: 32px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .ligas-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
   .benefits-grid { grid-template-columns: 1fr; }
   .selecao-small { min-height: 140px; padding: 28px 20px; }
+  .hero-left { padding: 80px 16px 32px; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
+  .hero-stat .num { font-size: 28px; }
+  .section { padding: 44px 16px; }
+  .product-info { padding: 10px; }
+  .product-name { font-size: 11px; }
+  .product-price { font-size: 20px; }
 }
 </style>

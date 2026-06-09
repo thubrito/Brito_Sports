@@ -64,7 +64,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .sec-badge svg{width:14px;height:14px;stroke:var(--muted);fill:none}
 
 @media(max-width:1024px){.cart-layout{grid-template-columns:1fr;padding:24px 32px 80px}.order-summary{position:static}}
-@media(max-width:768px){nav{padding:0 20px;height:56px}.breadcrumb{padding:76px 20px 0}.cart-layout{padding:20px 20px 60px}.cart-item{grid-template-columns:80px 1fr;gap:14px}.item-right{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}}
+@media(max-width:768px){
+  nav{padding:0 20px;height:56px}
+  .breadcrumb{padding:76px 20px 0}
+  .cart-layout{padding:16px 20px 60px}
+  .cart-item{grid-template-columns:72px 1fr;gap:12px;padding:14px}
+  .item-right{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}
+  .item-name{font-size:13px}
+  .item-price{font-size:26px}
+  .summary-title{font-size:26px}
+  .summary-total .val{font-size:32px}
+  .order-summary{padding:24px}
+  .security-badges{flex-wrap:wrap;gap:12px}
+}
+@media(max-width:480px){
+  .cart-item{grid-template-columns:60px 1fr;gap:10px}
+  .item-meta{flex-wrap:wrap;gap:4px}
+  .coupon-row{flex-direction:column}
+  .coupon-btn{width:100%;padding:12px}
+}
 </style>
 </head>
 <body>

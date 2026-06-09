@@ -88,7 +88,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .secure-item svg{width:13px;height:13px;stroke:var(--muted);fill:none}
 
 @media(max-width:1024px){.checkout-layout{grid-template-columns:1fr;padding:80px 32px 80px}.order-side{position:static}.steps{display:none}}
-@media(max-width:768px){nav{padding:0 20px;height:56px}.checkout-layout{padding:76px 20px 60px}.form-grid{grid-template-columns:1fr}}
+@media(max-width:768px){
+  nav{padding:0 20px;height:56px}
+  .checkout-layout{padding:76px 20px 60px}
+  .form-grid{grid-template-columns:1fr}
+  .pix-key-box{flex-direction:column;align-items:flex-start;gap:12px}
+  .pix-key{font-size:14px;letter-spacing:1px;word-break:break-all}
+  .pix-section{padding:20px}
+  .pix-qr{width:140px;height:140px}
+  .order-side{padding:20px}
+  .order-side-title{font-size:22px}
+  .sum-total .val{font-size:28px}
+  .secure-row{flex-wrap:wrap;gap:12px;justify-content:center}
+}
+@media(max-width:480px){
+  .pix-key{font-size:12px}
+  .form-section{padding:20px 16px}
+  .btn-place{font-size:12px;padding:16px}
+}
 </style>
 </head>
 <body>
