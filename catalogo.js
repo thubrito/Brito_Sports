@@ -59,7 +59,7 @@ function productImageHTML(product, w = 100, h = 130) {
   if (src) {
     const fallback = jerseyPlaceholderSVG(product, w, h).replace(/`/g, '\\`').replace(/"/g, '&quot;');
     return `<img src="${src}" alt="${product.club} ${product.name}"
-      style="width:100%;height:100%;object-fit:contain;padding:8px"
+      style="width:100%;height:100%;object-fit:contain;padding:10%"
       onerror="this.outerHTML='${jerseyPlaceholderSVG(product, w, h).replace(/'/g, "&#39;")}'">`;
   }
   return jerseyPlaceholderSVG(product, w, h);
