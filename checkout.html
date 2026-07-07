@@ -219,23 +219,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   <!-- SIDE SUMMARY -->
   <div class="order-side">
     <div class="order-side-title">SEU PEDIDO</div>
-    <div class="order-items">
-      <div class="oi">
-        <div class="oi-img"><svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(220,50,50,0.4)" stroke="rgba(220,50,50,0.6)" stroke-width="2"/></svg></div>
-        <div class="oi-info"><div class="oi-name">Camisa Titular Corinthians 2025/26</div><div class="oi-meta">Tamanho G • Qtd: 1</div></div>
-        <div class="oi-price">R$139</div>
-      </div>
-      <div class="oi">
-        <div class="oi-img"><svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="rgba(0,30,120,0.4)" stroke="rgba(60,120,255,0.6)" stroke-width="2"/></svg></div>
-        <div class="oi-info"><div class="oi-name">Camisa Titular Brasil Copa 2026</div><div class="oi-meta">Tamanho M • Qtd: 1</div></div>
-        <div class="oi-price">R$159</div>
-      </div>
-    </div>
+    <div class="order-items" id="orderItems"></div>
     <div class="divider"></div>
-    <div class="sum-row"><span class="lbl">Subtotal</span><span class="val">R$298</span></div>
+    <div class="sum-row"><span class="lbl">Subtotal</span><span class="val" id="subtotalVal">R$0</span></div>
     <div class="sum-row"><span class="lbl">Frete (PAC)</span><span class="val" id="freteVal">R$18</span></div>
     <div class="sum-row"><span class="lbl">Desconto</span><span class="val">—</span></div>
-    <div class="sum-total"><span class="lbl">Total</span><span class="val" id="totalFinal">R$316</span></div>
+    <div class="sum-total"><span class="lbl">Total</span><span class="val" id="totalFinal">R$0</span></div>
     <button class="btn-place" onclick="placeOrder()">Confirmar Pedido</button>
     <button class="btn-wpp-checkout" onclick="wppOrder()">
       <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.657 1.438 5.168L2 22l4.944-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
@@ -249,7 +238,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   </div>
 </div>
 
+<script src="catalogo.js"></script>
 <script>
+let cart = JSON.parse(localStorage.getItem('cart')||'[]');
+let cartSubtotal = 0;
+
+function renderOrderItems(){
+  const wrap = document.getElementById('orderItems');
+  if(!cart.length){
+    wrap.innerHTML = '<div style="padding:16px;text-align:center;color:var(--muted);font-size:12px">Seu carrinho está vazio.</div>';
+    cartSubtotal = 0;
+  } else {
+    wrap.innerHTML = cart.map(item=>`
+      <div class="oi">
+        <div class="oi-img">${item.imagem
+          ? `<img src="${item.imagem}" alt="${item.club} ${item.name}" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none'">`
+          : `<svg width="36" height="48" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="${item.color||'rgba(100,100,100,0.3)'}" stroke="${item.stroke||'rgba(150,150,150,0.5)'}" stroke-width="2"/></svg>`}
+        </div>
+        <div class="oi-info"><div class="oi-name">${item.name}</div><div class="oi-meta">Tamanho ${item.size} • Qtd: ${item.qty}</div></div>
+        <div class="oi-price">R$${item.price*item.qty}</div>
+      </div>
+    `).join('');
+    cartSubtotal = cart.reduce((a,i)=>a+i.price*i.qty,0);
+  }
+  document.getElementById('subtotalVal').textContent = 'R$'+cartSubtotal;
+  const frete = document.querySelector('[name=frete]:checked')?.value==='sedex'?32:18;
+  document.getElementById('freteVal').textContent = 'R$'+frete;
+  document.getElementById('totalFinal').textContent = 'R$'+(cartSubtotal+frete);
+}
+renderOrderItems();
 function formatCep(el){ let v=el.value.replace(/\D/g,''); if(v.length>5) v=v.substring(0,5)+'-'+v.substring(5,8); el.value=v; }
 function buscarCep(){
   const cep=document.getElementById('cep').value.replace(/\D/g,'');
@@ -270,7 +287,7 @@ function buscarCep(){
 document.querySelectorAll('[name=frete]').forEach(r=>r.addEventListener('change',function(){
   const prices={pac:18,sedex:32};
   document.getElementById('freteVal').textContent='R$'+prices[this.value];
-  document.getElementById('totalFinal').textContent='R$'+(298+prices[this.value]);
+  document.getElementById('totalFinal').textContent='R$'+(cartSubtotal+prices[this.value]);
   document.querySelectorAll('.frete-opt').forEach(o=>o.classList.remove('active'));
   this.closest('.frete-opt').classList.add('active');
 }));
@@ -280,14 +297,26 @@ function placeOrder(){
   const email=document.getElementById('email').value;
   const wpp=document.getElementById('wpp').value;
   if(!nome||!email||!wpp){alert('Preencha os dados obrigatórios.');return;}
-  sessionStorage.setItem('orderData',JSON.stringify({nome,email,wpp,pedido:'BS'+Math.floor(Math.random()*9000+1000)}));
+  if(!cart.length){alert('Seu carrinho está vazio.');return;}
+  const frete = document.querySelector('[name=frete]:checked')?.value==='sedex'?32:18;
+  sessionStorage.setItem('orderData',JSON.stringify({
+    nome, email, wpp,
+    pedido:'BS'+Math.floor(Math.random()*9000+1000),
+    itens: cart,
+    subtotal: cartSubtotal,
+    frete: frete,
+    total: cartSubtotal+frete
+  }));
+  localStorage.removeItem('cart');
   location.href='pedido-confirmado.html';
 }
 function wppOrder(){
   const nome=document.getElementById('nome').value||'Cliente';
   const cidade=document.getElementById('cidade').value||'—';
   const frete=document.querySelector('[name=frete]:checked')?.value==='sedex'?32:18;
-  const msg=encodeURIComponent(`Olá! Acabei de realizar um pedido na Brito's Store.\n\nPedido: #BS${Math.floor(Math.random()*9000+1000)}\n\nProdutos:\n• Camisa Titular Corinthians 2025/26 — G\n• Camisa Titular Brasil Copa 2026 — M\n\nTotal: R$${298+frete}\n\nNome: ${nome}\nCidade: ${cidade}\n\nVou enviar o comprovante do Pix.`);
+  if(!cart.length){alert('Seu carrinho está vazio.');return;}
+  const listaProdutos = cart.map(i=>`• ${i.name} — ${i.size} (x${i.qty})`).join('\n');
+  const msg=encodeURIComponent(`Olá! Acabei de realizar um pedido na Brito's Store.\n\nPedido: #BS${Math.floor(Math.random()*9000+1000)}\n\nProdutos:\n${listaProdutos}\n\nTotal: R$${cartSubtotal+frete}\n\nNome: ${nome}\nCidade: ${cidade}\n\nVou enviar o comprovante do Pix.`);
   window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank');
 }
 </script>
