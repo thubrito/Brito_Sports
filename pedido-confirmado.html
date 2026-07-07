@@ -20,6 +20,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 .confirm-title em{color:var(--accent);font-style:normal}
 .confirm-sub{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:32px}
 .order-number{display:inline-block;background:rgba(232,255,0,0.08);border:1px solid rgba(232,255,0,0.3);padding:12px 28px;font-family:var(--font-display);font-size:28px;color:var(--accent);letter-spacing:3px;margin-bottom:32px}
+
+.order-summary-box{text-align:left;border:1px solid var(--border);background:var(--bg2);margin-bottom:24px}
+.order-summary-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:14px 20px;border-bottom:1px solid var(--border)}
+.osi{display:flex;gap:12px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border)}
+.osi-img{width:44px;aspect-ratio:1/1;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.osi-img img{width:100%;height:100%;object-fit:contain}
+.osi-info{flex:1;text-align:left}
+.osi-name{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:2px}
+.osi-meta{font-size:11px;color:var(--muted)}
+.osi-price{font-family:var(--font-display);font-size:18px;color:var(--accent);flex-shrink:0}
+.os-totals{padding:14px 20px}
+.os-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);padding:4px 0}
+.os-row.total{color:var(--text);font-weight:700;font-size:14px;padding-top:10px;margin-top:6px;border-top:1px solid var(--border)}
+.os-row.total .val{color:var(--accent);font-family:var(--font-display);font-size:22px}
 .steps-confirm{display:flex;flex-direction:column;gap:0;margin-bottom:40px;text-align:left;border:1px solid var(--border)}
 .step-c{display:flex;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border);align-items:flex-start}
 .step-c:last-child{border-bottom:none}
@@ -34,7 +48,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 .btn-track:hover{background:rgba(232,255,0,0.06)}
 .btn-home{background:transparent;color:var(--muted);border:1px solid var(--border);padding:12px;font-family:var(--font-body);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;width:100%;transition:all .2s}
 .btn-home:hover{border-color:var(--text);color:var(--text)}
-@media(max-width:600px){.card{padding:40px 24px}.confirm-title{font-size:44px}}
+@media(max-width:600px){.card{padding:40px 24px}.confirm-title{font-size:44px}.osi{padding:12px 14px}.order-summary-title{padding:12px 14px}.os-totals{padding:12px 14px}}
 </style>
 </head>
 <body>
@@ -47,6 +61,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
   <h1 class="confirm-title">PEDIDO<br><em>CONFIRMADO!</em></h1>
   <p class="confirm-sub">Obrigado pela sua compra! Seu pedido foi registrado com sucesso e já está sendo processado.</p>
   <div class="order-number" id="orderNum">#BS1024</div>
+
+  <div class="order-summary-box" id="orderSummaryBox" style="display:none">
+    <div class="order-summary-title">Resumo do pedido</div>
+    <div id="osItems"></div>
+    <div class="os-totals">
+      <div class="os-row"><span>Subtotal</span><span id="osSubtotal">R$0</span></div>
+      <div class="os-row"><span>Frete</span><span id="osFrete">R$0</span></div>
+      <div class="os-row total"><span>Total</span><span class="val" id="osTotal">R$0</span></div>
+    </div>
+  </div>
 
   <div class="steps-confirm">
     <div class="step-c">
@@ -85,8 +109,30 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 <script>
 const order=JSON.parse(sessionStorage.getItem('orderData')||'{"pedido":"BS1024","nome":"Cliente","cidade":"—"}');
 document.getElementById('orderNum').textContent='#'+order.pedido;
+
+if(order.itens && order.itens.length){
+  document.getElementById('orderSummaryBox').style.display='block';
+  document.getElementById('osItems').innerHTML = order.itens.map(item=>`
+    <div class="osi">
+      <div class="osi-img">${item.imagem
+        ? `<img src="${item.imagem}" alt="${item.club} ${item.name}" onerror="this.style.display='none'">`
+        : `<svg width="30" height="40" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="${item.color||'rgba(100,100,100,0.3)'}" stroke="${item.stroke||'rgba(150,150,150,0.5)'}" stroke-width="2"/></svg>`}
+      </div>
+      <div class="osi-info"><div class="osi-name">${item.name}</div><div class="osi-meta">Tamanho ${item.size} • Qtd: ${item.qty}</div></div>
+      <div class="osi-price">R$${item.price*item.qty}</div>
+    </div>
+  `).join('');
+  document.getElementById('osSubtotal').textContent = 'R$'+(order.subtotal||0);
+  document.getElementById('osFrete').textContent = 'R$'+(order.frete||0);
+  document.getElementById('osTotal').textContent = 'R$'+(order.total||0);
+}
+
 document.getElementById('wppBtn').onclick=function(){
-  const msg=encodeURIComponent(`Olá! Acabei de realizar um pedido na Brito's Store.\n\nPedido: #${order.pedido}\n\nProdutos:\n• Camisa Titular Corinthians 2025/26 — G — Qtd: 1\n• Camisa Titular Brasil Copa 2026 — M — Qtd: 1\n\nValor Total: R$316\n\nNome: ${order.nome}\nCidade: ${order.cidade}\n\nVou enviar o comprovante do Pix em seguida.`);
+  const listaProdutos = (order.itens && order.itens.length)
+    ? order.itens.map(i=>`• ${i.name} — ${i.size} — Qtd: ${i.qty}`).join('\n')
+    : '• (produtos do pedido)';
+  const total = order.total != null ? order.total : '—';
+  const msg=encodeURIComponent(`Olá! Acabei de realizar um pedido na Brito's Store.\n\nPedido: #${order.pedido}\n\nProdutos:\n${listaProdutos}\n\nValor Total: R$${total}\n\nNome: ${order.nome}\nCidade: ${order.cidade}\n\nVou enviar o comprovante do Pix em seguida.`);
   window.open(`https://wa.me/5511940028422?text=${msg}`,'_blank');
 };
 // confetti
