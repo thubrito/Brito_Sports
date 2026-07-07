@@ -36,6 +36,7 @@ function addToCart(product, size, qty = 1) {
       qty: qty,
       color: product.color,
       stroke: product.stroke,
+      status: product.status,
       imagem: product.imagens ? product.imagens[0] : null
     });
   }

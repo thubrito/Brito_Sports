@@ -35,6 +35,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
 .btn-remove:hover{color:var(--accent2)}
 .cart-empty{text-align:center;padding:100px 40px;display:none}
+.enc-note{background:var(--bg3);border:1px solid rgba(232,255,0,0.25);padding:14px 18px;font-size:12.5px;color:var(--muted);line-height:1.6;margin:16px 0}
+.enc-note strong{color:var(--accent)}
 .cart-empty h2{font-family:var(--font-display);font-size:48px;margin-bottom:16px;color:var(--muted)}
 .cart-empty p{color:var(--muted);margin-bottom:32px}
 
@@ -61,6 +63,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .sec-badge{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
 .sec-badge svg{width:14px;height:14px;stroke:var(--muted);fill:none}
 
+.cross-sell{margin-top:32px}
+.cross-sell-title{font-family:var(--font-display);font-size:24px;color:var(--text);margin-bottom:16px}
+.cross-sell-title em{color:var(--accent);font-style:normal}
+.cross-sell-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.cs-card{background:var(--bg3);border:1px solid var(--border);cursor:pointer;transition:border-color .2s}
+.cs-card:hover{border-color:rgba(232,255,0,0.25)}
+.cs-img{aspect-ratio:1/1;background:var(--bg2);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cs-info{padding:12px}
+.cs-club{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.cs-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.3}
+.cs-price{font-family:var(--font-display);font-size:20px;color:var(--accent);margin-bottom:8px}
+.cs-add{width:100%;background:var(--accent);color:#000;border:none;padding:8px;font-family:var(--font-body);font-weight:800;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.cs-add:hover{background:#fff}
+
 @media(max-width:1024px){.cart-layout{grid-template-columns:1fr;padding:24px 32px 80px}.order-summary{position:static}}
 @media(max-width:768px){
   nav{padding:0 20px;height:56px}
@@ -74,6 +90,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   .summary-total .val{font-size:32px}
   .order-summary{padding:24px}
   .security-badges{flex-wrap:wrap;gap:12px}
+  .cross-sell-grid{grid-template-columns:1fr 1fr}
+  .cross-sell-grid .cs-card:last-child{display:none}
 }
 @media(max-width:480px){
   .cart-item{grid-template-columns:60px 1fr;gap:10px}
@@ -103,10 +121,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
     <div class="cart-items" id="cartItems"></div>
 
+    <div class="enc-note" id="encNote" style="display:none">
+      📦 Seu pedido inclui item(ns) <strong>sob encomenda</strong> — o prazo de envio será confirmado por WhatsApp após o pagamento, geralmente entre 7 e 15 dias úteis.
+    </div>
+
     <div class="cart-empty" id="cartEmpty">
       <h2>CARRINHO VAZIO</h2>
       <p>Você ainda não adicionou nenhuma camisa.</p>
       <button class="btn-checkout" style="max-width:280px;margin:0 auto" onclick="location.href='loja.html'">Ver Catálogo</button>
+    </div>
+
+    <div class="cross-sell" id="crossSell" style="display:none">
+      <div class="cross-sell-title">COMPLETE SEU <em>PEDIDO</em></div>
+      <div class="cross-sell-grid" id="crossSellGrid"></div>
     </div>
 
   </div>
@@ -130,9 +157,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="sec-badge"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Pagamento seguro</div>
       <div class="sec-badge"><svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>Pix criptografado</div>
     </div>
+    <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:14px">⭐ 4.9 de avaliação média · +1.200 pedidos entregues</div>
   </div>
 </div>
 
+<script src="catalogo.js"></script>
 <script>
 let cart = JSON.parse(localStorage.getItem('cart')||'[]');
 
@@ -140,15 +169,16 @@ function render(){
   const el=document.getElementById('cartItems');
   const empty=document.getElementById('cartEmpty');
   const encNote=document.getElementById('encNote');
-  if(!cart.length){el.innerHTML='';empty.style.display='block';return;}
+  if(!cart.length){el.innerHTML='';empty.style.display='block';document.getElementById('crossSell').style.display='none';return;}
   empty.style.display='none';
-  encNote.style.display=hasEnc?'block':'none';
+  const hasEnc = cart.some(item => item.status === 'encomenda');
+  encNote.style.display = hasEnc ? 'block' : 'none';
   el.innerHTML=cart.map((item,i)=>`
     <div class="cart-item">
       <div class="item-img">
-        <svg width="60" height="80" viewBox="0 0 200 260" fill="none">
-          <path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="${item.color||'rgba(100,100,100,0.3)'}" stroke="${item.stroke||'rgba(150,150,150,0.5)'}" stroke-width="2"/>
-        </svg>
+        ${item.imagem
+          ? `<img src="${item.imagem}" alt="${item.club} ${item.name}" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none'">`
+          : `<svg width="60" height="80" viewBox="0 0 200 260" fill="none"><path d="M60 20L30 60L10 55L25 100L10 200L80 215L80 120L120 120L120 215L190 200L175 100L190 55L170 60L140 20L120 30L110 60Q100 70 90 60L80 30Z" fill="${item.color||'rgba(100,100,100,0.3)'}" stroke="${item.stroke||'rgba(150,150,150,0.5)'}" stroke-width="2"/></svg>`}
       </div>
       <div class="item-details">
         <div class="item-club">${item.club} • ${item.liga}</div>
@@ -171,11 +201,44 @@ function render(){
   const sub=cart.reduce((a,i)=>a+i.price*i.qty,0);
   document.getElementById('subtotal').textContent='R$'+sub;
   document.getElementById('totalPrice').textContent='R$'+sub;
+  renderCrossSell();
+}
+
+function renderCrossSell(){
+  const catalog = window.CATALOGO || [];
+  if(!catalog.length) return;
+  const cartIds = new Set(cart.map(i=>i.id));
+  const suggestions = catalog.filter(p=>!cartIds.has(p.id)).slice(0,3);
+  const wrap = document.getElementById('crossSell');
+  const grid = document.getElementById('crossSellGrid');
+  if(!suggestions.length){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  grid.innerHTML = suggestions.map(p=>`
+    <div class="cs-card" onclick="location.href='produto.html?id=${p.id}'">
+      <div class="cs-img">${productImageHTML(p,100,130)}</div>
+      <div class="cs-info">
+        <div class="cs-club">${p.club} • ${p.liga}</div>
+        <div class="cs-name">${p.name}</div>
+        <div class="cs-price">R$${p.price}</div>
+        <button class="cs-add" onclick="event.stopPropagation();quickAdd(${p.id})">Adicionar</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function quickAdd(id){
+  const catalog = window.CATALOGO || [];
+  const product = catalog.find(p=>p.id===id);
+  if(!product) return;
+  addToCart(product, product.sizes[0]||'M', 1);
+  cart = JSON.parse(localStorage.getItem('cart')||'[]');
+  render();
 }
 function updateQty(i,d){ cart[i].qty=Math.max(1,cart[i].qty+d); localStorage.setItem('cart',JSON.stringify(cart)); render(); }
 function removeItem(i){ cart.splice(i,1); localStorage.setItem('cart',JSON.stringify(cart)); render(); }
 function applyCoupon(){ const c=document.getElementById('couponInput').value.toUpperCase(); if(c==='BRITO10'){ document.getElementById('discount').textContent='-10%'; alert('Cupom aplicado! 10% de desconto.'); } else { alert('Cupom inválido.'); } }
 render();
+loadCatalogo().then(()=>renderCrossSell());
 </script>
 </body>
 </html>
