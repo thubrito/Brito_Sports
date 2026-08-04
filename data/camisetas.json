@@ -266,5 +266,151 @@
       "assets/img/camisas/juventus/home-2025-3.png",
       "assets/img/camisas/juventus/home-2025-4.png"
     ]
+  },
+  {
+    "id": 13,
+    "name": "Camisa II Invasão 76 2026/27",
+    "club": "Corinthians",
+    "slug": "corinthians",
+    "liga": "Brasileirão Série A",
+    "tipo": "II",
+    "temporada": "2026/27",
+    "price": 199,
+    "oldPrice": 230,
+    "badge": "new",
+    "status": "disponivel",
+    "sizes": ["P", "M", "G", "GG", "XG"],
+    "color": "rgba(20,20,20,0.5)",
+    "stroke": "rgba(255,255,255,0.45)",
+    "descricao": "A camisa II do Corinthians para 2026/27 celebra os 50 anos da Invasão Corinthiana de 1976, quando milhares de torcedores tomaram o Rio de Janeiro. Resgata o tradicional padrão preto com finas listras verticais brancas, gola e mangas em branco, e o escudo retrô usado entre 1940 e 1980.",
+    "imagens": [
+      "assets/img/camisas/CorinthiansInvasao2026/frente.png",
+      "assets/img/camisas/CorinthiansInvasao2026/verso.png"
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Camisa Titular 2024/25",
+    "club": "Ajax",
+    "slug": "ajax",
+    "liga": "Eredivisie",
+    "tipo": "Titular",
+    "temporada": "2024/25",
+    "price": 169,
+    "oldPrice": null,
+    "badge": "new",
+    "status": "disponivel",
+    "sizes": ["P", "M", "G", "GG"],
+    "color": "rgba(255,255,255,0.12)",
+    "stroke": "rgba(200,0,20,0.6)",
+    "descricao": "A camisa titular do Ajax para 2024/25 traz um design retrô em homenagem aos 25 anos de parceria com a fornecedora, com o tradicional branco predominante e a larga faixa vermelha vertical mais fina. Gola polo vermelha com botão branco e as três cruzes de Santo André na nuca completam o visual clássico do clube holandês.",
+    "imagens": [
+      "assets/img/camisas/AjaxHome2024/frente.png",
+      "assets/img/camisas/AjaxHome2024/verso.png"
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Camisa Titular 2025/26",
+    "club": "Arsenal",
+    "slug": "arsenal",
+    "liga": "Premier League",
+    "tipo": "Titular",
+    "temporada": "2025/26",
+    "price": 179,
+    "oldPrice": 210,
+    "badge": "promo",
+    "status": "disponivel",
+    "sizes": ["P", "M", "G", "GG", "XG"],
+    "color": "rgba(180,0,20,0.35)",
+    "stroke": "rgba(255,255,255,0.55)",
+    "descricao": "A camisa titular do Arsenal para 2025/26 mantém o clássico corpo vermelho com mangas brancas, agora com um padrão repetido da letra 'A' em estilo gótico inspirado no brasão do clube. Gola branca, filetes vermelhos nos punhos e três listras vermelhas nos ombros reforçam a identidade centenária dos Gunners.",
+    "imagens": [
+      "assets/img/camisas/ArsenalHome2025/frente.png",
+      "assets/img/camisas/ArsenalHome2025/verso.png"
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Camisa Titular 2025/26",
+    "club": "Sporting CP",
+    "slug": "sporting-cp",
+    "liga": "Primeira Liga",
+    "tipo": "Titular",
+    "temporada": "2025/26",
+    "price": 159,
+    "oldPrice": null,
+    "badge": "new",
+    "status": "disponivel",
+    "sizes": ["P", "M", "G", "GG"],
+    "color": "rgba(0,110,50,0.35)",
+    "stroke": "rgba(255,255,255,0.5)",
+    "descricao": "A camisa titular do Sporting CP para 2025/26 traz de volta as clássicas listras horizontais verdes e brancas de Alvalade, agora em versão mais fina. Gola verde sólida, punhos brancos e mangas listradas equilibram tradição e um visual renovado para o Leão.",
+    "imagens": [
+      "assets/img/camisas/SportingHome2025/frente.png",
+      "assets/img/camisas/SportingHome2025/verso.png"
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Camisa Reserva Away 2026/27",
+    "club": "Real Madrid",
+    "slug": "real-madrid",
+    "liga": "La Liga",
+    "tipo": "Reserva",
+    "temporada": "2026/27",
+    "price": 189,
+    "oldPrice": null,
+    "badge": "new",
+    "status": "disponivel",
+    "sizes": ["P", "M", "G", "GG", "XG"],
+    "color": "rgba(10,55,40,0.4)",
+    "stroke": "rgba(225,255,230,0.4)",
+    "descricao": "A camisa reserva do Real Madrid para 2026/27 marca o retorno do verde-escuro ao guarda-roupa merengue após anos de ausência, com padrão geométrico discreto inspirado no escudo e nas iniciais do clube. Gola e punhos com acabamento em branco completam um visual sofisticado e diferente do habitual.",
+    "imagens": [
+      "assets/img/camisas/RealMadridAway2026/frente.png",
+      "assets/img/camisas/RealMadridAway2026/verso.png"
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Camisa Titular 2026/27",
+    "club": "Manchester City",
+    "slug": "manchester-city",
+    "liga": "Premier League",
+    "tipo": "Titular",
+    "temporada": "2026/27",
+    "price": 179,
+    "oldPrice": null,
+    "badge": "new",
+    "status": "disponivel",
+    "sizes": ["P", "M", "G"],
+    "color": "rgba(110,190,240,0.35)",
+    "stroke": "rgba(255,255,255,0.5)",
+    "descricao": "A camisa titular do Manchester City para 2026/27 explora tons de azul celeste em referência às cores usadas pelo clube ao longo da história, com gola e punhos brancos e escudo em acabamento monocromático. Um visual moderno para acompanhar os Citizens dentro e fora de campo.",
+    "imagens": [
+      "assets/img/camisas/ManchesterCityHome2026/frente.png"
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Camisa II Origens Italianas 2026",
+    "club": "Palmeiras",
+    "slug": "palmeiras",
+    "liga": "Brasileirão",
+    "tipo": "Reserva",
+    "temporada": "2026",
+    "price": 179,
+    "oldPrice": null,
+    "badge": "new",
+    "status": "disponivel",
+    "sizes": ["P", "M", "G", "GG"],
+    "color": "rgba(255,255,255,0.15)",
+    "stroke": "rgba(0,140,60,0.55)",
+    "descricao": "A camisa reserva do Palmeiras para 2026 homenageia as origens italianas do clube, fundado em 1914 por imigrantes. Base branca com gola polo e duas faixas finas verticais nas cores da bandeira da Itália, verde e vermelha, além do brasão em bordado.",
+    "imagens": [
+      "assets/img/camisas/PalmeirasAway2026/frente.png",
+      "assets/img/camisas/PalmeirasAway2026/verso.png"
+    ]
   }
 ]
